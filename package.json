@@ -4,7 +4,8 @@
   "description": "project for OOP-js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint .",
+    "test": "npm run lint && node test/all"
   },
   "repository": {
     "type": "git",
