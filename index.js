@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-const fs = require('fs');
+const fs = require('fs')
 
 fs.readFile('example.js', (err, data) => {
-  if (err) return console.error(err);
-  console.log(data.toString());
-});
+  console.log(data.toString())
+  if (err) return console.error(err)
+})
