@@ -1,0 +1,23 @@
+{
+  "name": "portfolio-constructor",
+  "version": "1.0.0",
+  "description": "project for OOP-js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekatereana/Portfolio-constructor.git"
+  },
+  "keywords": [
+    "express",
+    "node"
+  ],
+  "author": "ekate",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ekatereana/Portfolio-constructor/issues"
+  },
+  "homepage": "https://github.com/Ekatereana/Portfolio-constructor#readme"
+}
