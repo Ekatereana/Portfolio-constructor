@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - 10
+  - 11
+  - 12
+install:
+  - npm install
+script:
+  # - node --stack-trace-limit=1000 example.js
+  - npm run lint
