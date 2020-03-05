@@ -10,7 +10,7 @@ Portfolio-constructor is a web-service that can be used for creating and editing
 - [ ] __Users can register and sign in to web-application;__
 - [ ] __Service provides user access to his personal porfolio-page;__
 - [ ] __User can edit his personal-portfolio page:__
-  - [ ] _add some photos;_
+  - [ ] _add some photos;
   - [ ] _add text
   - [ ] _User can choose the field of work that will be displayed;_
   - [ ] _change configuration, size and coordinates of objects on a page;_
