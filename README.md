@@ -27,7 +27,7 @@ Portfolio-constructor is a web-service that can be used for creating and editing
 ### Frontend:
 ```
 - HTML5 + CSS;
-- aJax (for the comfortable work with the multimedia elements on the screen without reloading it);
+- aJax (allows work with multimedia without reloading the page);
 ```
 ### Backend:
 
