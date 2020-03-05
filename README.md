@@ -36,6 +36,6 @@ Portfolio-constructor is a web-service that can be used for creating and editing
 ```
 - PostgreSQL (one of the most convenient dbs out there);
 - Node.js;
-- Koa js;
+- Koa;
 - Telegraf;
 ```
