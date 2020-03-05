@@ -20,7 +20,7 @@ Portfolio-constructor is a web-service that can be used for creating and editing
 
 - [ ] __Users can connect telegram-bot @Personal_portfolio_bot to get messages from "contactMe"-form;__
 - [ ] __Users can drag the "blocks" of the portfolio and change their position using the graphical interface;__
-- [ ] __Users can upload the file using the drag-n-drop mechanics;__
+- [ ] __Users can upload the file using the drag'n'drop mechanics;__
   
 -------------------------------------------------
 
