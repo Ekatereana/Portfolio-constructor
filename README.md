@@ -17,7 +17,7 @@ Portfolio-constructor is a web-service that can be used for creating and editing
 
 ### Addvanced plan: 
 
-- [ ] __Users can connect telegram-bot @Personal_portfolio_bot to get messeges from "contactMe"-form;__
+- [ ] __Users can connect telegram-bot @Personal_portfolio_bot to get messages from "contactMe"-form;__
   
 -------------------------------------------------
 
