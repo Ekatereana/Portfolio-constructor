@@ -27,13 +27,13 @@ Portfolio-constructor is a web-service that can be used for creating and editing
 ### Frontend:
 ```
 - HTML5 + CSS;
-- aJax (allows work with multimedia without reloading the page);
+- React?;
 ```
 ### Backend:
 
 ```
 - PostgreSQL (one of the most convenient dbs out there);
 - Node.js;
-- Express;
+- Koa js;
 - Telegraf;
 ```
