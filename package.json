@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Ekatereana/Portfolio-constructor.git"
   },
   "keywords": [
-    "express",
+    "koa",
     "node"
   ],
   "author": "ekate",
@@ -28,5 +28,13 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1"
+  },
+  "dependencies": {
+    "knex": "^0.20.11",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^8.0.8",
+    "pg": "^7.18.2"
   }
 }
