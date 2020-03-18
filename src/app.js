@@ -2,6 +2,7 @@
 
 const Koa = require('koa')
 const Router = require('koa-router')
+const Logger = require('koa-logger')
 
 const app = new Koa()
 const router = new Router()
@@ -15,6 +16,9 @@ app
   .use(router.routes())
   // to parse request body
   .use(require('koa-body')())
+
+// to log all info
+app.use(Logger())
 
 app.listen(8080, function () {
   console.log('Start portfolio-constructor server!')
