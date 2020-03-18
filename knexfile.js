@@ -1,4 +1,5 @@
 // Update with your config settings.
+require('dotenv').config()
 
 const path = require('path')
 
@@ -18,7 +19,7 @@ module.exports = {
   },
   development: {
     client: 'pg',
-    connection: 'postgres://postgres:21101967VfVf@localhost:5432/portfolio-const',
+    connection: process.env.DB_URL,
     migrations: {
       directory: path.join(BASE_PATH, 'migrations')
     },
