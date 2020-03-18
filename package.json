@@ -29,6 +29,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1"
   },
+  
   "dependencies": {
     "knex": "^0.20.11",
     "koa": "^2.11.0",
