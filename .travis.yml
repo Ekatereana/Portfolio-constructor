@@ -3,8 +3,10 @@ node_js:
   - 10
   - 11
   - 12
+env: 
+- DB_URL = postgres://basic:2110vfvf@localhost:5432/portfolio-const
+ 
 install:
   - npm install
 script:
-  - node --stack-trace-limit=1000 src/app.js
   - npm run lint
