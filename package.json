@@ -32,6 +32,7 @@
   "dependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "fs": "0.0.1-security",
     "knex": "^0.20.11",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
