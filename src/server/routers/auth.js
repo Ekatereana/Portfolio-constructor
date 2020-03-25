@@ -43,7 +43,7 @@ router.get('/auth/login', async (ctx) => {
 })
 
 router.post('/auth/login', async (ctx) => {
-  return passport.authenticate('local', (err, user, info, status) =>{
+  return passport.authenticate('local', (err, user, info, status) => {
     if (user) {
       ctx.login(user)
       ctx.redirect('/auth/status')
