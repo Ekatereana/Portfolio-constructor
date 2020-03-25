@@ -9,6 +9,7 @@ const passport = require('koa-passport')
 
 const app = new Koa()
 const authRoutes = require('./routers/auth')
+const indexRoutes = require('./routers/home.')
 
 // sessions settings
 app.keys = [process.env.KEY]
@@ -23,6 +24,7 @@ app
   })
   // to use all routes that include in basic router
   .use(authRoutes.routes())
+  .use(indexRoutes.routes())
   // to parse request body
   .use(bodyParser())
 
