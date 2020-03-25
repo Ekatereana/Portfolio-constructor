@@ -8,7 +8,7 @@ const Logger = require('koa-logger')
 const passport = require('koa-passport')
 
 const app = new Koa()
-const userRoutes = require('./routes/users')
+const authRoutes = require('./routers/auth')
 
 // sessions settings
 app.keys = [process.env.KEY]
@@ -22,7 +22,7 @@ app
     }
   })
   // to use all routes that include in basic router
-  .use(userRoutes.routes())
+  .use(authRoutes.routes())
   // to parse request body
   .use(bodyParser())
 

@@ -9,7 +9,15 @@ const LocalStrategy = require('passport-local').Strategy
 // knex config
 const knex = require('./db/connection')
 
+// hashing passwords
+const bcrypt = require('bcryptjs')
+
 const options = {}
+
+// password hashing
+function comparePass (userPassword, databasePassword) {
+  return bcrypt.compareSync(userPassword, databasePassword)
+}
 
 // saved user id to the session to retrieve whole object later
 // with deserialize-function
@@ -29,7 +37,7 @@ passport.use(new LocalStrategy(options, (username, password, done) => {
     // no such user in db
       if (!user) return done(null, false)
       // does passwd match
-      if (password === user.password) {
+      if (!comparePass(password, user.password)) {
         return done(null, user)
       } else {
       // incorrect passwd

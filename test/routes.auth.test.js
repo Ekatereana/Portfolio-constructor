@@ -63,3 +63,16 @@ despribe('POST /auth/register', () => {
 	})
 })
 
+describe('GET /auth/login', () => {
+	it('should render the login view', (done) => {
+	   chai.request(server)
+	   .get('/auth/login')
+	   .end((err, res) => {
+	   	should.not.exists(err)
+	   	res.redirects.length.should.eql(0)
+	   	res.status.should.eq(200)
+	   	res.type.should.eql('text/html')
+	   })
+	})
+})
+
