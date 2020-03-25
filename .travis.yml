@@ -5,7 +5,7 @@ node_js:
   - 12
 env: 
 - DB_URL = postgres://basic:2110vfvf@localhost:5432/portfolio-const
- 
+- KEY = \xca\xf2\xa5]\x95\x8cGJ\x0eN\xb3\x11\xcc~\xf7\xa9O\xef\xab\xc8\xf0\xc5\xf89
 install:
   - npm install
 script:
