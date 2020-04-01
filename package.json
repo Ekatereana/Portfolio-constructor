@@ -32,6 +32,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "chai-http": "^4.3.0",
+    "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
     "knex": "^0.20.11",
     "koa": "^2.11.0",
