@@ -6,10 +6,10 @@ const chai = require('chai')
 const should = chai.should()
 const chaiHttp = require('chai-http')
 
-chai.use(chaiHttp)
-
-const server = require('../src/server/app')
+const server = require('../app')
 const knex = require('../src/server/db/connection')
+
+chai.use(chaiHttp)
 
 // common view for chai-describe
 describe('routes : auth', () => {
@@ -35,7 +35,7 @@ describe('GET /auth/register', () => {
 			should.not.exist(err)
 			res.redirects.length.should.eql(0)
 			res.status.should.eql(200)
-			res.type.should.eql("text/html")
+			res.type.should.eql("application/json")
 			// this requements will be chanched.
 			// res.text.should.contain('<h1>Register</h1>')
 			// res.text.should.contain(
@@ -46,8 +46,8 @@ describe('GET /auth/register', () => {
 	})
 })
 
-// post request to register user
-despribe('POST /auth/register', () => {
+//post request to register user
+describe('POST /auth/register', () => {
 	it('should register a new user', (done) => {
 		chai.request(server)
 		.post('/auth/register')
@@ -56,8 +56,8 @@ despribe('POST /auth/register', () => {
 			password: 'my_little_pony'
 		})
 		.end((err, res) => {
-			should.not.exists(err)
-			res.redirects[0].should.contain('/home')
+			should.not.exist(err)
+			//res.redirects[0].should.contain('/home')
 			done()
 		})
 	})
@@ -68,11 +68,13 @@ describe('GET /auth/login', () => {
 	   chai.request(server)
 	   .get('/auth/login')
 	   .end((err, res) => {
-	   	should.not.exists(err)
+	   	should.not.exist(err)
 	   	res.redirects.length.should.eql(0)
 	   	res.status.should.eq(200)
-	   	res.type.should.eql('text/html')
+	   	res.type.should.eql('application/json')
+	    done()
 	   })
+
 	})
 })
 

@@ -1,18 +1,21 @@
 'use strict'
-require('dotenv').config()
 
 const Koa = require('koa')
+const path = require('path')
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-session')
 const Logger = require('koa-logger')
 const passport = require('koa-passport')
+const BASE_PATH = '/src/server/'
+// authentication
+require(path.join(__dirname, BASE_PATH, '/auth'))
+const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'))
+const indexRoutes = require(path.join(__dirname, BASE_PATH, '/routers/home'))
 
 const app = new Koa()
-const authRoutes = require('./routers/auth')
-const indexRoutes = require('./routers/home.')
 
 // sessions settings
-app.keys = [process.env.KEY]
+app.keys = [process.env.KEY_A, process.env.KEY_H]
 app.use(session(app))
 
 app
@@ -23,14 +26,12 @@ app
     }
   })
   // to use all routes that include in basic router
-  .use(authRoutes.routes())
   .use(indexRoutes.routes())
   // to parse request body
   .use(bodyParser())
 
-// authentication
-require('./auth')
 app.use(passport.initialize())
+app.use((authRoutes.routes()))
 
 // to log all info
 app.use(Logger())

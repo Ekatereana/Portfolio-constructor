@@ -5,14 +5,12 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && /node_modules/mocha/bin/_mocha test/routes.auth.test.js"
+    "test": "npm run lint && mocha"
   },
   "repository": {
-    "type": "git",
     "url": "git+https://github.com/Ekatereana/Portfolio-constructor.git"
   },
   "keywords": [
-    "koa",
     "node"
   ],
   "author": "ekate",

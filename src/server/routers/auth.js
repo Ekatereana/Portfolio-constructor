@@ -18,15 +18,17 @@ router.get('/auth/register', async (ctx) => {
 router.post('/auth/register', async (ctx) => {
   const user = await queries.addUser(ctx.request.body)
   return passport.authenticate('local', (err, info, status) => {
-    if (user) {
-      ctx.login(user)
-      ctx.redirect('/home')
-    } else {
-      ctx.status = 400
-      ctx.body = { status: 'error' }
-    }
     if (err) {
       console.log(err.stack)
+    } else {
+      if (user) {
+        ctx.login(user)
+        ctx.redirect('/home')
+        ctx.type = 'application/json'
+      } else {
+        ctx.status = 400
+        ctx.body = { status: 'error' }
+      }
     }
   })(ctx)
 })
@@ -34,7 +36,8 @@ router.post('/auth/register', async (ctx) => {
 // login part
 router.get('/auth/login', async (ctx) => {
   if (!ctx.isAuthentificated()) {
-    ctx.type = 'html'
+    ctx.type = 'application/json'
+    ctx.redirect('/auth/register')
     // there should be some react login view
     // ctx.body = .....
   } else {
@@ -44,16 +47,17 @@ router.get('/auth/login', async (ctx) => {
 
 router.post('/auth/login', async (ctx) => {
   return passport.authenticate('local', (err, user, info, status) => {
-    if (user) {
-      ctx.login(user)
-      ctx.redirect('/auth/status')
-    } else {
-      ctx.status = 400
-      ctx.body = { status: 'error' }
-    }
     if (err) {
       console.log(err.stack)
       ctx.status = 400
+    } else {
+      if (user) {
+        ctx.login(user)
+        ctx.redirect('/auth/status')
+      } else {
+        ctx.status = 400
+        ctx.body = { status: 'error' }
+      }
     }
   })(ctx)
 })
