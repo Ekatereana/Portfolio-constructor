@@ -30,6 +30,8 @@
     "mocha": "^7.1.1"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "bcryptjs": "^2.4.3",
     "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
@@ -44,5 +46,8 @@
     "koa-session": "^5.13.1",
     "passport-local": "^1.0.0",
     "pg": "^7.18.2"
+  },
+  "directories": {
+    "test": "test"
   }
 }
