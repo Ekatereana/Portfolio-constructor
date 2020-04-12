@@ -12,7 +12,7 @@ const router = new Router()
 router.get('/auth/register', async (ctx) => {
   ctx.type = 'html'
   // we don`t have react-views yet
-  // ctx.body = fs.createReadStream('./src/server/views/sth')
+  // ctx.body = fs.createReadStream('./backend/server/views/sth')
 })
 
 router.post('/auth/register', async (ctx) => {

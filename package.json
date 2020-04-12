@@ -2,7 +2,7 @@
   "name": "portfolio-constructor",
   "version": "1.0.0",
   "description": "project for OOP-js",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && mocha"
