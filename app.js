@@ -10,7 +10,8 @@ const BASE_PATH = '/src/server/'
 // authentication
 require(path.join(__dirname, BASE_PATH, '/auth'))
 const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'))
-const indexRoutes = require(path.join(__dirname, BASE_PATH, '/routers/home'))
+const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'))
+const mainRoute = require(path.join(__dirname, BASE_PATH, '/routers/main'))
 
 const app = new Koa()
 
@@ -18,7 +19,8 @@ const app = new Koa()
 app.keys = [process.env.KEY_A, process.env.KEY_H]
 app.use(session(app))
 
-app
+
+/*app
   .use(async ctx => {
     ctx.body = {
       status: 'success',
@@ -29,6 +31,17 @@ app
   .use(indexRoutes.routes())
   // to parse request body
   .use(bodyParser())
+*/
+
+
+  // to use all routes that include in basic router
+app.use(homeRoute.routes())
+   .use(mainRoute.routes())
+   // to serve up compiled React app
+   .use(require('koa-static')('./build'))
+   // to parse request body
+   .use(bodyParser())
+
 
 app.use(passport.initialize())
 app.use((authRoutes.routes()))
@@ -36,7 +49,9 @@ app.use((authRoutes.routes()))
 // to log all info
 app.use(Logger())
 
-const server = app.listen(8080, function () {
+const port = process.env.PORT || 4000;
+
+const server = app.listen(port, function () {
   console.log('Start portfolio-constructor server!')
 })
 
