@@ -1,16 +1,13 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import './App.css';
-import Menu from './Menu';
+// eslint-disable-next-line no-unused-vars
+import Header from './Components/Header/Header';
 
 function App () {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-      <Menu />
+      <Header />
     </div>
   );
 }

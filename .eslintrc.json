@@ -15,5 +15,9 @@
         "sourceType": "module"
     },
     "rules": {
+        "semi": [
+            "error",
+            "always"
+        ]
     }
 }

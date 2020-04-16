@@ -1,9 +1,9 @@
 // Update with your config settings.
-require('dotenv').config()
+require('dotenv').config();
 
-const path = require('path')
+const path = require('path');
 
-const BASE_PATH = path.join(__dirname, 'src', 'server', 'db')
+const BASE_PATH = path.join(__dirname, 'src', 'server', 'db');
 
 module.exports = {
 
@@ -27,4 +27,4 @@ module.exports = {
     }
   }
 
-}
+};

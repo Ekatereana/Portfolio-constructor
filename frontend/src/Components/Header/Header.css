@@ -1,0 +1,21 @@
+h1 {
+    text-transform: uppercase;
+}
+
+.Header {
+    background: rgba(116,155,255,0.64);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+a {
+    color: rgba(0,0,0,0.67);
+}
+
+a:link {
+    font-family: 'Playfair Display', serif;
+    text-decoration: none;
+    font-size: 15pt;
+}
