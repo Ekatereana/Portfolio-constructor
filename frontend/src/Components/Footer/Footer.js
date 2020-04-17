@@ -11,17 +11,17 @@ const Footer = (props) => {
     <footer className="Footer">
       <Menu className="Menu"/>
       <div className="Credits">
-        <p>By :&nbsp;</p>
-        <a className={'github'} href="https://github.com/Ekatereana/">
+        <p className="Credit">By :&nbsp;</p>
+        <a className={'Credit'} href="https://github.com/Ekatereana/">
           <strong> Ekatereana</strong>
         </a>
-        <p>&nbsp;&&nbsp;</p>
-        <a href="https://github.com/vermi4elli/">
+        <p className="Credit">&nbsp;&&nbsp;</p>
+        <a className="Credit" href="https://github.com/vermi4elli/">
           <strong> Vermi4elli</strong>
         </a>
       </div>
       <div className="Year">
-        <p>2019</p>
+        <p className="Credit">2019</p>
       </div>
     </footer>
   );

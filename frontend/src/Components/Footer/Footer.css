@@ -15,7 +15,7 @@
     width: 100%;
     background-image: none;
     background-color: initial;
-    margin: 10px 0 5px 0;
+    margin: 20px 0 20px 0;
 }
 
 .Footer a {
@@ -27,13 +27,14 @@
     color: black;
 }
 
-.Footer .Credits p {
-    color: white;
+.Footer .Credit {
+    font-size: 14pt;
 }
 
 .Footer .Credits {
     display: flex;
     flex-direction: row;
+    color: white;
 }
 
 .Footer .Year {
