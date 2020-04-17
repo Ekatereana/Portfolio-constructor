@@ -1,11 +1,12 @@
-.Header {
-    height: 120px;
-}
-
 .Header .Menu{
     padding: 30px;
 }
 
 .Header .Menu #create {
     font-size: 40pt;
+}
+
+.Header {
+    display: flex;
+    flex-direction: column;
 }

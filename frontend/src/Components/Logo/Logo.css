@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+.Logo {
+    margin: 20px 0px 30px 0;
+    align-self: center;
+}
+
+.Logo p {
+    font-family: 'Special Elite', cursive;
+    font-size: 35pt;
+    overflow: hidden;
+    border-right: .15em solid transparent;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation:
+            typing 3.5s steps(30, end),
+            blink-caret .5s step-end 9;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: black }
+}
