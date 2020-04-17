@@ -23,8 +23,8 @@ function Test () {
 
   return (
     <div className="Test">
-      ssfsefsef
-      {users.map(user => (<p key={user.id}>{user.id}. {user.fname} {user.lname}</p>))}
+      {users.map(user =>
+        (<p key={user.id} align="center">{user.id}. {user.fname} {user.lname}</p>))}
     </div>
   );
 }
