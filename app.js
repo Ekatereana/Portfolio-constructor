@@ -12,6 +12,7 @@ require(path.join(__dirname, BASE_PATH, '/auth'));
 // const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'));
 const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'));
 const mainRoute = require(path.join(__dirname, BASE_PATH, '/routers/main'));
+const testRoute = require(path.join(__dirname, BASE_PATH, '/routers/test'));
 
 const app = new Koa();
 
@@ -35,6 +36,7 @@ app.use(session(app));
 // to use all routes that include in basic router
 app.use(homeRoute.routes())
   .use(mainRoute.routes())
+  .use(testRoute.routes())
 // to serve up compiled React app
   .use(require('koa-static')('./build'))
 // to parse request body
