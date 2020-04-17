@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
+import './Test.css';
 
 function Test () {
   const [users, setUsers] = useState([]);

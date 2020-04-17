@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital@0;1&display=swap');
 
 .Logo {
     margin: 20px 0px 30px 0;
@@ -6,16 +6,16 @@
 }
 
 .Logo p {
-    font-family: 'Special Elite', cursive;
     font-size: 35pt;
+    font-family: 'Lora', serif;
     overflow: hidden;
-    border-right: .15em solid transparent;
+    border-right: .1em solid transparent;
     white-space: nowrap;
     margin: 0 auto;
-    letter-spacing: .15em;
+    letter-spacing: .09em;
     animation:
-            typing 3.5s steps(30, end),
-            blink-caret .5s step-end 9;
+            typing 2.5s steps(30, end),
+            blink-caret .5s step-end 7;
 }
 
 @keyframes typing {

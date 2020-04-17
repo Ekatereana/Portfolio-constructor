@@ -21,7 +21,7 @@ const Footer = (props) => {
         </a>
       </div>
       <div className="Year">
-        <p className="Credit">2019</p>
+        <p className="Credit">2020</p>
       </div>
     </footer>
   );
