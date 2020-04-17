@@ -1,0 +1,18 @@
+.Footer {
+    background-color: steelblue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.Footer p {
+    font-size: 20pt;
+    color: rgba(0, 52, 111, 0.73);
+    transition: 0.5s;
+}
+
+.Footer p:hover {
+    color: black;
+}
+
+

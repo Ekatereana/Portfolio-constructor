@@ -1,21 +1,33 @@
-h1 {
-    text-transform: uppercase;
-}
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 .Header {
-    background: rgba(116,155,255,0.64);
+    background-color: rgba(183, 203, 255, 0.64);
+    background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.64), rgba(196, 214, 255, 0.64));
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+#create {
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 a {
-    color: rgba(0,0,0,0.67);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    color: rgba(81, 87, 109, 0.67);
+    transition: 0.5s;
 }
 
 a:link {
-    font-family: 'Playfair Display', serif;
     text-decoration: none;
-    font-size: 15pt;
+    font-size: 30pt;
+}
+
+a:hover {
+    color: #00007b;
 }

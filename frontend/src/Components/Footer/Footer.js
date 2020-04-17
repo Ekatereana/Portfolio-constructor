@@ -2,24 +2,24 @@
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import './Header.css';
+import './Footer.css';
 
-const Header = () => {
+const Footer = (props) => {
   return (
-    <header className="Header">
+    <footer className="Footer">
       <Router>
         <Link to={'/home'}>
           <p>Home</p>
         </Link>
         <Link to={'/create-new'}>
-          <p id={'create'}>Create</p>
+          <p>Create</p>
         </Link>
         <Link to={'/about'}>
           <p>About</p>
         </Link>
       </Router>
-    </header>
+    </footer>
   );
 };
 
-export default Header;
+export default Footer;

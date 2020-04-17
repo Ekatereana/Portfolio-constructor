@@ -9,7 +9,7 @@ const passport = require('koa-passport');
 const BASE_PATH = '/backend/server/';
 // authentication
 require(path.join(__dirname, BASE_PATH, '/auth'));
-const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'));
+// const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'));
 const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'));
 const mainRoute = require(path.join(__dirname, BASE_PATH, '/routers/main'));
 
@@ -41,7 +41,7 @@ app.use(homeRoute.routes())
   .use(bodyParser());
 
 app.use(passport.initialize());
-app.use((authRoutes.routes()));
+// app.use((authRoutes.routes()));
 
 // to log all info
 app.use(Logger());
@@ -49,7 +49,7 @@ app.use(Logger());
 const port = process.env.PORT || 4000;
 
 const server = app.listen(port, function () {
-  console.log('Start portfolio-constructor server!');
+  console.log(`Start portfolio-constructor server on ${port}!`);
 });
 
 module.exports = server;
