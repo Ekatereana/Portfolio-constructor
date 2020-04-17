@@ -1,0 +1,35 @@
+.Menu {
+    background-color: #a2d1d2;
+    background-image: linear-gradient(to bottom right, #67EFFF, #679FFF);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: max-content;
+}
+
+#create {
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+a {
+    font-weight: 400;
+    color: white;
+    transition: 0.5s;
+}
+
+p {
+    margin: 0;
+}
+
+a:link {
+    text-decoration: none;
+    font-size: 30pt;
+}
+
+a:hover {
+    color: #001588;
+}

@@ -1,25 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './Header.css';
+// eslint-disable-next-line no-unused-vars
+import Menu from './../Menu/Menu';
 
-const Header = () => {
+function Header () {
   return (
-    <header className="Header">
-      <Router>
-        <Link to={'/home'}>
-          <p>Home</p>
-        </Link>
-        <Link to={'/create-new'}>
-          <p id={'create'}>Create</p>
-        </Link>
-        <Link to={'/about'}>
-          <p>About</p>
-        </Link>
-      </Router>
-    </header>
+    <div className="Header">
+      <Menu className="Menu"/>
+    </div>
   );
-};
+}
 
 export default Header;
