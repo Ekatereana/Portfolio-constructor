@@ -10,7 +10,7 @@
     "backend": "nodemon app.js",
     "frontend": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
-    "install": "npm install && \"cd frontend && npm install\""
+    "construct": "npm install && \"cd frontend && npm install\""
   },
   "repository": {
     "url": "git+https://github.com/Ekatereana/Portfolio-constructor.git"
