@@ -6,11 +6,11 @@
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && mocha",
-    "start": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
+    "start": "npm run backend && npm run frontend",
     "backend": "nodemon app.js",
     "frontend": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
-    "install": "npm install && \"cd frontend && npm install\""
+    "load": "npm install && cd frontend && npm install"
   },
   "repository": {
     "url": "git+https://github.com/Ekatereana/Portfolio-constructor.git"
@@ -51,6 +51,7 @@
     "koa-session": "^5.13.1",
     "koa-static": "^5.0.0",
     "passport-local": "^1.0.0",
-    "pg": "^7.18.2"
+    "pg": "^7.18.2",
+    "yarn": "^1.22.4"
   }
 }
