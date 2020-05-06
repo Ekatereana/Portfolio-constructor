@@ -7,10 +7,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+.AppMain {
+  display: flex;
+  flex-direction: row;  
+  height: 100%;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 
 html,
 body,

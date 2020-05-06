@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 // eslint-disable-next-line no-unused-vars
 import Header from './Components/Header/Header';
@@ -11,14 +11,26 @@ import Test from './Components/Test/Test';
 import Conteiner from './Components/Conteiner/Conteiner';
 import './Components/Conteiner/Conteiner.css';
 
+import HomePage from './Components/HomePage/HomePage';
+import './Components/HomePage/HomePage.css';
+
+import Main from './Components/Main/Main';
+import './Components/Main/Main.css';
+
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App () {
   return (
     <Router>
-      <div className="App.Main">
-        <Conteiner />
+      <div className="AppMain">
+        <Header />
+        <div className="vertical-panel">
+          <Route path="/home" component={HomePage}/>
+          <Route path="/main" component={Main}/>
+          <Route path="/registration" component={Conteiner}/>
+          <Footer/>
+        </div>
       </div>
     </Router>
   );

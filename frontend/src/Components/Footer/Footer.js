@@ -4,24 +4,41 @@ import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './Footer.css';
 // eslint-disable-next-line no-unused-vars
-import Menu from '../Menu/Menu';
 
 const Footer = (props) => {
   return (
     <footer className="Footer">
-      <Menu className="Menu"/>
-      <div className="Credits">
-        <p className="Credit">By :&nbsp;</p>
-        <a className={'Credit'} href="https://github.com/Ekatereana/">
-          <strong> Ekatereana</strong>
+
+      <div className = "links">
+
+        <a className ="big" href="" >
+          <img src={'./logotype.svg'}/>
+
         </a>
-        <p className="Credit">&nbsp;&&nbsp;</p>
-        <a className="Credit" href="https://github.com/vermi4elli/">
-          <strong> Vermi4elli</strong>
+        <a className ="big" href="" >
+          <img src={'./github.svg'}/>
+
+        </a>
+        <a className ="big" href="" >
+          <img src={'./social-media.svg'}/>
+
         </a>
       </div>
-      <div className="Year">
-        <p className="Credit">2020</p>
+      <div className="Authtors">
+        <div className="Credits">
+          <p className="Credit">By :&nbsp;</p>
+          <a className={'Credit'} href="https://github.com/Ekatereana/">
+            <strong> Ekatereana</strong>
+          </a>
+          <p className="Credit">&nbsp;&&nbsp;</p>
+          <a className="Credit" href="https://github.com/vermi4elli/">
+            <strong> Vermi4elli</strong>
+          </a>
+        </div>
+        <div className="Year">
+          <p>. . .</p>
+          <p className="Credit">2020</p>
+        </div>
       </div>
     </footer>
   );

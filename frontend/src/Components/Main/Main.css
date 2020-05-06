@@ -1,0 +1,13 @@
+.main-container {
+	margin-left: 10%;
+	align-self:  center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+img {
+	top: 5px;
+	width: 40%;
+	height: 65%;
+}

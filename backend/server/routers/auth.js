@@ -24,11 +24,8 @@ router.post('/auth/register', async (ctx) => {
       console.log(err.stack);
     } else {
       if (user) {
-        ctx.login(user, async (err) => {
-          console.log(err);
-          await err ? ctx.body = err : ctx.redirect('/home');
-        });
-        ctx.type = 'application/json';
+        ctx.redirect('/home');
+        ctx.login(user);
       } else {
         ctx.status = 400;
         ctx.body = { status: 'error' };
@@ -77,8 +74,10 @@ router.get('/auth/logout', async (ctx) => {
 
 router.get('/home', async (ctx) => {
   console.log('home');
+  console.log(ctx.body);
+
   if (ctx.isAuthentificated()) {
-    ctx.type = 'html';
+    console.log(ctx.body.data);
     // there will be some view
     // ctx.body = fs.createReadStream(...)
   } else {

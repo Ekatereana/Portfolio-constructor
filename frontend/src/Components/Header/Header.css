@@ -1,14 +1,18 @@
 .Header .Menu{
     padding: 15px;
+    height: 100%;
 }
 
 .Header .Menu #create {
     font-size: 20pt;
 }
 
+.Menu {
+	height: 100%;
+	bottom: 0px;
+}
+
 .Header {
-    display: flex;
-    flex-direction: column;
     z-index: 3;
-    visibility: 75%;
+   
 }

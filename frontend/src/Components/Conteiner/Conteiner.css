@@ -2,11 +2,12 @@
 
 .App {
   text-align: center;
-  margin: 3%;
+  overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Open Sans", sans-serif;
+
 }
 
 .App-logo {
@@ -71,8 +72,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 3%;
-    margin-bottom: 3%;
+    margin-top: 8%;
+    margin-bottom: 6%;
     background-color: #3498db;
     width: 20%;
     position: absolute;
@@ -86,7 +87,7 @@
 
     .right {
       top: 20px;
-      right: 20%;
+      right: 23%;
       align-items: flex-end;
       
     }
@@ -114,7 +115,7 @@
 
 //Button
 .btn {
-  font-size: 50px;
+  font-size: 100px;
   border: 0;
   background-color: #3498db;
   color: #fff;

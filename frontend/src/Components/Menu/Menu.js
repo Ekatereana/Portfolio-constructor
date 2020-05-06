@@ -7,7 +7,7 @@ import './Menu.css';
 const Menu = () => {
   return (
     <header className="Menu">
-      <Link to="/home">
+      <Link to="/">
         <p>Home</p>
       </Link>
       <Link to="/create-new-portfolio">
@@ -16,6 +16,8 @@ const Menu = () => {
       <Link to="/about">
         <p>About</p>
       </Link>
+      <Link to="/registration">Registration</Link>
+      <Link to="/main">Main Page for site</Link>
     </header>
   );
 };

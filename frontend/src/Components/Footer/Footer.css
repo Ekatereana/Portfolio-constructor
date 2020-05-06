@@ -1,30 +1,31 @@
 .Footer {
-    background-color: #367b92;
-    background-image: linear-gradient(to bottom right, #4499b7, #255361);
+   
     display: flex;
     flex-direction: column;
     align-items: center;
     border: none;
+    align-self: center;
 }
 
 .Footer p {
     font-size: 20pt;
 }
 
-.Footer .Menu {
-    width: 100%;
+.Footer {
+    left: 20%;
     background-image: none;
     background-color: initial;
-    margin: 20px 0 20px 0;
+    bottom: 1%;
 }
 
 .Footer a {
     font-size: 20pt;
+    color: black;
     transition: 0.4s;
 }
 
 .Footer a:hover {
-    color: black;
+    color: #FF1493;
 }
 
 .Footer .Credit {
@@ -33,12 +34,47 @@
 
 .Footer .Credits {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
-    color: white;
+    color: black;
+    
 }
 
 .Footer .Year {
     margin-bottom: 10px;
-    color: white;
+    color: black;
     font-weight: 600;
+}
+
+.Year{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.links{
+    margin-left: 45%;
+    display:    flex;
+    flex-direction: row;
+    align-items: center; 
+    align-self: center;   
+
+
+}
+
+.Authtors{
+    width: 90%;
+    margin-left: 10%;
+    padding-top: 4px;
+    bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+}
+
+.big{
+    width:15%;
+    height:15%;
 }

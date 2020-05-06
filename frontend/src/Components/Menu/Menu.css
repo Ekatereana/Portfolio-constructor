@@ -1,13 +1,18 @@
 .Menu {
-    background-color: #a2d1d2;
-    background-image: linear-gradient(to bottom right, #67EFFF, #679FFF);
+    background-color: #3498db;
+    background-image: linear-gradient(to bottom right, #67EFFF, #3498db);
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
     align-items: center;
     margin: 0;
     padding: 0;
     height: max-content;
+    position: fixed;
+    z-index: 3;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
 }
 
 #create {

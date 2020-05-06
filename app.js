@@ -6,10 +6,14 @@ const bodyParser = require('koa-bodyparser');
 const session = require('koa-session');
 const Logger = require('koa-logger');
 const passport = require('koa-passport');
+const koaCors = require('koa-cors');
 const BASE_PATH = '/backend/server/';
-
 // authentication
 require(path.join(__dirname, BASE_PATH, '/auth'));
+const koaOptions = {
+  origin: true,
+  credentials: true
+};
 // const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'));
 const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'));
 const authRoute = require(path.join(__dirname, BASE_PATH, '/routers/auth'));
@@ -20,6 +24,7 @@ const app = new Koa();
 
 // sessions settings
 app.keys = [process.env.KEY_A, process.env.KEY_H];
+app.use(koaCors(koaOptions));
 app.use(session({}, app));
 app.use(bodyParser());
 

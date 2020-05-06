@@ -5,7 +5,7 @@ import './Logo.css';
 function Logo () {
   return (
     <div className="Logo">
-      <p className="Text">Portfolio constructor</p>
+      <p className="Text">Wellcome to portfolio constructor!!!</p>
     </div>
   );
 }
