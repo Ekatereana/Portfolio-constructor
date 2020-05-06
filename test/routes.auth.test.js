@@ -52,7 +52,7 @@ describe('POST /auth/register', () => {
 		chai.request(server)
 		.post('/auth/register')
 		.send({
-			username: 'unicorn',
+			email: 'unicorn@gmail',
 			password: 'my_little_pony'
 		})
 		.end((err, res) => {

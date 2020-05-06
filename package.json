@@ -6,11 +6,11 @@
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && mocha",
-    "start": "npm run backend && npm run frontend",
+    "start": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
     "backend": "nodemon app.js",
     "frontend": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
-    "construct": "npm install && cd frontend && npm install"
+    "construct": " concurently --kill-others \"npm install\" \" cd frontend && npm install\""
   },
   "repository": {
     "url": "git+https://github.com/Ekatereana/Portfolio-constructor.git"
@@ -36,6 +36,7 @@
     "nodemon": "^2.0.3"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "chai-http": "^4.3.0",
     "concurrently": "^5.1.0",

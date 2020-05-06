@@ -1,8 +1,8 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
 exports.seed = function (knex) {
-  const salt = bcrypt.genSaltSync()
-  const hash = bcrypt.hashSync('12345OMG', salt)
+  const salt = bcrypt.genSaltSync();
+  const hash = bcrypt.hashSync('12345OMG', salt);
   // Deletes ALL existing entries
   return knex('users').del()
     .then(function () {
@@ -13,6 +13,6 @@ exports.seed = function (knex) {
           email: 'ekatereanagricaenko@gmail.com',
           password: hash
         }
-      ])
-    })
-}
+      ]);
+    });
+};

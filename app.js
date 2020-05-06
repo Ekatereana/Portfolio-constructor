@@ -7,10 +7,12 @@ const session = require('koa-session');
 const Logger = require('koa-logger');
 const passport = require('koa-passport');
 const BASE_PATH = '/backend/server/';
+
 // authentication
 require(path.join(__dirname, BASE_PATH, '/auth'));
 // const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'));
 const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'));
+const authRoute = require(path.join(__dirname, BASE_PATH, '/routers/auth'));
 const mainRoute = require(path.join(__dirname, BASE_PATH, '/routers/main'));
 const testRoute = require(path.join(__dirname, BASE_PATH, '/routers/test'));
 
@@ -18,33 +20,20 @@ const app = new Koa();
 
 // sessions settings
 app.keys = [process.env.KEY_A, process.env.KEY_H];
-app.use(session(app));
+app.use(session({}, app));
+app.use(bodyParser());
 
-/* app
-  .use(async ctx => {
-    ctx.body = {
-      status: 'success',
-      message: 'Hello World'
-    }
-  })
-  // to use all routes that include in basic router
-  .use(indexRoutes.routes())
-  // to parse request body
-  .use(bodyParser())
-*/
+app.use(passport.initialize());
+app.use(passport.session());
 
 // to use all routes that include in basic router
 app.use(homeRoute.routes())
   .use(mainRoute.routes())
   .use(testRoute.routes())
+  .use(authRoute.routes())
 // to serve up compiled React app
-  .use(require('koa-static')('./build'))
+  .use(require('koa-static')('./build'));
 // to parse request body
-  .use(bodyParser());
-
-app.use(passport.initialize());
-// app.use((authRoutes.routes()));
-
 // to log all info
 app.use(Logger());
 

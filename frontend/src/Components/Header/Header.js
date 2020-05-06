@@ -9,8 +9,8 @@ import Logo from './../Logo/Logo';
 function Header () {
   return (
     <div className="Header">
-      <Logo className="Logo"/>
       <Menu className="Menu"/>
+      <Logo className="Logo"/>
     </div>
   );
 }

@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const path = require('path');
 
-const BASE_PATH = path.join(__dirname, 'src', 'server', 'db');
+const BASE_PATH = path.join(__dirname, 'backend', 'server', 'db');
 
 module.exports = {
 

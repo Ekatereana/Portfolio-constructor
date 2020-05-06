@@ -7,16 +7,18 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 // eslint-disable-next-line no-unused-vars
 import Test from './Components/Test/Test';
+
+import Conteiner from './Components/Conteiner/Conteiner';
+import './Components/Conteiner/Conteiner.css';
+
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App () {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Route path="/about" exact component={Test} />
-        <Footer />
+      <div className="App.Main">
+        <Conteiner />
       </div>
     </Router>
   );

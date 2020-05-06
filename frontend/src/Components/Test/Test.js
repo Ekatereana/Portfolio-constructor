@@ -5,16 +5,16 @@ import './Test.css';
 function Test () {
   const [users, setUsers] = useState([]);
 
-  /*useEffect(async () => {
+  /* useEffect(async () => {
     await fetch('users')
       .then(body => body.json())
       .then(res => setUsers(res.users))
-  }, []);*/
+  }, []); */
 
   useEffect(() => {
     // using this syntax instead of the upper variant
     // because React starts swearing
-    async function fet() {
+    async function fet () {
       await fetch('users')
         .then(body => body.json())
         .then(res => setUsers(res.users));

@@ -1,20 +1,20 @@
-'use strinct'
+'use strinct';
 
-const knex = require('../connection')
+const knex = require('../connection');
 
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
-function addUser (user) {
-  const salt = bcrypt.genSaltSync()
-  const hash = bcrypt.hashSync(user.password, salt)
+async function addUser (user) {
+  const salt = await bcrypt.genSaltSync();
+  const hash = await bcrypt.hashSync(user.password, salt);
   return knex('users')
     .insert({
-      username: user.username,
-      password: hash,
-      email: user.email
-    }).returning('*')
+      name: user.name,
+      email: user.email,
+      password: hash
+    }).returning('*');
 }
 
 module.exports = {
   addUser
-}
+};

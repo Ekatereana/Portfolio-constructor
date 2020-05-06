@@ -20,17 +20,21 @@ function comparePass (userPassword, databasePassword) {
 // saved user id to the session to retrieve whole object later
 // with deserialize-function
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((user, done) => {
+  const id = user[0].id;
   return knex('users').where({ id }).first()
-    .then((user) => { done(null, user); })
+    .then((user) => {
+      done(null, user);
+    })
     .catch((err) => { done(err, null); });
 });
 
-passport.use(new LocalStrategy(options, (username, password, done) => {
-  knex('users').where({ username }).first()
+passport.use(new LocalStrategy(options, (email, password, done) => {
+  console.log('loacal Strategy');
+  knex('users').where({ email }).first()
     .then((user) => {
     // no such user in db
       if (!user) return done(null, false);
