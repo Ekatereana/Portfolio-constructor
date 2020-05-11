@@ -15,24 +15,15 @@
     padding-top: 20px;
 }
 
-#create {
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
 a {
-    font-weight: 400;
+    font-weight: 500;
     color: white;
     transition: 0.5s;
 }
 
-p {
-    margin: 0;
-}
-
 a:link {
     text-decoration: none;
-    font-size: 24pt;
+    font-size: 28pt;
 }
 
 a:hover {

@@ -5,8 +5,6 @@ import './App.css';
 import Header from './Components/Header/Header';
 // eslint-disable-next-line no-unused-vars
 import Footer from './Components/Footer/Footer';
-// eslint-disable-next-line no-unused-vars
-import Test from './Components/Test/Test';
 
 import Container from './Components/Container/Container';
 import './Components/Container/Container.css';

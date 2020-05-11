@@ -10,8 +10,6 @@ const HomePage = ({ user }) => {
           <img src={'./social.svg'}/>
         </div>
         <div className="user-name"> JON DOU</div>
-        <div>
-        </div>
       </div>
     </div>
   );
