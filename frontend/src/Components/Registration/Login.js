@@ -54,6 +54,7 @@ export default class Login extends Component {
                 placeholder="yourname"
                 value={this.state.name}
                 onChange={this.handleChange}
+                className="regist-title"
                 required
               />
 
@@ -66,6 +67,7 @@ export default class Login extends Component {
                 name="password"
                 placeholder="yourPassword"
                 value={this.state.password}
+                className="regist-title"
                 onChange={this.handleChange}
                 required
               />

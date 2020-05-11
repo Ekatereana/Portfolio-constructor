@@ -45,20 +45,26 @@
   bottom: 5em;
 	}
 
-input[type=text]{
+input[class="card-title"]{
   text-align: center;
   border: none;
   border-bottom: 2px solid grey;
 }
 
-input[type=text]:focus{
+input[class="card-title"]:hover{
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid grey;
+}
+
+input[class="card-title"]:focus{
   text-align: center;
   outline: none;
   border: none;
   border-bottom: 2px solid red;
 }
 
-input[type=text]:active{
+input[class="card-title"]:active{
   text-align: center;
   border: none;
   outline: none;

@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 
 .App {
+  top: 3em;
   text-align: center;
-  overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;

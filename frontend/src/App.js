@@ -33,7 +33,6 @@ function App () {
           <Route path="/about" component={About}/>
           <Route path="/main" component={Main}/>
           <Route path="/registration" component={Conteiner}/>
-       
         </div>
       </div>
     </Router>

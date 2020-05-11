@@ -8,7 +8,7 @@ class Conteiner extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      isLogginActive: false
+      isLogginActive: true
     };
   }
 

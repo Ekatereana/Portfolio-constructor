@@ -54,6 +54,7 @@ export default class Registration extends Component {
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <input
+                className="regist-title"
                 type="text"
                 name="name"
                 placeholder="yourname"
@@ -67,6 +68,7 @@ export default class Registration extends Component {
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
+                className="regist-title"
                 type="email"
                 name="email"
                 placeholder="youremail@gmail.com"
@@ -79,6 +81,7 @@ export default class Registration extends Component {
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
+                className="regist-title"
                 type="password"
                 name="password"
                 placeholder="yourPassword"
@@ -91,6 +94,7 @@ export default class Registration extends Component {
             <div className="form-group">
               <label htmlFor="password">Confirm password</label>
               <input
+                className="regist-title"
                 type="password"
                 name="password_confirm"
                 placeholder="confirm yourPassword"
