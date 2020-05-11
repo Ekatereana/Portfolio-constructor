@@ -1,6 +1,9 @@
 import React from 'react';
 import './Canvas.css';
 
+import Draggable from '../Draggable/Draggable';
+import '../Draggable/Draggable.css';
+
 const Canvas = () => {
   return (
     <div className="canvas">
@@ -11,6 +14,7 @@ const Canvas = () => {
         <a className="edit-item">Export as...</a>
       </div>
       <div className="edit-field">
+        <Draggable>Text</Draggable>
       </div>
     </div>
   );
