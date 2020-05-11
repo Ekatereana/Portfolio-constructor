@@ -21,6 +21,10 @@ a {
     transition: 0.5s;
 }
 
+p {
+    margin: 0;
+}
+
 a:link {
     text-decoration: none;
     font-size: 28pt;
