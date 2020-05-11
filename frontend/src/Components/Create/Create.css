@@ -1,0 +1,12 @@
+.edit-table {
+    margin: 0 0 3% 11%;
+    align-self:  center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heading {
+    font-size: 24pt;
+    margin: 10px;
+}

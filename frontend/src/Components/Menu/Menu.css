@@ -16,6 +16,7 @@
 }
 
 a {
+    font-size: 32pt;
     font-weight: 500;
     color: white;
     transition: 0.5s;
@@ -27,7 +28,7 @@ p {
 
 a:link {
     text-decoration: none;
-    font-size: 28pt;
+    font-size: 32pt;
 }
 
 a:hover {

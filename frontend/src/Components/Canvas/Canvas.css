@@ -1,0 +1,39 @@
+.canvas {
+    height: 600px;
+    width: 93%;
+    background: lightsteelblue;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-menu {
+    height: 90%;
+    width: 14%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 2% 0 0 2%;
+    padding: 0 2% 0 2%;
+    background: steelblue;
+    border-radius: 8px;
+}
+
+.edit-item {
+    font-weight: normal;
+    color: white;
+    font-size: 20pt;
+    transition: 0.3s;
+}
+
+.edit-item:hover {
+    color: #314760;
+}
+
+.edit-field {
+    height: 90%;
+    width: 77%;
+    margin: 2% 2% 0 2%;
+    background: white;
+    border-radius: 8px;
+}
