@@ -4,7 +4,7 @@ import '../Registration/register-login.css';
 import Login from '../Registration/Login';
 import Register from '../Registration/Registration';
 
-class Conteiner extends React.Component {
+class Container extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -71,4 +71,4 @@ const RightSide = props => {
   );
 };
 
-export default Conteiner;
+export default Container;

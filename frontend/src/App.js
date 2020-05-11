@@ -8,8 +8,8 @@ import Footer from './Components/Footer/Footer';
 // eslint-disable-next-line no-unused-vars
 import Test from './Components/Test/Test';
 
-import Conteiner from './Components/Conteiner/Conteiner';
-import './Components/Conteiner/Conteiner.css';
+import Container from './Components/Container/Container';
+import './Components/Container/Container.css';
 
 import HomePage from './Components/HomePage/HomePage';
 import './Components/HomePage/HomePage.css';
@@ -28,7 +28,7 @@ function App () {
         <div className="vertical-panel">
           <Route path="/home" component={HomePage}/>
           <Route path="/main" component={Main}/>
-          <Route path="/registration" component={Conteiner}/>
+          <Route path="/registration" component={Container}/>
           <Footer/>
         </div>
       </div>
