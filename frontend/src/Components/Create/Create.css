@@ -1,5 +1,5 @@
 .edit-table {
-    margin: 0 0 3% 11%;
+    margin: 0 0 3% 13%;
     align-self:  center;
     display: flex;
     flex-direction: column;
@@ -8,5 +8,5 @@
 
 .heading {
     font-size: 24pt;
-    margin: 10px;
+    margin: 2%;
 }

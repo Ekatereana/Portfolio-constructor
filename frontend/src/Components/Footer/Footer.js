@@ -24,7 +24,7 @@ const Footer = (props) => {
 
         </a>
       </div>
-      <div className="Authtors">
+      <div className="Authors">
         <div className="Credits">
           <p className="Credit">By :&nbsp;</p>
           <a className={'Credit'} href="https://github.com/Ekatereana/">

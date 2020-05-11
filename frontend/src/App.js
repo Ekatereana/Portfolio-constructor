@@ -15,6 +15,9 @@ import './Components/HomePage/HomePage.css';
 import Create from './Components/Create/Create';
 import './Components/Create/Create.css';
 
+import About from './Components/About/About';
+import './Components/About/About.css';
+
 import Main from './Components/Main/Main';
 import './Components/Main/Main.css';
 
@@ -29,6 +32,7 @@ function App () {
         <div className="vertical-panel">
           <Route path="/home" component={HomePage}/>
           <Route path="/main" component={Main}/>
+          <Route path="/about" component={About}/>
           <Route path="/create-new-portfolio" component={Create}/>
           <Route path="/registration" component={Container}/>
           <Footer/>

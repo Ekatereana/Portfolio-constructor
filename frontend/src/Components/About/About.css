@@ -1,0 +1,21 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 60%;
+    width: 73%;
+    margin: 3% 10% 5% 18.5%;
+    padding-right: 10%;
+    justify-content: space-evenly;
+}
+
+.description {
+    font-size: 20pt;
+    line-height: 30pt;
+}
+
+.accent {
+    font-size: 30pt;
+    font-weight: 800;
+    align-self: center;
+}
