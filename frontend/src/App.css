@@ -12,8 +12,9 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin-top: 3em;
-  overflow-x: hidden;
+  width: 100%;
+  margin-top: 7em;
+  margin-bottom: 10em;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -21,8 +22,6 @@ code {
 }
 
 
-html,
-body,
 #root,
 .App {
   top: 3%;
