@@ -36,7 +36,7 @@ const Footer = (props) => {
           </a>
         </div>
         <div className="Year">
-          <p>. . .</p>
+          <p className="Credit">All rights reserved</p>
           <p className="Credit">2020</p>
         </div>
       </div>
