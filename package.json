@@ -41,7 +41,6 @@
     "chai-http": "^4.3.0",
     "concurrently": "^5.1.0",
     "dotenv": "^8.2.0",
-    "fs": "0.0.1-security",
     "knex": "^0.20.11",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
@@ -54,6 +53,7 @@
     "koa-static": "^5.0.0",
     "passport-local": "^1.0.0",
     "pg": "^7.18.2",
+    "pug": "^2.0.4",
     "yarn": "^1.22.4"
   }
 }

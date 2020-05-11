@@ -20,17 +20,17 @@
     text-transform: uppercase;
 }
 
-a {
+.menu-text {
     font-weight: 400;
     color: white;
     transition: 0.5s;
 }
 
-p {
+.menu-text {
     margin: 0;
 }
 
-a:link {
+.menu-text:link {
     text-decoration: none;
     font-size: 24pt;
 }

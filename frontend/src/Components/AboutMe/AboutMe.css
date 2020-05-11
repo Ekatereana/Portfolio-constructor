@@ -1,0 +1,38 @@
+.about-conteiner {
+	margin-left: 15%;
+	
+	display: flex;
+	flex-direction: column;
+	margin-top: 2em;
+}
+
+.SomeDetails{
+    display: flex;
+	flex-direction: row;
+    align-items: center;
+    margin: 2em;
+}
+
+.card-element {
+	max-width: 30%;
+	margin-right: 2em;
+}
+
+
+.md-form {
+	margin-top: 0.5em;
+	margin-bottom: 0em;
+	margin-left: 2em;
+}
+
+.card-text{
+	margin-bottom: 0.5em;
+}
+
+.add-card-button-group {
+	margin-left: 2em;
+	margin-right: 2em;
+	border-bottom-color:  #f3f3f3;
+	border-bottom-style: groove; 
+	border-radius: 25;
+}

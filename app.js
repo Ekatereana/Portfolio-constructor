@@ -14,18 +14,20 @@ const koaOptions = {
   origin: true,
   credentials: true
 };
+
 // const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'));
 const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'));
 const authRoute = require(path.join(__dirname, BASE_PATH, '/routers/auth'));
 const mainRoute = require(path.join(__dirname, BASE_PATH, '/routers/main'));
 const testRoute = require(path.join(__dirname, BASE_PATH, '/routers/test'));
+const updateRoute = require(path.join(__dirname, BASE_PATH, '/routers/update'));
 
 const app = new Koa();
 
 // sessions settings
 app.keys = [process.env.KEY_A, process.env.KEY_H];
 app.use(koaCors(koaOptions));
-app.use(session({}, app));
+app.use(session({ faildWithErrors: true, session: true }, app));
 app.use(bodyParser());
 
 app.use(passport.initialize());
@@ -36,6 +38,7 @@ app.use(homeRoute.routes())
   .use(mainRoute.routes())
   .use(testRoute.routes())
   .use(authRoute.routes())
+  .use(updateRoute.routes())
 // to serve up compiled React app
   .use(require('koa-static')('./build'));
 // to parse request body

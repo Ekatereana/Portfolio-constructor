@@ -7,17 +7,17 @@ import './Menu.css';
 const Menu = () => {
   return (
     <header className="Menu">
-      <Link to="/">
-        <p>Home</p>
+      <Link className="menu-text" to="/main">
+        <p >Main</p>
       </Link>
       <Link to="/create-new-portfolio">
-        <p id="create">Create</p>
+        <p className="menu-text" id="create">Create</p>
       </Link>
-      <Link to="/about">
-        <p>About</p>
+      <Link className="menu-text" to="/about">
+        <p >About</p>
       </Link>
-      <Link to="/registration">Registration</Link>
-      <Link to="/main">Main Page for site</Link>
+      <Link className="menu-text" to="/registration">Registration</Link>
+      <Link className="menu-text" to="/home">User Home</Link>
     </header>
   );
 };

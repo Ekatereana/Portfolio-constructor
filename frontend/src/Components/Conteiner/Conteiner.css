@@ -61,6 +61,7 @@
     border-radius: 4px;
     position: relative;
     z-index: 99;
+    align-items: center;
     width: 100%;
     height: 100%;
     z-index: 99;
@@ -86,14 +87,14 @@
   }
 
     .right {
-      top: 20px;
+      top: 60px;
       right: 23%;
       align-items: flex-end;
       
     }
 
     .right:hover {
-        right: 17%;
+        right: 19%;
       }
     .left {
       bottom: 20px;

@@ -17,6 +17,9 @@ import './Components/HomePage/HomePage.css';
 import Main from './Components/Main/Main';
 import './Components/Main/Main.css';
 
+import About from './Components/AboutMe/AboutMe';
+import './Components/AboutMe/AboutMe.css';
+
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -27,9 +30,10 @@ function App () {
         <Header />
         <div className="vertical-panel">
           <Route path="/home" component={HomePage}/>
+          <Route path="/about" component={About}/>
           <Route path="/main" component={Main}/>
           <Route path="/registration" component={Conteiner}/>
-          <Footer/>
+       
         </div>
       </div>
     </Router>

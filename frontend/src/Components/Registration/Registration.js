@@ -14,28 +14,31 @@ export default class Registration extends Component {
       registrationErrors: ''
     };
 
-    this.handleSublit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   };
 
   handleChange (event) {
+    console.log('change');
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  handleSubmit (event) {
-    axios.post('http://localhost:4000/auth/register', {
+  async handleSubmit (event) {
+    console.log('handleSubmit');
+
+    axios.post('/auth/register', {
+      name: this.state.name,
       email: this.state.email,
-      password: this.state.pssword
-    },
-    { withCredentials: true }).then(response => {
-      console.log('registration', response);
-    })
-      .cathch(error => {
-        console.log('error ', error);
+      password: this.state.password
+    }, { withCredentials: true, port: 4000 })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-    event.preventDefefault();
   };
 
   render () {
@@ -96,14 +99,13 @@ export default class Registration extends Component {
                 required
               />
             </div>
-
+            <div className="footer">
+              <button type="submit" className="btn">Register</button>
+            </div>
           </form>
 
         </div>
 
-        <div className="footer">
-          <button type="submit" className="btn">Register</button>
-        </div>
       </div>
 
     );

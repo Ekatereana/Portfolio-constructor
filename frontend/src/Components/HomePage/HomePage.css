@@ -1,28 +1,89 @@
-.headerContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.name-space {
-	margin-top: 5%;
+.profile-conteiner {
+	max-width: 60%;
+	margin-left: 25em;
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	border-width: 5px;
-	border-color:  #3498db;
-
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 3em;
+	margin-bottom: 3em;
 }
 
-.image{
-	margin-left: 3%;
+.profile-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.up {
+	z-index: 10;
+}
+
+.card-down {
+	z-index: -10;
+	top: 5em%;
+	position: absolute;
+	display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    font-weight: 400;
+    border: 0;
+    max-width: 60%;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.max { height: 100%;  }
+
+.up {
+	top: 20em;
+	width: 50em;
+	display: flex;
+  bottom: 5em;
+	}
+
+input[type=text]{
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid grey;
+}
+
+input[type=text]:focus{
+  text-align: center;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid red;
+}
+
+input[type=text]:active{
+  text-align: center;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid red;
+}
+
+.editable-title {
+	font-weight: bold;
+	font-size: 20pt;
 }
 
 
-img {
-	width: 50%;
-	height: 50%;
+.profile-photo {
+  display: flex;
+  flex-direction : row;
+  justify-content: space-around;
+  margin-top: 2em;
 }
 
-.user-name {
-	font-weight: 500;
+.avatar {
+  width: 60%;
+  height: 60%;
+  margin-left: 2em;
+}
+
+.md-form {
+  width: 100%;
 }

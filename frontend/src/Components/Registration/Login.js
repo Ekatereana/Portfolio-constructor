@@ -12,7 +12,7 @@ export default class Login extends Component {
       loginErrors: ''
     };
 
-    this.handleSublit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   };
 
@@ -23,17 +23,17 @@ export default class Login extends Component {
   }
 
   handleSubmit (event) {
-    axios.post('http://localhost:4000/auth/login', {
+    console.log('login');
+    axios.post('/auth/login', {
       email: this.state.email,
       password: this.state.pssword
     },
-    { withCredentials: true }).then(response => {
+    { withCredentials: true, port: 4000 }).then(response => {
       console.log('login', response);
     })
-      .cathch(error => {
+      .catch(error => {
         console.log('error ', error);
       });
-    event.preventDefefault();
   };
 
   render () {
@@ -44,7 +44,7 @@ export default class Login extends Component {
           <div className="image">
             <img src={'./login.svg'}/>
           </div>
-          <form className="form" onSubmit={this.handleSubmit}>
+          <form className="form" >
 
             <div className="form-group">
               <label htmlFor="username">Username</label>
@@ -76,7 +76,7 @@ export default class Login extends Component {
         </div>
 
         <div className="footer">
-          <button type="submit" className="btn">Login</button>
+          <button type="submit" onClick={this.handleSubmit} className="btn">Login</button>
         </div>
       </div>
 

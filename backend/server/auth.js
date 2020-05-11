@@ -10,7 +10,7 @@ const knex = require('./db/connection');
 // hashing passwords
 const bcrypt = require('bcryptjs');
 
-const options = {};
+const options = { session: true, failWithError: true };
 
 // password hashing
 function comparePass (userPassword, databasePassword) {
@@ -20,23 +20,29 @@ function comparePass (userPassword, databasePassword) {
 // saved user id to the session to retrieve whole object later
 // with deserialize-function
 passport.serializeUser((user, done) => {
+  console.log('serializeUser');
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
   const id = user[0].id;
+  console.log(id);
   return knex('users').where({ id }).first()
     .then((user) => {
       done(null, user);
     })
-    .catch((err) => { done(err, null); });
+    .catch((err) => {
+      console.log(err);
+      done(err, null);
+    });
 });
 
-passport.use(new LocalStrategy(options, (email, password, done) => {
+passport.use('local', new LocalStrategy(options, (email, password, done) => {
   console.log('loacal Strategy');
   knex('users').where({ email }).first()
     .then((user) => {
     // no such user in db
+      console.log(user);
       if (!user) return done(null, false);
       // does passwd match
       if (!comparePass(password, user.password)) {

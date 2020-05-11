@@ -2,6 +2,7 @@
 
 const Router = require('koa-router');
 const passport = require('koa-passport');
+require('../auth');
 // to create read stream
 // const fs = require('fs')
 const queries = require('../db/queries/users');
@@ -11,33 +12,37 @@ const router = new Router();
 // registration part
 router.get('/auth/register', async (ctx) => {
   ctx.type = 'application/json';
-  // we don`t have react-views yet
-  // ctx.body = fs.createReadStream('./backend/server/views/sth')
 });
 
 router.post('/auth/register', async (ctx) => {
-  console.log('post register');
-  const user = await queries.addUser(ctx.request.body);
+  let user = await queries.getUser(ctx.request.body);
+  if (user) {
+    ctx.body = { error: 'user already exist' };
+  } else {
+    console.log('post register');
+    user = await queries.addUser(ctx.request.body);
+    console.log('after add');
 
-  return passport.authenticate('local', (err, info, status) => {
-    if (err) {
-      console.log(err.stack);
-    } else {
-      if (user) {
-        ctx.redirect('/home');
-        ctx.login(user);
+    return passport.authenticate('local', (err, info, status) => {
+      if (err) {
+        console.log(err.stack);
       } else {
-        ctx.status = 400;
-        ctx.body = { status: 'error' };
+        if (user) {
+          ctx.login(user);
+          ctx.redirect('/home');
+        } else {
+          ctx.status = 400;
+          ctx.body = { status: 'error' };
+        }
       }
-    }
-  })(ctx);
+    })(ctx);
+  }
 });
 
 // login part
 router.get('/auth/login', async (ctx) => {
   console.log('get login');
-  if (!ctx.isAuthentificated()) {
+  if (!ctx.isAuthenticated()) {
     ctx.type = 'application/json';
     ctx.redirect('/auth/register');
   } else {
@@ -46,16 +51,21 @@ router.get('/auth/login', async (ctx) => {
 });
 
 router.post('/auth/login', async (ctx) => {
+  console.log('start login');
+  const user = await queries.getUser(ctx.request.body);
   return passport.authenticate('local', (err, user, info, status) => {
     if (err) {
+      console.log('error with login');
       console.log(err.stack);
       ctx.status = 400;
     } else {
       if (user) {
+        console.log('login me');
         ctx.login(user);
-        ctx.redirect('/auth/status');
+        ctx.redirect('/home');
       } else {
         ctx.status = 400;
+        console.log('error with user auth');
         ctx.body = { status: 'error' };
       }
     }
@@ -74,12 +84,11 @@ router.get('/auth/logout', async (ctx) => {
 
 router.get('/home', async (ctx) => {
   console.log('home');
-  console.log(ctx.body);
-
-  if (ctx.isAuthentificated()) {
-    console.log(ctx.body.data);
-    // there will be some view
-    // ctx.body = fs.createReadStream(...)
+  console.log(ctx.state);
+  if (ctx.isAuthenticated()) {
+    console.log('is auth');
+    console.log(ctx.state);
+    ctx.body = ctx.state.user;
   } else {
     ctx.redirect('/auth/login');
   }
