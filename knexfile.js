@@ -18,7 +18,13 @@ module.exports = {
   },
   development: {
     client: 'pg',
-    connection: process.env.DB_URL,
+    connection: {
+      host: '127.0.0.1',
+      user: 'postgres',
+      port: 5432,
+      password: '2120',
+      database: 'portfolio-const'
+    },
     migrations: {
       directory: path.join(BASE_PATH, 'migrations')
     },

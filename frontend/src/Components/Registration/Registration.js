@@ -57,7 +57,7 @@ export default class Registration extends Component {
                 className="regist-title"
                 type="text"
                 name="name"
-                placeholder="yourname"
+                placeholder="Your name"
                 value={this.state.name}
                 onChange={this.handleChange}
                 required
@@ -71,7 +71,7 @@ export default class Registration extends Component {
                 className="regist-title"
                 type="email"
                 name="email"
-                placeholder="youremail@gmail.com"
+                placeholder="your_email@gmail.com"
                 value={this.state.email}
                 onChange={this.handleChange}
                 required
@@ -84,7 +84,7 @@ export default class Registration extends Component {
                 className="regist-title"
                 type="password"
                 name="password"
-                placeholder="yourPassword"
+                placeholder="Your password"
                 value={this.state.password}
                 onChange={this.handleChange}
                 required
@@ -97,7 +97,7 @@ export default class Registration extends Component {
                 className="regist-title"
                 type="password"
                 name="password_confirm"
-                placeholder="confirm yourPassword"
+                placeholder="Confirm Your password"
                 value={this.state.password_confirm}
                 onChange={this.handleChange}
                 required

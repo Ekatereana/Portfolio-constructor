@@ -73,7 +73,7 @@ router.post('/auth/login', async (ctx) => {
 });
 
 router.get('/auth/logout', async (ctx) => {
-  if (ctx.isAuthentificated()) {
+  if (ctx.isAuthenticated()) {
     ctx.logout();
     ctx.redirect('/auth/login');
   } else {

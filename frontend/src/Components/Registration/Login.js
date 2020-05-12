@@ -24,9 +24,10 @@ export default class Login extends Component {
 
   handleSubmit (event) {
     console.log('login');
-    axios.post('/auth/login', {
+    axios.defaults.baseURL = 'http://localhost:4000/';
+    axios.post('auth/login', {
       email: this.state.email,
-      password: this.state.pssword
+      password: this.state.password
     },
     { withCredentials: true, port: 4000 }).then(response => {
       console.log('login', response);
