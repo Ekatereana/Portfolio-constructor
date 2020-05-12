@@ -20,15 +20,20 @@ export default class Login extends Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+
+    console.log(event.target.name);
   }
 
   handleSubmit (event) {
     console.log('login');
+    console.log(this.state.email);
+    console.log(this.state.password);
+    axios.defaults.port = 4000;
     axios.post('/auth/login', {
       email: this.state.email,
-      password: this.state.pssword
+      password: this.state.password
     },
-    { withCredentials: true, port: 4000 }).then(response => {
+    { port: 4000, withCredentials: true }).then(response => {
       console.log('login', response);
     })
       .catch(error => {
@@ -47,12 +52,12 @@ export default class Login extends Component {
           <form className="form" >
 
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
-                type="text"
-                name="name"
-                placeholder="yourname"
-                value={this.state.name}
+                type="email"
+                name="email"
+                placeholder="email"
+                value={this.state.email}
                 onChange={this.handleChange}
                 className="regist-title"
                 required

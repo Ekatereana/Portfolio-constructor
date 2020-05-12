@@ -15,11 +15,6 @@ const options = {
   passwordField: 'password'
 };
 
-// password hashing
-function comparePass (userPassword, databasePassword) {
-  return bcrypt.compareSync(userPassword, databasePassword);
-}
-
 // saved user id to the session to retrieve whole object later
 // with deserialize-function
 passport.serializeUser((user, done) => {
@@ -41,15 +36,15 @@ passport.deserializeUser((user, done) => {
     });
 });
 
-passport.use('local', new LocalStrategy(options, function (email, password, done) {
+passport.use('local', new LocalStrategy(options, async (email, password, done) => {
   console.log('loacal Strategy');
   knex('users').where({ email }).first()
     .then((user) => {
     // no such user in db
-      console.log(user);
+      console.log('local-str', user);
       if (!user) return done(null, false);
       // does passwd match
-      if (!comparePass(password, user.password)) {
+      if (bcrypt.compareSync(password, user.password)) {
         return done(null, user);
       } else {
       // incorrect passwd

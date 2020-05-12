@@ -51,6 +51,7 @@ router.get('/auth/login', async (ctx) => {
 
 router.post('/auth/login', async (ctx, next) => {
   console.log('start login');
+  console.log(ctx.request.body);
   return passport.authenticate('local', (err, user, info, status) => {
     console.log(user);
     if (err) {
