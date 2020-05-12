@@ -1,8 +1,7 @@
 'use strict';
 
 const Router = require('koa-router');
-const passport = require('koa-passport');
-require('../auth');
+const passport = require('../auth');
 // to create read stream
 // const fs = require('fs')
 const queries = require('../db/queries/users');
@@ -14,7 +13,7 @@ router.get('/auth/register', async (ctx) => {
   ctx.type = 'application/json';
 });
 
-router.post('/auth/register', async (ctx) => {
+router.post('/auth/register', async (ctx, next) => {
   let user = await queries.getUser(ctx.request.body);
   if (user) {
     ctx.body = { error: 'user already exist' };
@@ -35,7 +34,7 @@ router.post('/auth/register', async (ctx) => {
           ctx.body = { status: 'error' };
         }
       }
-    })(ctx);
+    })(ctx, next);
   }
 });
 
@@ -50,10 +49,10 @@ router.get('/auth/login', async (ctx) => {
   }
 });
 
-router.post('/auth/login', async (ctx) => {
+router.post('/auth/login', async (ctx, next) => {
   console.log('start login');
-  const user = await queries.getUser(ctx.request.body);
   return passport.authenticate('local', (err, user, info, status) => {
+    console.log(user);
     if (err) {
       console.log('error with login');
       console.log(err.stack);
@@ -69,7 +68,7 @@ router.post('/auth/login', async (ctx) => {
         ctx.body = { status: 'error' };
       }
     }
-  })(ctx);
+  })(ctx, next);
 });
 
 router.get('/auth/logout', async (ctx) => {

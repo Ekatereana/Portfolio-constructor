@@ -4,7 +4,6 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	margin-top: 3em;
 	margin-bottom: 3em;
 }
 
@@ -20,11 +19,11 @@
 
 .card-down {
 	z-index: -10;
-	top: 5em%;
 	position: absolute;
 	display: flex;
     flex-direction: column;
     min-width: 0;
+    margin-bottom: 5em;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
@@ -39,10 +38,10 @@
 .max { height: 100%;  }
 
 .up {
-	top: 20em;
 	width: 50em;
 	display: flex;
-  bottom: 5em;
+  top: 20em;
+  margin-bottom: 5em;
 	}
 
 input[class="card-title"]{
@@ -92,4 +91,12 @@ input[class="card-title"]:active{
 
 .md-form {
   width: 100%;
+}
+
+.title-row{
+  display:  flex;
+  flex-direction:   row;
+  width: 100%;
+  align-items: center;  
+  justify-content:  center; 
 }
