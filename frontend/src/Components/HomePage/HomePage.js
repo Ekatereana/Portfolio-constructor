@@ -117,10 +117,10 @@ class ButtonDrop extends React.Component {
         <MDBDropdown>
           <MDBDropdownToggle caret color="primary" />
           <MDBDropdownMenu color="primary">
-            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-fb', 'fa-facebook-f pr-1', )}>Facebook</MDBDropdownItem>
-            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-tw', 'fa-linkedin-in pr-1')} >LinkedIn</MDBDropdownItem>
-            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-fb', 'fa-google-plus-g pr-1')}>GitHub</MDBDropdownItem>
-            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-fb', 'fa-instagram pr-1')}>Instagram</MDBDropdownItem>
+            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-fb', 'fa-facebook-f pr-1', 'Facebook')}>Facebook</MDBDropdownItem>
+            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-lincked', 'fa-linkedin-in pr-1', 'LinkedIn')} >LinkedIn</MDBDropdownItem>
+            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-github', 'fa-github pr-1', 'GitHub')}>GitHub</MDBDropdownItem>
+            <MDBDropdownItem onClick={() => this.props.addSosialLable('btn-instagram', 'fa-instagram pr-1', 'Instagram')}>Instagram</MDBDropdownItem>
           </MDBDropdownMenu>
         </MDBDropdown>
       </MDBBtnGroup>
@@ -132,12 +132,32 @@ class SocialButton extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      isEditable: false
+      isEditable: false,
+      url: '#'
     };
+    this.editSocial = this.editSocial.bind(this);
+  }
+
+  editSocial () {
+    console.log('edit social');
+    const { isEditable } = this.state;
+    this.setState({ isEditable: !isEditable });
   }
 
   render () {
-    return <button type="button" className={'btn' + this.props.butonClass}><i className={ 'fab' + this.props.classname}></i>{this.props.socialName}</button>;
+    return (
+      <div className="social-button">
+        <div className="social-item"> <button
+          href={this.state.url}
+          type="button"
+          className={'btn ' + this.props.butonclass + ' no-rm'}>
+          <i className={ 'fab ' + this.props.classname}></i>{this.props.socialName}
+        </button> </div>
+        { this.state.isEditable ? <div className="social-item"><input class="card-title editable-link" type="text" value={this.state.url}/></div> : null }
+        <div className="social-item">  <button type="button" onClick={this.editSocial} className="fas fa-edit btn-edit-social"></button></div>
+      </div>
+
+    );
   }
 }
 
@@ -158,11 +178,10 @@ class UserPhotoCard extends React.Component {
   addSosialLable (btnclass, classname) {
     const array = this.state.arrayOfSocial;
     array.push(<SocialButton
-      buttonClass = {btnclass}
+      butonclass = {btnclass}
       classname = {classname}
       key={ array.length }
       id={ array.length } />);
-    console.log(array);
     this.setState(
       { arrayOfSocial: array }
     );
@@ -192,12 +211,15 @@ class UserPhotoCard extends React.Component {
             <ButtonDrop addSosialLable={this.addSosialLable}/>
 
           </div>
+
+        </div>
+
+        <div className="social-panel">
           {
             arrayOfSocial.map((el) => {
               return el;
             })
           }
-
         </div>
 
         <div className="card-body">

@@ -44,26 +44,26 @@
   margin-bottom: 5em;
 	}
 
-input[class="card-title"]{
+.social-panel input{
   text-align: center;
   border: none;
   border-bottom: 2px solid grey;
 }
 
-input[class="card-title"]:hover{
+.social-panel input:hover{
   text-align: center;
   border: none;
   border-bottom: 2px solid grey;
 }
 
-input[class="card-title"]:focus{
+.social-panel input:focus{
   text-align: center;
   outline: none;
   border: none;
   border-bottom: 2px solid red;
 }
 
-input[class="card-title"]:active{
+.social-panel input:active{
   text-align: center;
   border: none;
   outline: none;
@@ -99,4 +99,58 @@ input[class="card-title"]:active{
   width: 100%;
   align-items: center;  
   justify-content:  center; 
+}
+
+
+.btn-fb {
+   background-color: #204da8;  
+}
+
+.btn-lincked {
+  background-color: #26afe0; 
+}
+
+.btn-instagram{
+  background-color: #eb173e; 
+}
+
+.btn-github{
+  background-color: #332d2e;
+}
+
+.btn{
+  color:  white;
+}
+
+.no-rm{
+  margin-right: 0;
+}
+
+.btn-edit-social {
+  background-color: white;
+  border: none; 
+}
+
+.btn-edit-social:hover, .btn-edit-social:active {
+  outline: none;
+}
+
+.social-panel {
+  display:  flex; 
+  flex-direction:   row; 
+  margin: 2em; 
+
+}
+
+.social-button {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  align-items: center;
+
+}
+
+.social-item {
+  margin-left: 0.5em;
+
 }
