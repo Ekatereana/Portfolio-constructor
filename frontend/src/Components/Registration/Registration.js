@@ -35,6 +35,7 @@ export default class Registration extends Component {
     }, { withCredentials: true, port: 4000 })
       .then(function (response) {
         console.log(response);
+        this.props.handleUser(response.data);
       })
       .catch(function (error) {
         console.log(error);

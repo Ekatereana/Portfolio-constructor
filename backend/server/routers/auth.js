@@ -87,8 +87,7 @@ router.get('/home', async (ctx) => {
   console.log(ctx.state);
   if (ctx.isAuthenticated()) {
     console.log('is auth');
-    console.log(ctx.state);
-    ctx.body = ctx.state.user;
+    ctx.response.body = ctx.state.user;
   } else {
     ctx.redirect('/auth/login');
   }

@@ -26,8 +26,6 @@ export default class Login extends Component {
 
   handleSubmit (event) {
     console.log('login');
-    console.log(this.state.email);
-    console.log(this.state.password);
     axios.defaults.port = 4000;
     axios.post('/auth/login', {
       email: this.state.email,
@@ -35,6 +33,7 @@ export default class Login extends Component {
     },
     { port: 4000, withCredentials: true }).then(response => {
       console.log('login', response);
+      this.props.handleUser(response.data);
     })
       .catch(error => {
         console.log('error ', error);
@@ -56,7 +55,7 @@ export default class Login extends Component {
               <input
                 type="email"
                 name="email"
-                placeholder="email"
+                placeholder="yourEmail"
                 value={this.state.email}
                 onChange={this.handleChange}
                 className="regist-title"

@@ -8,15 +8,17 @@ import Footer from './Components/Footer/Footer';
 // eslint-disable-next-line no-unused-vars
 import Test from './Components/Test/Test';
 
-import Conteiner from './Components/Conteiner/Conteiner';
-import './Components/Conteiner/Conteiner.css';
+import Authorized from './Components/Authorized';
+// import Conteiner from './Components/Conteiner/Conteiner';
+// import './Components/Conteiner/Conteiner.css';
 
-import Main from './Components/Main/Main';
-import './Components/Main/Main.css';
+// import Main from './Components/Main/Main';
+// import './Components/Main/Main.css';
 
-import CreateAll from './Components/Create/Create';
-import './Components/Create/Create.css';
+// import CreateAll from './Components/Create/Create';
+// import './Components/Create/Create.css';
 // eslint-disable-next-line no-unused-vars
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App () {
@@ -25,9 +27,7 @@ function App () {
       <div className="AppMain">
         <Header />
         <div className="vertical-panel">
-          <Route path="/main" component={Main}/>
-          <Route path="/create" component={CreateAll}/>
-          <Route path="/registration" component={Conteiner}/>
+          <Route component={Authorized}/>
         </div>
       </div>
     </Router>
