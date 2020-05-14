@@ -32,12 +32,12 @@ export default class Login extends Component {
       password: this.state.password
     },
     { port: 4000, withCredentials: true }).then(response => {
-      console.log('login', response);
       this.props.handleUser(response.data);
     })
       .catch(error => {
         console.log('error ', error);
       });
+    this.props.history.push('/create');
   };
 
   render () {

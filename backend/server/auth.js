@@ -22,7 +22,8 @@ passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser((ctx, user, done) => {
+  console.log('deser 1');
   console.log(user);
   const id = user.id;
   console.log(id);
@@ -37,14 +38,16 @@ passport.deserializeUser((user, done) => {
 });
 
 passport.use('local', new LocalStrategy(options, async (email, password, done) => {
-  console.log('loacal Strategy');
+  console.log('local Strategy');
+  console.log(email);
   knex('users').where({ email }).first()
     .then((user) => {
     // no such user in db
       console.log('local-str', user);
       if (!user) return done(null, false);
       // does passwd match
-      if (bcrypt.compareSync(password, user.password)) {
+      // bcrypt.compareSync(password, user.password)
+      if (password === user.password) {
         return done(null, user);
       } else {
       // incorrect passwd

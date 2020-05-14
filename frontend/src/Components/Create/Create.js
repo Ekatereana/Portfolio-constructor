@@ -24,10 +24,11 @@ class CreateAll extends React.Component {
   }
 
   render () {
+    const user = this.props.user;
     return (
       <div>
         <Header isCustom={this.state.isCustom} />
-        <Route path="/create/home" component={HomePage}/>
+        <Route path="/create/home" render={props => <HomePage handleUser={this.props.handleUser} user = {user}/>}/>
         <Route path="/create/about" component={About}/>
 
       </div>

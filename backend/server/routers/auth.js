@@ -14,7 +14,9 @@ router.get('/auth/register', async (ctx) => {
 });
 
 router.post('/auth/register', async (ctx, next) => {
+  console.log('post register');
   let user = await queries.getUser(ctx.request.body);
+  console.log(user);
   if (user) {
     ctx.body = { error: 'user already exist' };
   } else {
@@ -52,6 +54,7 @@ router.get('/auth/login', async (ctx) => {
 router.post('/auth/login', async (ctx, next) => {
   console.log('start login');
   console.log(ctx.request.body);
+  ctx.logout();
   return passport.authenticate('local', (err, user, info, status) => {
     console.log(user);
     if (err) {
@@ -73,7 +76,9 @@ router.post('/auth/login', async (ctx, next) => {
 });
 
 router.get('/auth/logout', async (ctx) => {
-  if (ctx.isAuthentificated()) {
+  console.log('try');
+  if (ctx.isAuthenticated()) {
+    console.log('logaut');
     ctx.logout();
     ctx.redirect('/auth/login');
   } else {

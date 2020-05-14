@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Conteiner from './Conteiner/Conteiner';
 import './Conteiner/Conteiner.css';
@@ -8,42 +8,56 @@ import './Conteiner/Conteiner.css';
 import Main from './Main/Main';
 import './Main/Main.css';
 
+import Header from './Header/Header';
+
 import CreateAll from './Create/Create';
 import './Create/Create.css';
 
-const useStateWithLocalStorage = localStorageKey => {
+import { createBrowserHistory } from "history";
+
+const useStateWithsessionStorage = SessionStorageKey => {
+  if (sessionStorage.getItem(SessionStorageKey) == null) {
+    sessionStorage.setItem(SessionStorageKey, null);
+  }
   const [value, setValue] = React.useState(
-    localStorage.getItem(localStorageKey) || ''
+    sessionStorage.getItem(SessionStorageKey) || ''
   );
 
   React.useEffect(() => {
-    localStorage.setItem(localStorageKey, value);
+    sessionStorage.setItem(SessionStorageKey, value);
   }, [value]);
   return [value, setValue];
 };
 
 function Authorized () {
-  const [value, setValue] = useStateWithLocalStorage(
-    'user'
-  );
+  let [value, setValue] = useStateWithsessionStorage('user');
 
   const handleUser = (user) => {
-    localStorage.setItem('user', user);
-    setValue(user);
+    console.log('handle');
+    setValue(JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
   };
+  const history = createBrowserHistory();
+  value = JSON.parse(value);
   let content;
   const isAuthorized = value;
   if (isAuthorized) {
     content =
      <Router>
-       <Route path="/create" render={props => <CreateAll user={value} /> }/>
-       <Route path="/main" component={ Main }/>
+       <Header isAuthorized={isAuthorized} />
+       <div className="vertical-panel">
+         <Route path="/create" render={props => <CreateAll handleUser={handleUser} user={value} /> }/>
+         <Route path="/main" component={ Main }/>
+       </div>
      </Router>;
   } else {
     content =
      <Router>
-       <Route path="/(create|registration)/" render={props => <Conteiner handleUser={handleUser} /> }/>
-       <Route path="/main" component={ Main }/>
+       <Header isAuthorized={isAuthorized}/>
+       <div className="vertical-panel">
+         <Route path="/registration" render={props => <Conteiner handleUser={handleUser} history={history} /> }/>
+         <Route path="/main" component={ Main }/>
+       </div>
      </Router>;
   }
   return content;

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './HomePage.css';
 
+import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 
+import axios from 'axios';
 import { MDBBtn, MDBDropdown, MDBDropdownToggle,  MDBBtnGroup, MDBDropdownMenu, MDBDropdownItem } from 'mdbreact';
 
 // import { useLocation } from 'react-router-dom';
@@ -11,23 +13,73 @@ class HomePage extends React.Component {
   constructor (props) {
     super(props);
     console.log('start');
+    const { user } = this.props;
 
     this.state = {
-      arrayOfCards: [],
-      user: {
-        name: 'Ekate',
-        email: 'ekatereana@gmail.com',
-        password: '1234555',
-        homePage: null
-      }
+      user: user
     };
+    console.log('start state', user);
+    this.handleSublmitAll = this.handleSublmitAll.bind(this);
+    this.updateState = this.updateState.bind(this);
   };
 
+  updateState (className, newState) {
+    const { user } = this.state;
+    switch (className) {
+      case 'userPhotoCard':
+        console.log('user-photo');
+        console.log('new home', newState);
+        user.home.userPhotoCard = newState;
+        break;
+    }
+    this.setState(user);
+  }
+
+  async handleSublmitAll (home) {
+    console.log('handleSubmit');
+    const { user } = this.state;
+    user.home = home;
+    this.setState(user);
+    console.log('udate user ', user);
+
+    axios.post('/update', {
+      user: user
+    },
+    { port: 4000, withCredentials: true }).then(response => {
+      console.log('sucess', response);
+      this.props.handleUser(response.data);
+      console.log(JSON.parse(sessionStorage.getItem('user')));
+    })
+      .catch(error => {
+        console.log('error ', error);
+      });
+    // window.location.reload();
+    console.log('udate user home', this.state.user.home);
+  }
+
   render () {
+    console.log('home', this.state.user.home);
+    let { home } = this.state.user;
+    if (!home) {
+      home = {
+        userPhotoCard: {
+          img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
+          title: 'My adventure',
+          quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
+          arrayOfSocial: []
+        },
+        basicProfile: {
+          img: 'https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg',
+          title: 'My adventure'
+
+        }
+      };
+    };
     return (
       <div className="profile-conteiner">
-        <UserPhotoCard user={this.state.user} />
-        <BasicUserProfile />
+        <button type="button" onClick={() => this.handleSublmitAll(home)} className="btn btn-outline-success waves-effect">SAVE CHANGES</button>
+        <UserPhotoCard update = {this.updateState} id='UserPhotoCard' currentState={ home.userPhotoCard } />
+        <BasicUserProfile id='BasicUserProfile' currentState= { home.basicProfile }/>
       </div>
 
     );
@@ -38,8 +90,8 @@ class BasicUserProfile extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      img: 'https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg',
-      title: 'My adventure'
+      img: this.props.currentState.img,
+      title: this.props.currentState.title
 
     };
   }
@@ -131,29 +183,43 @@ class ButtonDrop extends React.Component {
 class SocialButton extends React.Component {
   constructor (props) {
     super(props);
+    const { url } = this.props;
     this.state = {
       isEditable: false,
-      url: '#'
+      url: url
     };
     this.editSocial = this.editSocial.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange (event) {
+    console.log('change');
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
   editSocial () {
     console.log('edit social');
     const { isEditable } = this.state;
+    const save = () => this.props.save(this, this.state.url);
+    if (isEditable) {
+      save();
+    }
     this.setState({ isEditable: !isEditable });
   }
 
   render () {
     return (
       <div className="social-button">
+        <div className="socia-item">  <button onClick={ () => this.props.delete(this)} className="far fa-trash-alt btn-edit-social"></button> </div>
         <div className="social-item"> <button
-          href={this.state.url}
+          action={this.state.url}
           type="button"
           className={'btn ' + this.props.butonclass + ' no-rm'}>
           <i className={ 'fab ' + this.props.classname}></i>{this.props.socialName}
         </button> </div>
-        { this.state.isEditable ? <div className="social-item"><input class="card-title editable-link" type="text" value={this.state.url}/></div> : null }
+        { this.state.isEditable ? <div className="social-item"><input name="url" onChange={this.handleChange} className="card-title editable-link" type="text" value={this.state.url}/></div> : null }
         <div className="social-item">  <button type="button" onClick={this.editSocial} className="fas fa-edit btn-edit-social"></button></div>
       </div>
 
@@ -164,27 +230,89 @@ class SocialButton extends React.Component {
 class UserPhotoCard extends React.Component {
   constructor (props) {
     super(props);
-    console.log('start');
-
+    const currentS = this.props.currentState;
     this.state = {
-      img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
-      title: 'My adventure',
-      arrayOfSocial: []
+      img: currentS.img,
+      title: currentS.title,
+      quotes: currentS.quotes,
+      arrayOfSocial: currentS.arrayOfSocial,
+      isShown: false
     };
 
+    console.log('arr', currentS.arrayOfSocial);
     this.addSosialLable = this.addSosialLable.bind(this);
+    this.saveSocialLable = this.saveSocialLable.bind(this);
+    this.deleteSocial = this.deleteSocial.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.saveTextInput = this.saveTextInput.bind(this);
+    this.upload = this.upload.bind(this);
   };
 
+  upload () {
+    console.log('isShown');
+    const { isShown } = this.state;
+    this.setState({
+      isShown: !isShown
+    });
+    this.nameInput.focus();
+  }
+
   addSosialLable (btnclass, classname) {
-    const array = this.state.arrayOfSocial;
-    array.push(<SocialButton
+    const { arrayOfSocial } = this.state;
+    console.log('add social');
+    arrayOfSocial.push(<SocialButton
+      delete = {this.deleteSocial}
+      save = {this.saveSocialLable}
+      url = "#"
       butonclass = {btnclass}
       classname = {classname}
-      key={ array.length }
-      id={ array.length } />);
+      key={ arrayOfSocial.length }
+      id={ arrayOfSocial.length } />);
+    console.log('add social');
     this.setState(
-      { arrayOfSocial: array }
+      { arrayOfSocial: arrayOfSocial }
     );
+    this.props.update('userPhotoCard', this.state);
+    console.log('add social', this.state.arrayOfSocial);
+  }
+
+  saveTextInput (event, input, element) {
+    if (event.key === 'Enter') {
+      const newState = this.state;
+      newState[element] = input;
+      this.setState(newState);
+      this.props.update('userPhotoCard', this.state);
+    };
+  }
+
+  saveSocialLable (lable, url) {
+    console.log('save social-lable', url);
+    const newState = this.state;
+    console.log(lable.props.id);
+    this.deleteSocial(lable);
+    console.log('replace', newState.arrayOfSocial);
+    newState.arrayOfSocial.push(<SocialButton delete = {this.deleteSocial}
+      save = {this.saveSocialLable} url = {url} butonclass = {lable.props.butonclass} classname = {lable.props.classname} key={lable.props.id} id={lable.props.id}/>);
+    this.setState(newState);
+    this.props.update('userPhotoCard', this.state);
+  };
+
+  deleteSocial (lable) {
+    const newState = this.state;
+    const index = newState.arrayOfSocial.findIndex(a => a.props.id === lable.props.id);
+    console.log(index);
+    if (index === -1) return;
+    newState.arrayOfSocial.splice(index, 1);
+    console.log(this.state);
+    this.setState(newState);
+    this.props.update('userPhotoCard', this.state);
+  }
+
+  handleChange (event) {
+    console.log('change');
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
   render () {
@@ -202,7 +330,8 @@ class UserPhotoCard extends React.Component {
             <div className="file-field">
               <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
                 <span>Choose Photo</span>
-                <input id='selectImage' hidden type="file" multiple/>
+                {console.log(this.state.isShown)}
+                { this.state.isShown ? <input ref={(input) => { this.nameInput = input;}} id='selectImage' hidden type="file" multiple/> : null}
               </div>
               <div className="file-path-wrapper">
                 <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
@@ -217,15 +346,22 @@ class UserPhotoCard extends React.Component {
         <div className="social-panel">
           {
             arrayOfSocial.map((el) => {
-              return el;
+              return <SocialButton
+                delete = {this.deleteSocial}
+                save = {this.saveSocialLable}
+                url = {el.props.url}
+                butonclass = { el.props.butonclass}
+                classname = { el.props.classname}
+                key={ el.props.id }
+                id={ el.props.id } />;
             })
           }
         </div>
 
         <div className="card-body">
-          <Editable styleName="editable-title card-title" text={this.state.title} type="input" value={this.state.title}>
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName="editable-title card-title" text={this.state.title} type="input" value={this.state.title}>
             <input
-              name="name"
+              name="title"
               value={this.state.title}
               onChange={this.handleChange}
               type="text"
@@ -235,8 +371,16 @@ class UserPhotoCard extends React.Component {
 
           <hr/>
 
-          <p><i className="fas fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci
-          </p>
+          <i className="fas fa-quote-left"></i>
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes')} styleName="editable-text card-text" text={this.state.quotes} type="input" value={this.state.quotes}>
+            <input
+              name="quotes"
+              value={this.state.quotes}
+              onChange={this.handleChange}
+              type="text"
+              id="inputPrefilledEx"
+              className="form-control card-title"/>
+          </Editable>
         </div>
       </div>
 

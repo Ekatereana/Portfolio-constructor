@@ -39,10 +39,10 @@ class Conteiner extends React.Component {
         <div className="login">
           <div className="container" ref={ref => (this.container = ref)}>
             {isLogginActive && (
-              <Login handleUser={this.props.handleUser} containerRef={ref => (this.current = ref)} />
+              <Login history = {this.props.history} handleUser={this.props.handleUser} containerRef={ref => (this.current = ref)} />
             )}
             {!isLogginActive && (
-              <Register handleUser={this.props.handleUser} containerRef={ref => (this.current = ref)} />
+              <Register history = {this.props.history} handleUser={this.props.handleUser} containerRef={ref => (this.current = ref)} />
             )}
           </div>
           <RightSide

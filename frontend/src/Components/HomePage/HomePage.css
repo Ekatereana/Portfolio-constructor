@@ -135,6 +135,7 @@
 .social-panel {
   display:  flex; 
   flex-direction:   row; 
+  max-width: 60%;
   margin: 2em; 
 
 }

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 // eslint-disable-next-line no-unused-vars
-import Header from './Components/Header/Header';
+
 // eslint-disable-next-line no-unused-vars
 import Footer from './Components/Footer/Footer';
 // eslint-disable-next-line no-unused-vars
@@ -25,10 +25,7 @@ function App () {
   return (
     <Router>
       <div className="AppMain">
-        <Header />
-        <div className="vertical-panel">
-          <Route component={Authorized}/>
-        </div>
+        <Route component={Authorized}/>
       </div>
     </Router>
   );

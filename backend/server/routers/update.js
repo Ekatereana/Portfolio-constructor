@@ -7,12 +7,13 @@ const queries = require('../db/queries/users');
 
 const router = new Router();
 
-router.post('/users/update/', async (ctx) => {
-  console.log('users update');
-  const user = await queries.updateUser(ctx.request.body);
+router.post('/update', async (ctx) => {
+  console.log('will be uodate', ctx.request.body);
+  const user = await queries.updateUser(ctx.request.body.user);
   console.log(user);
   if (user) {
     ctx.body = ctx.state.user;
+    console.log('updated', ctx.body);
   } else {
     ctx.stus = 400;
     ctx.body = 'Internal Error';
