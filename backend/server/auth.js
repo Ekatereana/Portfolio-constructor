@@ -18,17 +18,19 @@ const options = {
 // saved user id to the session to retrieve whole object later
 // with deserialize-function
 passport.serializeUser((user, done) => {
-  console.log('serializeUser');
+  console.log('====serializeUser===');
+  console.log('user in serialize: ', user);
   done(null, user);
 });
 
 passport.deserializeUser((ctx, user, done) => {
-  console.log('deser 1');
-  console.log(user);
-  const id = user.id;
-  console.log(id);
+  console.log('===deserializeUser===');
+  console.log('user: ', user);
+  const id = Array.isArray(user) ? user[0].id : user.id;
+  console.log('user id: ', id);
   return knex('users').where({ id }).first()
     .then((user) => {
+      console.log('user inside then in case of correct: ', user);
       done(null, user);
     })
     .catch((err) => {
@@ -38,7 +40,7 @@ passport.deserializeUser((ctx, user, done) => {
 });
 
 passport.use('local', new LocalStrategy(options, async (email, password, done) => {
-  console.log('local Strategy');
+  console.log('===Local Strategy===');
   console.log(email);
   knex('users').where({ email }).first()
     .then((user) => {
@@ -46,11 +48,11 @@ passport.use('local', new LocalStrategy(options, async (email, password, done) =
       console.log('local-str', user);
       if (!user) return done(null, false);
       // does passwd match
-      // bcrypt.compareSync(password, user.password)
-      if (password === user.password) {
+      //
+      if (bcrypt.compareSync(password, user.password)) {
         return done(null, user);
       } else {
-      // incorrect passwd
+      // incorrect password
         return done(null, false);
       }
     })

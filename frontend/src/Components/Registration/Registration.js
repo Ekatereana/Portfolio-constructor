@@ -25,15 +25,15 @@ export default class Registration extends Component {
     });
   }
 
-  async handleSubmit (event) {
+  handleSubmit (event) {
     console.log('handleSubmit');
-
     axios.post('/auth/register', {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password
     }, { withCredentials: true, port: 4000 })
       .then(function (response) {
+        console.log('added user in Registration');
         console.log(response);
         this.props.handleUser(response.data);
       })

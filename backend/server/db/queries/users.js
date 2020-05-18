@@ -5,7 +5,8 @@ const knex = require('../connection');
 const bcrypt = require('bcryptjs');
 
 async function addUser (user) {
-  console.log(user.name);
+  console.log('addUser');
+  console.log('user: ', user);
   const salt = await bcrypt.genSaltSync();
   const hash = await bcrypt.hashSync(user.password, salt);
   return knex('users')
@@ -18,8 +19,9 @@ async function addUser (user) {
 
 async function getUser (user) {
   const email = user.email;
-  console.log(user);
-  console.log(email);
+  console.log('Get user');
+  console.log('user: ', user);
+  console.log('email: ', email);
   return knex('users').where({ email }).first();
 }
 

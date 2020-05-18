@@ -54,9 +54,9 @@ router.get('/auth/login', async (ctx) => {
 router.post('/auth/login', async (ctx, next) => {
   console.log('start login');
   console.log(ctx.request.body);
-  ctx.logout();
+  // ctx.logout();
   return passport.authenticate('local', (err, user, info, status) => {
-    console.log(user);
+    console.log('inside post login user: ', user);
     if (err) {
       console.log('error with login');
       console.log(err.stack);
