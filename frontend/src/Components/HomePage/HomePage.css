@@ -1,12 +1,18 @@
 .profile-conteiner {
 	max-width: 60%;
-	margin-left: 25em;
+	margin-left: 20em;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	margin-bottom: 3em;
 }
 
+
+.profile-conteiner button {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 1em;
+}
 .profile-card {
 	display: flex;
 	flex-direction: column;
@@ -31,7 +37,7 @@
     border-radius: .25rem;
     font-weight: 400;
     border: 0;
-    max-width: 60%;
+    max-width: 60em;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
@@ -44,31 +50,7 @@
   margin-bottom: 5em;
 	}
 
-.social-panel input{
-  text-align: center;
-  border: none;
-  border-bottom: 2px solid grey;
-}
 
-.social-panel input:hover{
-  text-align: center;
-  border: none;
-  border-bottom: 2px solid grey;
-}
-
-.social-panel input:focus{
-  text-align: center;
-  outline: none;
-  border: none;
-  border-bottom: 2px solid red;
-}
-
-.social-panel input:active{
-  text-align: center;
-  border: none;
-  outline: none;
-  border-bottom: 2px solid red;
-}
 
 .editable-title {
 	font-weight: bold;

@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import './App.css';
 // eslint-disable-next-line no-unused-vars
 
@@ -22,6 +23,7 @@ import Authorized from './Components/Authorized';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App () {
+  // <Redirect to='/main/' />
   return (
     <Router>
       <div className="AppMain">

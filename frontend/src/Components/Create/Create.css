@@ -1,0 +1,18 @@
+.create-filler {
+	max-width: 75%;
+	margin-left: 15em;
+}
+
+.lav {
+   background-color: #593780;
+   text-color: white;
+}
+
+.lav:hover {
+	background-color: #c3b9e3;
+}
+
+.view {
+	width: 70em;
+	margin-left: 5em;
+}

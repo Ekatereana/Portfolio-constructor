@@ -29,6 +29,20 @@ class HomePage extends React.Component {
       case 'userPhotoCard':
         console.log('user-photo');
         console.log('new home', newState);
+        if (!user.home) {
+          user.home = {
+            userPhotoCard: {
+              img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
+              title: 'My adventure',
+              quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
+              arrayOfSocial: []
+            },
+            basicProfile: {
+              img: 'https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg',
+              title: 'My adventure'
+            }
+          };
+        };
         user.home.userPhotoCard = newState;
         break;
     }
@@ -115,7 +129,7 @@ class BasicUserProfile extends React.Component {
 
           <div className="card-down card-cascade wider reverse">
 
-            <div className="view view-cascade overlay">
+            <div className="view-cascade">
               <img className="card-img-top max" src={this.state.img}
                 alt="Card image cap"/>
               <a href="#!">
@@ -331,7 +345,7 @@ class UserPhotoCard extends React.Component {
               <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
                 <span>Choose Photo</span>
                 {console.log(this.state.isShown)}
-                { this.state.isShown ? <input ref={(input) => { this.nameInput = input;}} id='selectImage' hidden type="file" multiple/> : null}
+                { this.state.isShown ? <input ref={(input) => { this.nameInput = input; } } id='selectImage' hidden type="file" multiple/> : null}
               </div>
               <div className="file-path-wrapper">
                 <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
@@ -358,15 +372,14 @@ class UserPhotoCard extends React.Component {
           }
         </div>
 
-        <div className="card-body">
+        <div className="card-body editable">
           <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName="editable-title card-title" text={this.state.title} type="input" value={this.state.title}>
             <input
               name="title"
               value={this.state.title}
               onChange={this.handleChange}
               type="text"
-              id="inputPrefilledEx"
-              className="form-control card-title"/>
+              id="inputPrefilledEx"/>
           </Editable>
 
           <hr/>

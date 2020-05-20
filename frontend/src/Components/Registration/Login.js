@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -9,7 +10,8 @@ export default class Login extends Component {
     this.state = {
       name: '',
       password: '',
-      loginErrors: ''
+      loginErrors: '',
+      isRedirect: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,10 +39,15 @@ export default class Login extends Component {
       .catch(error => {
         console.log('error ', error);
       });
-    this.props.history.push('/create');
+    this.setState({
+      isRedirect: true
+    });
   };
 
   render () {
+    if (this.state.isRedirect) {
+      return <Redirect to='/create' />;
+    }
     return (
       <div className="base-container" ref={this.props.containerRef}>
         <div className="header">Login</div>

@@ -13,8 +13,6 @@ import Header from './Header/Header';
 import CreateAll from './Create/Create';
 import './Create/Create.css';
 
-import { createBrowserHistory } from "history";
-
 const useStateWithsessionStorage = SessionStorageKey => {
   if (sessionStorage.getItem(SessionStorageKey) == null) {
     sessionStorage.setItem(SessionStorageKey, null);
@@ -37,7 +35,6 @@ function Authorized () {
     setValue(JSON.stringify(user));
     sessionStorage.setItem('user', JSON.stringify(user));
   };
-  const history = createBrowserHistory();
   value = JSON.parse(value);
   let content;
   const isAuthorized = value;
@@ -55,8 +52,7 @@ function Authorized () {
      <Router>
        <Header isAuthorized={isAuthorized}/>
        <div className="vertical-panel">
-         <Route path="/registration" render={props => <Conteiner handleUser={handleUser} history={history} /> }/>
-         <Route path="/main" component={ Main }/>
+         <Route path="/registration" render={props => <Conteiner handleUser={handleUser} /> }/>
        </div>
      </Router>;
   }

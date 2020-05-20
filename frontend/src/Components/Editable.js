@@ -1,3 +1,4 @@
+import './Editable.css';
 import React, { useState, useEffect } from 'react';
 const Editable = ({
   text,
@@ -40,7 +41,7 @@ const Editable = ({
         </div>
       ) : (
         <div
-          className={`rounded py-2 px-3 text-gray-700 leading-tight whitespace-pre-wrap hover:shadow-outline editable-${type}`}
+          className={`editable-${type}`}
           onClick={() => setEditing(true)}
         >
           <span className={`${text ? 'text-black ' : 'text-gray-500'}` + `${styleName}`}>
