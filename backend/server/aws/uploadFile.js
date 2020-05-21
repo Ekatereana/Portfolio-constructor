@@ -23,7 +23,7 @@ const uploadFile = async file => {
         ACL: 'public-read',
         Bucket: 'portfolio-const-bucket',
         Body: stream,
-        Key: file.name,
+        Key: file.name.concat(Date.now().toString()),
         ContentType: file.type
       },
       function (err, data) {

@@ -337,7 +337,7 @@ class UserPhotoCard extends React.Component {
       { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
       console.log('Processed results');
       console.log('frontend result: ', res);
-      this.setState({ avatar: res.data.url });
+      console.log('the link to the image: ', res.data.url);
     });
   }
 
