@@ -1,20 +1,15 @@
 'use strict';
 
 const Router = require('koa-router');
-const uploadFile = require('./../uploadFile');
+const { uploadFile } = require('../aws/uploadFile');
 
 const router = new Router();
 
-router.post('/upload/image', async ctx => {
-  console.log('uploading image');
-  console.log(ctx.request.data);
-  const file = ctx.request.data;
-  console.log(file);
-  const { key, url } = await uploadFile.uploadFile({
-    fileName: file.name,
-    filePath: file.path,
-    fileType: file.type
-  });
+router.post('/upload/image', async (ctx, next) => {
+  console.log('===router /upload/image===');
+  const image = ctx.request.files.image;
+  console.log('image: ', image);
+  const { key, url } = await uploadFile(image);
   ctx.body = { key, url };
 });
 
