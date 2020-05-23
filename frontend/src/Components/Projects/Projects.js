@@ -6,6 +6,8 @@ import Editable from '../Editable';
 
 import axios from 'axios';
 import { MDBBtn, MDBDropdown, MDBDropdownToggle,  MDBBtnGroup, MDBDropdownMenu, MDBDropdownItem } from 'mdbreact';
+import RowComponent from './RowComponent';
+
 class Projects extends Component {
   constructor (props) {
     super(props);
@@ -22,7 +24,6 @@ class Projects extends Component {
 
   updateState (className, newState) {
     const { user } = this.state;
-    console.log('current state', user.portfolio);
     console.log('new state', newState);
     switch (className) {
       case 'best':
@@ -103,12 +104,30 @@ class Best extends Component {
     this.addBestCard = this.addBestCard.bind(this);
     this.deleteBestCard = this.deleteBestCard.bind(this);
     this.saveTextInput = this.saveTextInput.bind(this);
+    this.updateRowComponent = this.updateRowComponent.bind(this);
+  }
+
+  updateRowComponent (component) {
+    const newState = this.state;
+    console.log(component.props.id);
+    this.deleteBestCard(component);
+
+    newState.arrayOfCards.push(<RowComponent
+      content={component.state}
+      delete = {this.deleteBestCard}
+      update = {this.updateRowComponent}
+      key={component.props.id}
+      id={component.props.id}/>);
+    this.setState(newState);
+    this.props.update('best', this.state);
   }
 
   addBestCard () {
     const { arrayOfCards } = this.state;
     console.log('add card');
     arrayOfCards.push(<RowComponent
+      content={null}
+      update={this.updateRowComponent}
       key={ arrayOfCards.length }
       id={ arrayOfCards.length }
       delete={this.deleteBestCard} />);
@@ -155,16 +174,16 @@ class Best extends Component {
     const newState = this.state;
     switch (event.currentTarget.getAttribute('value')) {
       case 'text-center':
-        newState.titlePosition = 'text-left';
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
         break;
       case 'text-left':
-        newState.titlePosition = 'text-right';
+        newState[event.currentTarget.getAttribute('name')] = 'text-right';
         break;
       case 'text-right':
-        newState.titlePosition = 'text-center';
+        newState[event.currentTarget.getAttribute('name')] = 'text-center';
         break;
       case null:
-        newState.titlePosition = 'text-left';
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
         break;
     }
     this.setState(newState);
@@ -251,7 +270,9 @@ class Best extends Component {
             {
               arrayOfCards.map((el) => {
                 return <RowComponent
-                  delete={el.props.delete}
+                  content={el.props.content}
+                  update={this.updateRowComponent}
+                  delete={this.deleteBestCard}
                   id = {el.props.id}
                   key = {el.props.key}/>;
               })
@@ -283,34 +304,5 @@ class ButtonDrop extends React.Component {
   }
 };
 
-class RowComponent extends Component {
-  render () {
-    return (
-      <div className="col-md-6 mb-4">
-
-        <div className="card compact">
-          <div className="view overlay no-m">
-            <img className="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(147).jpg" alt="Card image cap"/>
-          </div>
-          <div className="right-side-arr " onClick={console.log('hey')}>
-            <p class="hint-text"> Learn more</p>
-            <i className="fas fa-chevron-circle-right arrow"></i>
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Read more about my project</h4>
-            <hr/>
-            <p className="card-text text-muted font-weight-light">
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-            Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <hr/>
-            <button type="button" onClick={() => { this.props.delete(this); }} class="btn btn-danger">DELETE</button>
-          </div>
-        </div>
-
-      </div>
-    );
-  }
-}
-
 export default Projects;
-export { Best, RowComponent };
+export { Best };

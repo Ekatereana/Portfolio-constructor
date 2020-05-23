@@ -21,6 +21,9 @@ code {
     monospace;
 }
 
+.vertical-panel {
+  margin-top: 0.5em;
+}
 
 #root,
 .App {

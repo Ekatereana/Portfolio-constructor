@@ -62,7 +62,7 @@ export default class Registration extends Component {
           </div>
           <form className="form" onSubmit={this.handleSubmit}>
 
-            <div className="form-group">
+            <div className="form-group regist-title">
               <label htmlFor="username">Username</label>
               <input
                 className="regist-title"
@@ -76,10 +76,10 @@ export default class Registration extends Component {
 
             </div>
 
-            <div className="form-group">
+            <div className="form-group regist-title">
               <label htmlFor="email">Email</label>
               <input
-                className="regist-title"
+                className="regist-title "
                 type="email"
                 name="email"
                 placeholder="youremail@gmail.com"
@@ -89,7 +89,7 @@ export default class Registration extends Component {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group regist-title">
               <label htmlFor="password">Password</label>
               <input
                 className="regist-title"
@@ -102,7 +102,7 @@ export default class Registration extends Component {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group regist-title">
               <label htmlFor="password">Confirm password</label>
               <input
                 className="regist-title"
