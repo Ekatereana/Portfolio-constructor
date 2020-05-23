@@ -2,7 +2,7 @@
 
 const Koa = require('koa');
 const path = require('path');
-const bodyParser = require('koa-bodyparser');
+const koaBody = require('koa-body');
 const session = require('koa-session');
 const Logger = require('koa-logger');
 const passport = require('koa-passport');
@@ -21,6 +21,7 @@ const authRoute = require(path.join(__dirname, BASE_PATH, '/routers/auth'));
 const mainRoute = require(path.join(__dirname, BASE_PATH, '/routers/main'));
 const testRoute = require(path.join(__dirname, BASE_PATH, '/routers/test'));
 const updateRoute = require(path.join(__dirname, BASE_PATH, '/routers/update'));
+const uploadRoute = require(path.join(__dirname, BASE_PATH, '/routers/upload'));
 
 const app = new Koa();
 
@@ -28,7 +29,7 @@ const app = new Koa();
 app.keys = [process.env.KEY_A, process.env.KEY_H];
 app.use(koaCors(koaOptions));
 app.use(session({ faildWithErrors: true, session: true }, app));
-app.use(bodyParser());
+app.use(koaBody({ multipart: true }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -38,7 +39,7 @@ app.use(homeRoute.routes())
   .use(mainRoute.routes())
   .use(testRoute.routes())
   .use(authRoute.routes())
-  .use(updateRoute.routes())
+  .use(uploadRoute.routes())
 // to serve up compiled React app
   .use(require('koa-static')('./build'));
 // to parse request body

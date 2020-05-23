@@ -322,6 +322,25 @@ class UserPhotoCard extends React.Component {
     this.props.update('userPhotoCard', this.state);
   }
 
+  uploadFile ({ target: { files } }) {
+    console.log('===HomePage file upload===');
+    console.log('files: ', files);
+    const file = files[0];
+    console.log('file: ', file);
+
+    const data = new FormData();
+    data.append('image', file);
+    console.log('data: ', data);
+
+    axios.post('/upload/image',
+      data,
+      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+      console.log('Processed results');
+      console.log('frontend result: ', res);
+      console.log('the link to the image: ', res.data.url);
+    });
+  }
+
   handleChange (event) {
     console.log('change');
     this.setState({
@@ -349,6 +368,7 @@ class UserPhotoCard extends React.Component {
               </div>
               <div className="file-path-wrapper">
                 <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
+                <input type="file" onChange={this.uploadFile}/>
               </div>
             </div>
             <ButtonDrop addSosialLable={this.addSosialLable}/>

@@ -36,6 +36,7 @@
     "nodemon": "^2.0.3"
   },
   "dependencies": {
+    "aws-sdk": "^2.681.0",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "chai-http": "^4.3.0",
@@ -44,7 +45,6 @@
     "knex": "^0.21.1",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
-    "koa-bodyparser": "^4.2.1",
     "koa-cors": "^0.0.16",
     "koa-logger": "^3.2.1",
     "koa-passport": "^4.1.3",
