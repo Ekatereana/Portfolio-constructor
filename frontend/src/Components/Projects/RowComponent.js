@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Editable from '../Editable';
+import axios from 'axios';
 
 class RowComponent extends Component {
   constructor (props) {
@@ -31,7 +32,13 @@ class RowComponent extends Component {
     this.saveTextInput = this.saveTextInput.bind(this);
     this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.upload = this.upload.bind(this);
   };
+
+  upload () {
+    console.log('upload');
+    document.getElementById('selectImage').click();
+  }
 
   getStyled (position, styles) {
     let styleHeader;
@@ -115,7 +122,7 @@ class RowComponent extends Component {
   render () {
     const titleButton = this.getButtonType(this.state.titlePosition);
     const textButton = this.getButtonType(this.state.textPosition);
-    console.log(this.props);
+    console.log('rowComponent', this.props);
 
     return (
       <div className="col-md-6 mb-4">
@@ -164,7 +171,20 @@ class RowComponent extends Component {
             <hr/>
             <button type="button" onClick={() => { this.props.update(this); }} className="btn btn-primary">SAVE</button>
             <button type="button" onClick={() => { this.props.delete(this); }} className="btn btn-danger">DELETE</button>
-
+            <div className="md-form">
+              <div className="file-field">
+                <div className="btn btn-primary btn-sm float-left" value="Browse..."
+                  onClick={this.upload}>
+                  <span>Choose Photo</span>
+                  <div className="file-path-wrapper">
+                    <input id="selectImage" hidden type="file" onChange={(target) => { console.log('button click', this.key); this.uploadFile(this.props.key, target); }}/>
+                  </div>
+                </div>
+                <div className="file-path-wrapper">
+                  <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

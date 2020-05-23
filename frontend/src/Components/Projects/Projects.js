@@ -70,7 +70,7 @@ class Projects extends Component {
     }
     return (
       <div className="portfolio-container">
-        <button type="button" onClick={() => this.handleSublmitAll(portfolio)} className="btn btn-outline-secondary waves-effect">SUBMIT ALL</button>
+        <button type="button" onClick={() => this.handleSublmitAll(portfolio)} className="btn btn-secondary waves-effect">SUBMIT ALL</button>
         <Best currentState={portfolio.best} update={this.updateState} sumit={this.handleSublmitAll}/>
       </div>
     );
@@ -105,19 +105,36 @@ class Best extends Component {
     this.deleteBestCard = this.deleteBestCard.bind(this);
     this.saveTextInput = this.saveTextInput.bind(this);
     this.updateRowComponent = this.updateRowComponent.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
+  }
+
+  async uploadFile (id, { target: { files } }) {
+    console.log('===HomePage file upload===');
+    const file = files[0];
+    const data = new FormData();
+    data.append('image', file);
+    await axios.post('/upload/image',
+      data,
+      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+      console.log('the link to the image: ', res.data.url);
+    });
   }
 
   updateRowComponent (component) {
     const newState = this.state;
-    console.log(component.props.id);
+    console.log('new component', component);
+    console.log('id of component', component.props.id);
+    const current = newState.arrayOfCards.find(el => el.props.id === component.props.id);
+    const id = newState.arrayOfCards.indexOf(current);
+    console.log('id', id);
     this.deleteBestCard(component);
-
-    newState.arrayOfCards.push(<RowComponent
+    newState.arrayOfCards.splice(id, 1, <RowComponent
       content={component.state}
       delete = {this.deleteBestCard}
       update = {this.updateRowComponent}
       key={component.props.id}
       id={component.props.id}/>);
+    console.log('add to arr', newState.arrayOfCards);
     this.setState(newState);
     this.props.update('best', this.state);
   }
@@ -128,8 +145,8 @@ class Best extends Component {
     arrayOfCards.push(<RowComponent
       content={null}
       update={this.updateRowComponent}
-      key={ arrayOfCards.length }
-      id={ arrayOfCards.length }
+      key={arrayOfCards.length}
+      id={arrayOfCards.length }
       delete={this.deleteBestCard} />);
     this.setState(
       { arrayOfCards: arrayOfCards }
@@ -169,8 +186,6 @@ class Best extends Component {
   };
 
   onChangeTiTlePosition (event) {
-    console.log('change position');
-    console.log(event.currentTarget.getAttribute('name'));
     const newState = this.state;
     switch (event.currentTarget.getAttribute('value')) {
       case 'text-center':
@@ -221,7 +236,6 @@ class Best extends Component {
   }
 
   handleChange (event) {
-    console.log('change');
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -231,7 +245,7 @@ class Best extends Component {
     const titleButton = this.getButtonType(this.state.titlePosition);
     const subtitleButton = this.getButtonType(this.state.subtitlePosition);
     const { arrayOfCards } = this.state;
-    console.log(subtitleButton);
+    console.log('array of components', arrayOfCards);
     return (
       <div className="best-container">
 
@@ -274,7 +288,7 @@ class Best extends Component {
                   update={this.updateRowComponent}
                   delete={this.deleteBestCard}
                   id = {el.props.id}
-                  key = {el.props.key}/>;
+                  key = {el.props.id}/>;
               })
             }
           </div>

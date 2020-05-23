@@ -93,7 +93,7 @@ class HomePage extends React.Component {
       <div className="profile-conteiner">
         <button type="button" onClick={() => this.handleSublmitAll(home)} className="btn btn-outline-success waves-effect">SAVE CHANGES</button>
         <UserPhotoCard update = {this.updateState} id='UserPhotoCard' currentState={ home.userPhotoCard } />
-        <BasicUserProfile id='BasicUserProfile' currentState= { home.basicProfile }/>
+        <BasicUserProfile id='BasicUserProfile' update= {this.updateState} currentState= { home.basicProfile }/>
       </div>
 
     );
@@ -106,8 +106,32 @@ class BasicUserProfile extends React.Component {
     this.state = {
       img: this.props.currentState.img,
       title: this.props.currentState.title
-
     };
+    this.uploadFile = this.uploadFile.bind(this);
+  }
+
+  uploadFile ({ target: { files } }) {
+    console.log('===HomePage file upload===');
+    console.log('files: ', files);
+    const file = files[0];
+    console.log('file: ', file);
+
+    const data = new FormData();
+    data.append('image', file);
+    console.log('data: ', data);
+
+    axios.post('/upload/image',
+      data,
+      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+      console.log('Processed results');
+      console.log('frontend result: ', res);
+      console.log('the link to the image: ', res.data.url);
+      this.setState({
+        img: res.data.url
+      });
+      console.log('new state after file upload', this.state);
+      this.props.update('userPhotoCard', this.state);
+    });
   }
 
   render () {
@@ -115,11 +139,9 @@ class BasicUserProfile extends React.Component {
       <div className="profile-panel">
         <div className="md-form">
           <div className="file-field">
-            <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
+            <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => { document.getElementById('selectImage').click(); }}>
               <span>Choose Photo</span>
-              <input id='selectImage' hidden type="file" multiple/>
-            </div>
-            <div className="file-path-wrapper">
+              <input onClick={this.uploadFile} id='selectImage' hidden type="file" multiple/>
               <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
             </div>
           </div>
@@ -139,7 +161,7 @@ class BasicUserProfile extends React.Component {
 
           </div>
           <div className="card up">
-            <div className="card-body card-body-cascade text-center">
+            <div className="card-body card-body-cascade">
               <div className="title-row">
                 <Editable styleName="editable-title" text={this.state.title} type="input" value={this.state.title}>
 
@@ -245,6 +267,7 @@ class UserPhotoCard extends React.Component {
   constructor (props) {
     super(props);
     const currentS = this.props.currentState;
+    this.nameInput = React.createRef();
     this.state = {
       img: currentS.img,
       title: currentS.title,
@@ -260,15 +283,12 @@ class UserPhotoCard extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.saveTextInput = this.saveTextInput.bind(this);
     this.upload = this.upload.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
   };
 
   upload () {
-    console.log('isShown');
-    const { isShown } = this.state;
-    this.setState({
-      isShown: !isShown
-    });
-    this.nameInput.focus();
+    console.log(document.getElementById('selectImage'));
+    document.getElementById('selectImage').click();
   }
 
   addSosialLable (btnclass, classname) {
@@ -338,6 +358,11 @@ class UserPhotoCard extends React.Component {
       console.log('Processed results');
       console.log('frontend result: ', res);
       console.log('the link to the image: ', res.data.url);
+      this.setState({
+        img: res.data.url
+      });
+      console.log('new state after file upload', this.state);
+      this.props.update('userPhotoCard', this.state);
     });
   }
 
@@ -359,16 +384,17 @@ class UserPhotoCard extends React.Component {
             <img src={this.state.img} className="rounded-circle avatar"
               alt="woman avatar"/>
           </div>
+
           <div className="md-form">
             <div className="file-field">
               <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
                 <span>Choose Photo</span>
-                {console.log(this.state.isShown)}
-                { this.state.isShown ? <input ref={(input) => { this.nameInput = input; } } id='selectImage' hidden type="file" multiple/> : null}
+                <div className="file-path-wrapper">
+                  <input id="selectImage" hidden type="file" onChange={this.uploadFile}/>
+                </div>
               </div>
               <div className="file-path-wrapper">
                 <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
-                <input type="file" onChange={this.uploadFile}/>
               </div>
             </div>
             <ButtonDrop addSosialLable={this.addSosialLable}/>

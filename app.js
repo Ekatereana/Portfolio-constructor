@@ -39,6 +39,7 @@ app.use(homeRoute.routes())
   .use(mainRoute.routes())
   .use(testRoute.routes())
   .use(authRoute.routes())
+  .use(updateRoute.routes())
   .use(uploadRoute.routes())
 // to serve up compiled React app
   .use(require('koa-static')('./build'));
