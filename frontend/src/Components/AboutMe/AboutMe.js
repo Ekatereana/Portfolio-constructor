@@ -12,8 +12,13 @@ class AboutMe extends React.Component {
     super(props);
     console.log('start');
 
+    let cards = [];
+    if (this.props.user.aboutMe.arrayOfCards) {
+      cards = this.props.user.aboutMe.arrayOfCards;
+    }
+
     this.state = {
-      arrayOfCards: []
+      arrayOfCards: cards
     };
     this.handleAddCard = this.handleAddCard.bind(this);
     this.handleSublmitAll = this.handleSublmitAll.bind(this);
@@ -25,7 +30,7 @@ class AboutMe extends React.Component {
     const newState = this.state;
     console.log('remove');
 
-    const index = newState.arrayOfCards.findIndex(a => a.props.id === id);
+    const index = newState.arrayOfCards.findIndex(a => a.props.id === id.props.id);
     console.log(index);
     if (index === -1) return;
     newState.arrayOfCards.splice(index, 1);
@@ -34,38 +39,62 @@ class AboutMe extends React.Component {
   };
 
   saveChangedCard (card) {
-    console.log('save card');
     const newState = this.state;
-    newState.arrayOfCards.slice(0, card.id, card);
+    console.log('new card', card);
+    console.log('id of component', card.props.id);
+    const current = newState.arrayOfCards.find(el => el.props.id === card.props.id);
+    const id = newState.arrayOfCards.indexOf(current);
+    console.log('id', id);
+    this.removeCard(card);
+    newState.arrayOfCards.push(<AboutCard
+      content={card.state}
+      delete = {this.removeCard}
+      update = {this.saveChangedCard}
+      key={card.props.id}
+      id={card.props.id}/>);
+    console.log('add to arr', newState.arrayOfCards);
     this.setState(newState);
   }
 
-  async handleSublmitAll (event) {
+  async handleSublmitAll (about) {
     console.log('handleSubmit');
-    this.setState({
-      arrayOfCards: this.state.arrayOfCards
-    });
-    console.log('udate about', this.state);
+    const { user } = this.props;
+    console.log('about', about);
+    user.aboutMe = about;
+    this.setState(user);
+    console.log('udate user ', user);
+
+    axios.post('/update', {
+      user: user
+    },
+    { port: 4000, withCredentials: true }).then(response => {
+      console.log('sucess', response);
+      this.props.handleUser(response.data);
+      console.log(JSON.parse(sessionStorage.getItem('user')));
+    })
+      .catch(error => {
+        console.log('error ', error);
+      });
+    console.log('udate user about', this.props.user);
   }
 
   handleAddCard (event) {
-    const arr = this.state.arrayOfCards;
-    arr.push(<AboutCard
-      removeCard={this.removeCard.bind(this)}
-      saveChangedCard={this.saveChangedCard.bind(this)}
-      key={ arr.length }
-      id={ arr.length } />);
+    const { arrayOfCards } = this.state;
+    arrayOfCards.push(<AboutCard
+      content = {null}
+      delete={this.removeCard}
+      update={this.saveChangedCard}
+      key={ arrayOfCards.length }
+      id={ arrayOfCards.length } />);
     this.setState(
-      { arrayOfCards: arr }
+      { arrayOfCards: arrayOfCards }
     );
   }
 
   render () {
-    const { arrayOfCards } = this.state;
-    let cards;
-    if (arrayOfCards.length === 0) {
-      cards = <AboutCard saveChangedCard={this.saveChangedCard.bind(this)} removeCard={this.removeCard.bind(this)} id={ 0 } key={0} />;
-      arrayOfCards.push(cards);
+    let { arrayOfCards } = this.state;
+    if (!arrayOfCards) {
+      arrayOfCards = [];
     }
     return (
       <div className="about-conteiner">
@@ -75,9 +104,14 @@ class AboutMe extends React.Component {
 
         </div>
 
-        <div className="SomeDetails">
+        <div className="SomeDetails row">
           { arrayOfCards.map((el) => {
-            return el;
+            return <AboutCard
+              content = {el.props.content}
+              delete={this.removeCard}
+              update={this.saveChangedCard}
+              key={ el.props.id }
+              id={ el.props.id } />;
           })}
         </div>
       </div>
@@ -89,19 +123,40 @@ class AboutCard extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {
-      title: 'Alison Belmont',
-      subTitle: 'Graffiti Artist',
-      primaryText: 'Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque \nlaudantium, totam rem aperiam.'
+    const content = this.props.content;
 
-    };
-    this.upload = this.upload.bind(this);
+    if (content) {
+      this.state = {
+        title: content.title,
+        img: content.img,
+        titlePosition: content.titlePosition,
+        primaryText: content.primaryText,
+        subtitlePosition: content.subtitlePosition,
+        primaryTextPosition: content.primaryTextPosition,
+        subTitle: content.subTitle
+      };
+    } else {
+      this.state = {
+        img: 'https://mdbootstrap.com/img/Photos/Others/images/43.jpg',
+        title: 'Alison Belmont',
+        subTitle: 'Graffiti Artist',
+        titlePosition: null,
+        subtitlePosition: null,
+        primaryTextPosition: null,
+        primaryText: 'Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque \nlaudantium, totam rem aperiam.'
+      };
+    }
+
+    this.getStyled = this.getStyled.bind(this);
+    this.saveTextInput = this.saveTextInput.bind(this);
+    this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.textInput = React.createRef();
+    this.upload = this.upload.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
   };
 
-  upload () {
-    document.getElementById('selectImage').click();
+  upload (id) {
+    document.getElementById('selectImage' + id).click();
   };
 
   handleChange (event) {
@@ -111,23 +166,97 @@ class AboutCard extends React.Component {
     });
   }
 
+  async uploadFile ({ target: { files } }) {
+    console.log('===HomePage file upload===');
+    const file = files[0];
+    const data = new FormData();
+    data.append('image', file);
+    await axios.post('/upload/image',
+      data,
+      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+      console.log('the link to the image: ', res.data.url);
+      this.setState({
+        img: res.data.url
+      });
+    });
+  }
+
+  getStyled (position, styles) {
+    let styleHeader;
+    switch (position) {
+      case null:
+        styleHeader = 'text-center';
+        break;
+      case 'text-center':
+        styleHeader = 'text-center';
+        break;
+      case 'text-left':
+        styleHeader = 'text-left';
+        break;
+      case 'text-right':
+        styleHeader = 'text-right';
+        break;
+    };
+    return styleHeader + ' ' + styles;
+  };
+
+  onChangeTiTlePosition (event) {
+    console.log('change position');
+    console.log(event.currentTarget.getAttribute('name'));
+    const newState = this.state;
+    switch (event.currentTarget.getAttribute('value')) {
+      case 'text-center':
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
+        break;
+      case 'text-left':
+        newState[event.currentTarget.getAttribute('name')] = 'text-right';
+        break;
+      case 'text-right':
+        newState[event.currentTarget.getAttribute('name')] = 'text-center';
+        break;
+      case null:
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
+        break;
+    }
+    newState.isSaved = false;
+    this.setState(newState);
+    this.props.update(this);
+  }
+
+  getButtonType (value) {
+    let titleButton;
+    switch (value) {
+      case 'text-center':
+        titleButton = <i className="fas fa-align-center"></i>;
+        break;
+      case 'text-left':
+        titleButton = <i className="fas fa-align-left"></i>;
+        break;
+      case 'text-right':
+        titleButton = <i className="fas fa-align-right"></i>;
+        break;
+      case null:
+        titleButton = <i className="fas fa-align-center"></i>;
+        break;
+    };
+    return titleButton;
+  }
+
+  saveTextInput (event, input, element) {
+    if (event.key === 'Enter') {
+      const newState = this.state;
+      newState[element] = input;
+      newState.isSaved = false;
+      this.setState(newState);
+      this.props.update(this);
+    };
+  }
+
   render () {
     return (
       <div className="card card-element">
-        <img className="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap"/>
+        <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
         <div className="card-body">
-          <div className="md-form">
-            <div className="file-field">
-              <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
-                <span>Choose Photo</span>
-                <input id='selectImage' hidden type="file" multiple/>
-              </div>
-              <div className="file-path-wrapper">
-                <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
-              </div>
-            </div>
-          </div>
-
           <Editable childRef={ this.textInput} className="card-title" text={this.state.title} type="input">
             <input ref={ this.textInput } name="title" value={this.state.title} onChange={this.handleChange} type="text" id="inputPrefilledEx" className="form-control"/>
           </Editable>
@@ -139,9 +268,17 @@ class AboutCard extends React.Component {
           <Editable type="text" className="card-text" text={this.state.primaryText}>
             <input value={this.state.primaryText} name="primaryText" type="text" className="form-control" onChange={this.handleChange}/>
           </Editable>
-          <a href="#" onClick={() => this.props.saveChangedCard(this)} className="btn btn-primary">Save</a>
-          <a href="#" onClick={() => this.props.removeCard(this.props.id)} className="btn btn-danger">Delete</a>
-
+          <div className="card-footer max-h-10">
+            <a href="#" onClick={() => this.props.update(this)} className="btn btn-primary">Save</a>
+            <a href="#" onClick={() => this.props.delete(this)} className="btn btn-danger">Delete</a>
+            <div className="btn btn-info" value="Browse..."
+              onClick={() => { this.upload(this.props.id); }}>
+              <span>Choose Photo</span>
+              <div className="file-path-wrapper">
+                <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -149,3 +286,4 @@ class AboutCard extends React.Component {
 };
 
 export default AboutMe;
+export {AboutCard};

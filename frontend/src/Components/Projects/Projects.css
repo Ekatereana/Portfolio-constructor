@@ -67,6 +67,10 @@
 
 }
 
+.no-l-mg {
+	margin-left: 0;
+}
+
 .right-side-arr{	
 	display: flex;
 	position: absolute;
@@ -92,3 +96,8 @@
 	font-size: 20px;
 }
 
+.card-footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}

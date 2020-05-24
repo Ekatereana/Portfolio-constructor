@@ -66,13 +66,12 @@
   display: flex;
   flex-direction : row;
   justify-content: space-around;
-  margin-top: 2em;
 }
 
 .avatar {
-  width: 60%;
-  height: 60%;
-  margin-left: 2em;
+  width: 70%;
+  height: 70%;
+  border-bottom-right-radius: 50%; 
 }
 
 .md-form {

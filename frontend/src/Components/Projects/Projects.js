@@ -70,7 +70,7 @@ class Projects extends Component {
     }
     return (
       <div className="portfolio-container">
-        <button type="button" onClick={() => this.handleSublmitAll(portfolio)} className="btn btn-secondary waves-effect">SUBMIT ALL</button>
+        <button type="button" onClick={() => this.handleSublmitAll(portfolio)} className="btn no-l-mg btn-info waves-effect">SUBMIT ALL</button>
         <Best currentState={portfolio.best} update={this.updateState} sumit={this.handleSublmitAll}/>
       </div>
     );
@@ -105,19 +105,6 @@ class Best extends Component {
     this.deleteBestCard = this.deleteBestCard.bind(this);
     this.saveTextInput = this.saveTextInput.bind(this);
     this.updateRowComponent = this.updateRowComponent.bind(this);
-    this.uploadFile = this.uploadFile.bind(this);
-  }
-
-  async uploadFile (id, { target: { files } }) {
-    console.log('===HomePage file upload===');
-    const file = files[0];
-    const data = new FormData();
-    data.append('image', file);
-    await axios.post('/upload/image',
-      data,
-      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-      console.log('the link to the image: ', res.data.url);
-    });
   }
 
   updateRowComponent (component) {
@@ -128,7 +115,7 @@ class Best extends Component {
     const id = newState.arrayOfCards.indexOf(current);
     console.log('id', id);
     this.deleteBestCard(component);
-    newState.arrayOfCards.splice(id, 1, <RowComponent
+    newState.arrayOfCards.push(<RowComponent
       content={component.state}
       delete = {this.deleteBestCard}
       update = {this.updateRowComponent}
@@ -248,7 +235,7 @@ class Best extends Component {
     console.log('array of components', arrayOfCards);
     return (
       <div className="best-container">
-
+        <hr/>
         <section className="dark-grey-text editable ">
           <div className="best-header">
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
@@ -279,7 +266,8 @@ class Best extends Component {
               </div>
             </div>
           </div>
-          <button type="button" onClick={this.addBestCard} className="btn btn-secondary">ADD NEW PROJECT</button>
+          <hr/>
+          <button type="button" onClick={this.addBestCard} className="btn no-l-mg btn-info">ADD NEW PROJECT</button>
           <div className="row">
             {
               arrayOfCards.map((el) => {
@@ -287,6 +275,7 @@ class Best extends Component {
                   content={el.props.content}
                   update={this.updateRowComponent}
                   delete={this.deleteBestCard}
+                  uploadFile={this.uploadFile}
                   id = {el.props.id}
                   key = {el.props.id}/>;
               })

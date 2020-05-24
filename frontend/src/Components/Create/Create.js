@@ -34,7 +34,7 @@ class CreateAll extends React.Component {
         <Header isCustom={this.state.isCustom} />
         <Route path="/create/home" exact render={props => <HomePage handleUser={this.props.handleUser} user = {user}/>}/>
         <Route path="/create/portfolio" exact render={props => <Projects handleUser={this.props.handleUser} user = {user}/>}/>
-        <Route path="/create/about" component={About}/>
+        <Route path="/create/about"  exact render={props => <About handleUser={this.props.handleUser} user = {user}/>} />
         <Route path="/create/" exact component={CreatePlaceHolder} />
       </Router>
     );

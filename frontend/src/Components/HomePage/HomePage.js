@@ -381,7 +381,7 @@ class UserPhotoCard extends React.Component {
         <div className="card-up indigo lighten-1"></div>
         <div className="profile-photo">
           <div className="avatar white">
-            <img src={this.state.img} className="rounded-circle avatar"
+            <img src={this.state.img} className="avatar"
               alt="woman avatar"/>
           </div>
 

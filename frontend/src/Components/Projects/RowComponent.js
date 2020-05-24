@@ -33,11 +33,27 @@ class RowComponent extends Component {
     this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.upload = this.upload.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
   };
 
-  upload () {
-    console.log('upload');
-    document.getElementById('selectImage').click();
+  upload (id) {
+    console.log('upload', id);
+    document.getElementById('selectImage' + id).click();
+  }
+
+  async uploadFile ({ target: { files } }) {
+    console.log('===HomePage file upload===');
+    const file = files[0];
+    const data = new FormData();
+    data.append('image', file);
+    await axios.post('/upload/image',
+      data,
+      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+      console.log('the link to the image: ', res.data.url);
+      this.setState({
+        img: res.data.url
+      });
+    });
   }
 
   getStyled (position, styles) {
@@ -131,10 +147,6 @@ class RowComponent extends Component {
           <div className="view overlay no-m">
             <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
           </div>
-          <div className="right-side-arr " onClick={console.log('hey')}>
-            <p className="hint-text" value={this.state.hint}></p>
-            <i href={this.state.url} className="fas fa-chevron-circle-right arrow"></i>
-          </div>
           <div className="card-body">
 
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
@@ -169,19 +181,14 @@ class RowComponent extends Component {
               </div>
             </div>
             <hr/>
-            <button type="button" onClick={() => { this.props.update(this); }} className="btn btn-primary">SAVE</button>
-            <button type="button" onClick={() => { this.props.delete(this); }} className="btn btn-danger">DELETE</button>
-            <div className="md-form">
-              <div className="file-field">
-                <div className="btn btn-primary btn-sm float-left" value="Browse..."
-                  onClick={this.upload}>
-                  <span>Choose Photo</span>
-                  <div className="file-path-wrapper">
-                    <input id="selectImage" hidden type="file" onChange={(target) => { console.log('button click', this.key); this.uploadFile(this.props.key, target); }}/>
-                  </div>
-                </div>
+            <div clssName="card-footer">
+              <button type="button" onClick={() => { this.props.update(this); }} className="btn btn-primary">SAVE</button>
+              <button type="button" onClick={() => { this.props.delete(this); }} className="btn btn-danger">DELETE</button>
+              <div className="btn btn-info" value="Browse..."
+                onClick={() => { this.upload(this.props.id); }}>
+                <span>Choose Photo</span>
                 <div className="file-path-wrapper">
-                  <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
+                  <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
                 </div>
               </div>
             </div>
