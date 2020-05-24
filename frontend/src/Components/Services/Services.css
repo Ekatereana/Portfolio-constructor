@@ -1,0 +1,47 @@
+.h1-responsive {
+	font-size: 50px;
+}
+
+.services-card {
+	max-width: 	70%;
+	margin-left: 15em;
+}
+
+.btn-group .btn {
+	margin-right: 0;
+	margin-left: 0;
+}
+
+.row {
+ margin-top: 1em;
+}
+
+.col-md-4 {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 3em;
+}
+
+.del-button {
+	cursor: pointer;
+	display: flex;
+	justify-content: flex-end;
+	width: 70%;
+	font-size: 24px;
+}
+
+.del-button:hover{
+	color: #4db8ff;
+}
+
+.filler-color {
+	margin-right: 0.3em;
+	color: #8c8c8c;
+	cursor: pointer;
+}
+
+.filler-color:hover {
+
+	color: #4db8ff;
+	
+}

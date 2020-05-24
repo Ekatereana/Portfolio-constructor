@@ -18,6 +18,8 @@ import '..//HomePage/HomePage.css';
 import Projects from '../Projects/Projects';
 import '../Projects/Projects.css';
 
+import Services  from '../Services/Services';
+import '../Services/Services.css'
 class CreateAll extends React.Component {
   constructor (props) {
     super(props);
@@ -34,7 +36,8 @@ class CreateAll extends React.Component {
         <Header isCustom={this.state.isCustom} />
         <Route path="/create/home" exact render={props => <HomePage handleUser={this.props.handleUser} user = {user}/>}/>
         <Route path="/create/portfolio" exact render={props => <Projects handleUser={this.props.handleUser} user = {user}/>}/>
-        <Route path="/create/about"  exact render={props => <About handleUser={this.props.handleUser} user = {user}/>} />
+        <Route path="/create/about" exact render={props => <About handleUser={this.props.handleUser} user = {user}/>} />
+        <Route path="/create/services" exact render={props => <Services handleUser={this.props.handleUser} user = {user}/>} />
         <Route path="/create/" exact component={CreatePlaceHolder} />
       </Router>
     );
