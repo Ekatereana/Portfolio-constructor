@@ -11,11 +11,31 @@ class Header extends React.Component {
   render () {
     let header;
     let content;
-    if (this.props.isAuthorized) {
+    if (this.props.preview) {
       content =
        <ul className="navbar-nav mr-auto">
          <li className="nav-item active">
-           <a className="nav-link" href="/main">Home<span className="sr-only">(current)</span></a>
+           <a className="nav-link" href="#">Home<span className="sr-only">(current)</span></a>
+         </li>
+         <li className="nav-item">
+           <a className="nav-link" href="#about">About Me</a>
+         </li>
+         <li className="nav-item">
+           <a className="nav-link" href="#portfolio">Portfolio</a>
+         </li>
+         <li className="nav-item">
+           <a className="nav-link" href="#services">Services</a>
+         </li>
+         <li onClick={ () => { this.props.handlePreview(null); } }>
+           <a className="nav-link" href="/create">GO BACK TO CONSTRUCTOR</a>
+         </li>
+       </ul>;
+    } else {
+      if (this.props.isAuthorized) {
+        content =
+       <ul className="navbar-nav mr-auto">
+         <li className="nav-item active">
+           <a className="nav-link" href="/">Home<span className="sr-only">(current)</span></a>
          </li>
          <li className="nav-item">
            <a className="nav-link" href="/create">Create</a>
@@ -27,14 +47,11 @@ class Header extends React.Component {
            <a className="nav-link" href="/aboutUS">AboutUS</a>
          </li>
        </ul>;
-    } else {
-      content =
+      } else {
+        content =
        <ul className="navbar-nav mr-auto">
          <li className="nav-item active">
-           <a className="nav-link" href="/main">Home<span className="sr-only">(current)</span></a>
-         </li>
-         <li className="nav-item">
-           <a className="nav-link" href="/preview">Preview</a>
+           <a className="nav-link" href="/">Home<span className="sr-only">(current)</span></a>
          </li>
          <li className="nav-item">
            <a className="nav-link" href="/registration">Register</a>
@@ -43,7 +60,8 @@ class Header extends React.Component {
            <a className="nav-link" href="/aboutUS">AboutUS</a>
          </li>
        </ul>;
-    }
+      };
+    };
     if (this.props.isCustom) {
       header = <div className="Header"><Menu className="Menu"/></div>;
     } else {

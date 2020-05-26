@@ -18,8 +18,8 @@ import '..//HomePage/HomePage.css';
 import Projects from '../Projects/Projects';
 import '../Projects/Projects.css';
 
-import Services  from '../Services/Services';
-import '../Services/Services.css'
+import Services from '../Services/Services';
+import '../Services/Services.css';
 class CreateAll extends React.Component {
   constructor (props) {
     super(props);
@@ -38,7 +38,7 @@ class CreateAll extends React.Component {
         <Route path="/create/portfolio" exact render={props => <Projects handleUser={this.props.handleUser} user = {user}/>}/>
         <Route path="/create/about" exact render={props => <About handleUser={this.props.handleUser} user = {user}/>} />
         <Route path="/create/services" exact render={props => <Services handleUser={this.props.handleUser} user = {user}/>} />
-        <Route path="/create/" exact component={CreatePlaceHolder} />
+        <Route path="/create/" exact render={props => <CreatePlaceHolder handlePreview={this.props.handlePreview}/>} />
       </Router>
     );
   }
@@ -62,7 +62,7 @@ class CreatePlaceHolder extends React.Component {
 
   render () {
     if (this.state.isRedirect) {
-      return <Redirect to="/preview/" />;
+      return this.props.handlePreview(true);
     }
 
     return (

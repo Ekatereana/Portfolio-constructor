@@ -4,7 +4,7 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	margin-bottom: 3em;
+	margin-bottom: 5em;
 }
 
 .profile-panel{
@@ -27,9 +27,14 @@
 	z-index: 10;
 }
 
+.button-mg-top {
+  margin-top: 1em;
+  font-size: 30px;
+}
 .card-down {
+  margin-top: 2em;
 	z-index: -10;
-	position: absolute;
+	position: relative;
 	display: flex;
     flex-direction: column;
     min-width: 0;
@@ -47,12 +52,21 @@
 
 .max { height: 100%;  }
 
-.up {
+.up-full {
 	width: 50em;
 	display: flex;
-  top: 20em;
+  position: absolute;
+  top: 65em;
   margin-bottom: 5em;
 	}
+
+.up-edit {
+  width: 50em;
+  display: flex;
+  position: absolute;
+  top: 72em;
+  margin-bottom: 5em;
+  }
 
 
 
@@ -65,12 +79,13 @@
 .profile-photo {
   display: flex;
   flex-direction : row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .avatar {
   width: 70%;
   height: 70%;
+  max-width: 20em;
   border-bottom-right-radius: 50%; 
 }
 

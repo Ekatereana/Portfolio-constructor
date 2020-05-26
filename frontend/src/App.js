@@ -23,7 +23,6 @@ import Authorized from './Components/Authorized';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App () {
-  // <Redirect to='/main/' />
   return (
     <Router>
       <div className="AppMain">

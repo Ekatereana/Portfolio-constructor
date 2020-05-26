@@ -34,6 +34,7 @@ export default class Login extends Component {
       password: this.state.password
     },
     { port: 4000, withCredentials: true }).then(response => {
+      console.log('user', response.data);
       this.props.handleUser(response.data);
     })
       .catch(error => {

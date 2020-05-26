@@ -25,26 +25,30 @@ class HomePage extends React.Component {
 
   updateState (className, newState) {
     const { user } = this.state;
+    if (!user.home) {
+      user.home = {
+        userPhotoCard: {
+          img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
+          title: 'My adventure',
+          quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
+          arrayOfSocial: []
+        },
+        basicProfile: {
+          img: 'https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg',
+          title: 'My adventure'
+        }
+      };
+    };
     switch (className) {
       case 'userPhotoCard':
         console.log('user-photo');
         console.log('new home', newState);
-        if (!user.home) {
-          user.home = {
-            userPhotoCard: {
-              img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
-              title: 'My adventure',
-              quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
-              arrayOfSocial: []
-            },
-            basicProfile: {
-              img: 'https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg',
-              title: 'My adventure'
-            }
-          };
-        };
         user.home.userPhotoCard = newState;
         break;
+      case 'basicProfile':
+        console.log('user-basic');
+        console.log('new home', newState);
+        user.home.basicProfile = newState;
     }
     this.setState(user);
   }
@@ -79,21 +83,27 @@ class HomePage extends React.Component {
         userPhotoCard: {
           img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
           title: 'My adventure',
+          titlePosition: null,
+          quotesPosition: null,
           quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
           arrayOfSocial: []
         },
         basicProfile: {
           img: 'https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg',
-          title: 'My adventure'
+          title: 'My adventure',
+          subtitle: 'Photograpy',
+          titlePosition: null,
+          subtitlePosition: null,
+          primaryTextPosition: null
 
         }
       };
     };
     return (
       <div className="profile-conteiner">
-        <button type="button" onClick={() => this.handleSublmitAll(home)} className="btn btn-outline-success waves-effect">SAVE CHANGES</button>
-        <UserPhotoCard update = {this.updateState} id='UserPhotoCard' currentState={ home.userPhotoCard } />
-        <BasicUserProfile id='BasicUserProfile' update= {this.updateState} currentState= { home.basicProfile }/>
+        {!this.props.preview ? <button type="button" onClick={() => this.handleSublmitAll(home)} className="btn btn-outline-success waves-effect">SAVE CHANGES</button> : null}
+        <UserPhotoCard preview={this.props.preview} update = {this.updateState} id='UserPhotoCard' currentState={ home.userPhotoCard } />
+        <BasicUserProfile preview={this.props.preview} id='BasicUserProfile' update= {this.updateState} currentState= { home.basicProfile }/>
       </div>
 
     );
@@ -105,9 +115,95 @@ class BasicUserProfile extends React.Component {
     super(props);
     this.state = {
       img: this.props.currentState.img,
-      title: this.props.currentState.title
+      title: this.props.currentState.title,
+      subtitle: this.props.currentState.subtitle,
+      subtitlePosition: this.subtitlePosition,
+      titlePosition: this.titlePosition,
+      primaryText: this.props.currentState.primaryText,
+      primaryTextPosition: this.primaryTextPosition
     };
     this.uploadFile = this.uploadFile.bind(this);
+    this.saveTextInput = this.saveTextInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
+  }
+
+  getStyled (position, styles) {
+    let styleHeader;
+    switch (position) {
+      case null:
+        styleHeader = 'text-center';
+        break;
+      case 'text-center':
+        styleHeader = 'text-center';
+        break;
+      case 'text-left':
+        styleHeader = 'text-left';
+        break;
+      case 'text-right':
+        styleHeader = 'text-right';
+        break;
+    };
+    return styleHeader + ' ' + styles;
+  };
+
+  onChangeTiTlePosition (event) {
+    console.log('change position');
+    console.log(event.currentTarget.getAttribute('name'));
+    const newState = this.state;
+    switch (event.currentTarget.getAttribute('value')) {
+      case 'text-center':
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
+        break;
+      case 'text-left':
+        newState[event.currentTarget.getAttribute('name')] = 'text-right';
+        break;
+      case 'text-right':
+        newState[event.currentTarget.getAttribute('name')] = 'text-center';
+        break;
+      case null:
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
+        break;
+    }
+    newState.isSaved = false;
+    this.setState(newState);
+    this.props.update('basicProfile', this.state);
+  }
+
+  getButtonType (value) {
+    let titleButton;
+    switch (value) {
+      case 'text-center':
+        titleButton = <i className="fas fa-align-center"></i>;
+        break;
+      case 'text-left':
+        titleButton = <i className="fas fa-align-left"></i>;
+        break;
+      case 'text-right':
+        titleButton = <i className="fas fa-align-right"></i>;
+        break;
+      case null:
+        titleButton = <i className="fas fa-align-center"></i>;
+        break;
+    };
+    return titleButton;
+  }
+
+  handleChange (event) {
+    console.log('change');
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  saveTextInput (event, input, element) {
+    if (event.key === 'Enter') {
+      const newState = this.state;
+      newState[element] = input;
+      newState.isSaved = false;
+      this.setState(newState);
+      this.props.update('basicProfile', this.state);
+    };
   }
 
   uploadFile ({ target: { files } }) {
@@ -130,23 +226,28 @@ class BasicUserProfile extends React.Component {
         img: res.data.url
       });
       console.log('new state after file upload', this.state);
-      this.props.update('userPhotoCard', this.state);
+      this.props.update('basicProfile', this.state);
     });
   }
 
   render () {
-    return (
-      <div className="profile-panel">
-        <div className="md-form">
-          <div className="file-field">
-            <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => { document.getElementById('selectImage').click(); }}>
-              <span>Choose Photo</span>
-              <input onClick={this.uploadFile} id='selectImage' hidden type="file" multiple/>
-              <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
+    const noEdit = this.props.preview;
+    const titleButton = this.getButtonType(this.state.titlePosition);
+    let choosePhotoButton;
+    if (!noEdit) {
+      choosePhotoButton =
+        <div className="file-field button-mg-top" >
+          <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => document.getElementById('selectImage-1').click()}>
+            <span>Choose Photo</span>
+            <div className="file-path-wrapper">
+              <input id="selectImage-2" hidden type="file" onChange={this.uploadFile}/>
             </div>
           </div>
-        </div>
+        </div>;
+    }
 
+    return (
+      <div className="profile-panel">
         <div className="profile-card">
 
           <div className="card-down card-cascade wider reverse">
@@ -160,10 +261,10 @@ class BasicUserProfile extends React.Component {
             </div>
 
           </div>
-          <div className="card up">
+          <div className={'card ' + `${noEdit ? 'up-full' : 'up-edit'}`}>
             <div className="card-body card-body-cascade">
-              <div className="title-row">
-                <Editable styleName="editable-title" text={this.state.title} type="input" value={this.state.title}>
+              <div className={this.getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName="editable-title" text={this.state.title} type="input" value={this.state.title}>
 
                   <input
                     name="title"
@@ -173,18 +274,45 @@ class BasicUserProfile extends React.Component {
                     id="inputPrefilledEx"
                     className="card-title"/>
                 </Editable>
+                {!noEdit ? (
+                  <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                    { titleButton }
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="editable">
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle')} styleName="font-weight-bold indigo-text py-2" text={this.state.subtitle} type="input" value={this.state.subtitle}>
+
+                  <input
+                    name="subtitle"
+                    value={this.state.subtitle}
+                    onChange={this.handleChange}
+                    type="text"
+                    id="inputPrefilledEx"
+                    className="card-title"/>
+                </Editable>
 
               </div>
 
-              <h6 className="font-weight-bold indigo-text py-2">Photography</h6>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem perspiciatis
-                voluptatum a, quo nobis, non commodi quia repellendus sequi nulla voluptatem dicta reprehenderit, placeat
-                laborum ut beatae ullam suscipit veniam.
-              </p>
+              <div className="editable">
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.primaryText, 'primaryText')} styleName="card-text" text={this.state.primaryText} type="input" value={this.state.subtitle}>
 
+                  <input
+                    name="primaryText"
+                    value={this.state.primaryText}
+                    onChange={this.handleChange}
+                    type="text"
+                    id="inputPrefilledEx"
+                    className="card-title"/>
+                </Editable>
+
+              </div>
+              <hr/>
               <a className="px-2 fa-lg li-ic"><i className="fab fa-linkedin-in"></i></a>
               <a className="px-2 fa-lg tw-ic"><i className="fab fa-twitter"></i></a>
               <a className="px-2 fa-lg fb-ic"><i className="fab fa-facebook-f"></i></a>
+              {choosePhotoButton}
 
             </div>
 
@@ -246,9 +374,16 @@ class SocialButton extends React.Component {
   }
 
   render () {
+    let edit;
+    if (!this.props.editable) {
+      edit =
+      <div>
+        <div className="social-item">  <button type="button" onClick={this.editSocial} className="fas fa-edit btn-edit-social"></button></div>
+        <div className="socia-item">  <button onClick={ () => this.props.delete(this)} className="far fa-trash-alt btn-edit-social"></button> </div>
+      </div>;
+    }
     return (
       <div className="social-button">
-        <div className="socia-item">  <button onClick={ () => this.props.delete(this)} className="far fa-trash-alt btn-edit-social"></button> </div>
         <div className="social-item"> <button
           action={this.state.url}
           type="button"
@@ -256,7 +391,7 @@ class SocialButton extends React.Component {
           <i className={ 'fab ' + this.props.classname}></i>{this.props.socialName}
         </button> </div>
         { this.state.isEditable ? <div className="social-item"><input name="url" onChange={this.handleChange} className="card-title editable-link" type="text" value={this.state.url}/></div> : null }
-        <div className="social-item">  <button type="button" onClick={this.editSocial} className="fas fa-edit btn-edit-social"></button></div>
+        {edit}
       </div>
 
     );
@@ -286,14 +421,17 @@ class UserPhotoCard extends React.Component {
     this.uploadFile = this.uploadFile.bind(this);
   };
 
-  upload () {
+  upload (id) {
     console.log(document.getElementById('selectImage'));
-    document.getElementById('selectImage').click();
+    document.getElementById('selectImage-1').click();
   }
 
   addSosialLable (btnclass, classname) {
-    const { arrayOfSocial } = this.state;
+    let { arrayOfSocial } = this.state;
     console.log('add social');
+    if (!arrayOfSocial) {
+      arrayOfSocial = [];
+    }
     arrayOfSocial.push(<SocialButton
       delete = {this.deleteSocial}
       save = {this.saveSocialLable}
@@ -325,6 +463,9 @@ class UserPhotoCard extends React.Component {
     console.log(lable.props.id);
     this.deleteSocial(lable);
     console.log('replace', newState.arrayOfSocial);
+    if (!newState.arrayOfSocial) {
+      newState.arrayOfSocial = [];
+    }
     newState.arrayOfSocial.push(<SocialButton delete = {this.deleteSocial}
       save = {this.saveSocialLable} url = {url} butonclass = {lable.props.butonclass} classname = {lable.props.classname} key={lable.props.id} id={lable.props.id}/>);
     this.setState(newState);
@@ -374,7 +515,32 @@ class UserPhotoCard extends React.Component {
   }
 
   render () {
-    const { arrayOfSocial } = this.state;
+    let { arrayOfSocial } = this.state;
+    const imMuteble = this.props.preview;
+    console.log('immuteble', imMuteble);
+    let editPhotoCard;
+    if (arrayOfSocial == null) {
+      arrayOfSocial = [];
+    }
+    if (!imMuteble) {
+      editPhotoCard =
+        <div className="md-form">
+          <div className="file-field">
+            <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
+              <span>Choose Photo</span>
+              <div className="file-path-wrapper">
+                <input id="selectImage-1" hidden type="file" onChange={this.uploadFile}/>
+              </div>
+            </div>
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
+            </div>
+          </div>
+          <ButtonDrop addSosialLable={this.addSosialLable}/>
+
+        </div>;
+    }
+
     return (
       <div className="card ">
 
@@ -385,28 +551,14 @@ class UserPhotoCard extends React.Component {
               alt="woman avatar"/>
           </div>
 
-          <div className="md-form">
-            <div className="file-field">
-              <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
-                <span>Choose Photo</span>
-                <div className="file-path-wrapper">
-                  <input id="selectImage" hidden type="file" onChange={this.uploadFile}/>
-                </div>
-              </div>
-              <div className="file-path-wrapper">
-                <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
-              </div>
-            </div>
-            <ButtonDrop addSosialLable={this.addSosialLable}/>
-
-          </div>
-
+          {editPhotoCard}
         </div>
 
         <div className="social-panel">
           {
             arrayOfSocial.map((el) => {
               return <SocialButton
+                editable={imMuteble}
                 delete = {this.deleteSocial}
                 save = {this.saveSocialLable}
                 url = {el.props.url}
@@ -419,7 +571,7 @@ class UserPhotoCard extends React.Component {
         </div>
 
         <div className="card-body editable">
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName="editable-title card-title" text={this.state.title} type="input" value={this.state.title}>
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={imMuteble} styleName="editable-title card-title" text={this.state.title} type="input" value={this.state.title}>
             <input
               name="title"
               value={this.state.title}
@@ -430,15 +582,15 @@ class UserPhotoCard extends React.Component {
 
           <hr/>
 
-          <i className="fas fa-quote-left"></i>
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes')} styleName="editable-text card-text" text={this.state.quotes} type="input" value={this.state.quotes}>
+          <i className="fas fa-quote-left "></i>
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes')} edit={imMuteble} styleName="editable-text card-text" text={this.state.quotes} type="input" value={this.state.quotes}>
             <input
               name="quotes"
               value={this.state.quotes}
               onChange={this.handleChange}
               type="text"
               id="inputPrefilledEx"
-              className="form-control card-title"/>
+              className="card-title"/>
           </Editable>
         </div>
       </div>

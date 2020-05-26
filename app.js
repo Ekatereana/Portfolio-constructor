@@ -26,7 +26,7 @@ const uploadRoute = require(path.join(__dirname, BASE_PATH, '/routers/upload'));
 const app = new Koa();
 
 // sessions settings
-app.keys = [process.env.KEY_A, process.env.KEY_H];
+app.keys = [process.env.KEY_A, process.env.KEY_B];
 app.use(koaCors(koaOptions));
 app.use(session({ faildWithErrors: true, session: true }, app));
 app.use(koaBody({ multipart: true }));

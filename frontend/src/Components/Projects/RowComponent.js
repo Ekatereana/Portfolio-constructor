@@ -144,7 +144,7 @@ class RowComponent extends Component {
       <div className="col-md-6 mb-4">
 
         <div className="card compact">
-          <div className="view overlay no-m">
+          <div className=" overlay no-m">
             <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
           </div>
           <div className="card-body">
@@ -181,7 +181,7 @@ class RowComponent extends Component {
               </div>
             </div>
             <hr/>
-            <div clssName="card-footer">
+            <div className="card-footer">
               <button type="button" onClick={() => { this.props.update(this); }} className="btn btn-primary">SAVE</button>
               <button type="button" onClick={() => { this.props.delete(this); }} className="btn btn-danger">DELETE</button>
               <div className="btn btn-info" value="Browse..."

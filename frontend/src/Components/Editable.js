@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const Editable = ({
   text,
   type,
+  edit,
   placeholder,
   children,
   childRef,
@@ -30,6 +31,13 @@ const Editable = ({
     }
   };
 
+  let editable;
+  if (edit == null) {
+    editable = () => setEditing(true);
+  }
+
+  console.log('editable', edit);
+
   return (
     <section {...props}>
       {isEditing ? (
@@ -40,9 +48,10 @@ const Editable = ({
           {children}
         </div>
       ) : (
+
         <div
           className={`editable-${type}`}
-          onClick={() => setEditing(true)}
+          onClick={editable}
         >
           <span className={`${text ? 'text-black ' : 'text-gray-500'}` + `${styleName}`}>
             {text || placeholder || 'Editable content'}
