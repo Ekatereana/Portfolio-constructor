@@ -45,6 +45,7 @@ class Services extends Component {
   async handleSublmitAll (services) {
     console.log('handleSubmit');
     const { user } = this.state;
+    console.log('services: ', services);
     user.services = services;
     this.setState(user);
     console.log('udate user ', user);
