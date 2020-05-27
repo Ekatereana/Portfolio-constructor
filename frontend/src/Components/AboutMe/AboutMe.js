@@ -14,13 +14,8 @@ class AboutMe extends React.Component {
     console.log('props.user: ', this.props.user);
 
     this.state = {
-      arrayOfCards: this.props.user.aboutMe.arrayOfCards ? this.props.user.aboutMe.arrayOfCards : []
+      arrayOfCards: this.props.user.aboutMe ? this.props.user.aboutMe.arrayOfCards : []
     };
-
-    // let cards = [];
-    // if (this.props.user.aboutMe.arrayOfCards.length > 0) {
-    //   cards = this.props.user.aboutMe.arrayOfCards;
-    // }
 
     this.handleAddCard = this.handleAddCard.bind(this);
     this.handleSublmitAll = this.handleSublmitAll.bind(this);

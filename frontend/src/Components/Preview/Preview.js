@@ -25,11 +25,11 @@ class Preview extends React.Component {
     const user = this.props.user;
     console.log('Preview', this.props.preview);
     return (
-      <Route path ='/preview/'>
+      <Route path ='/preview'>
         <a id="home"/>
         <HomePage handleUser={this.props.handleUser} user = {user} preview={this.props.preview}/>
         <a id="portfolio"/>
-        <Projects handleUser={this.props.handleUser} user = {user}/>
+        <Projects preview={this.props.preview} handleUser={this.props.handleUser} user = {user}/>
       </Route>
     );
   }

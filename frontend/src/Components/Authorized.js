@@ -47,7 +47,7 @@ function Authorized () {
     console.log('preview value', preview);
     if (preview !== null) {
       console.log('preview value', preview);
-      return <Redirect to="/preview/#home" />;
+      return <Redirect to="/preview" />;
     } else {
       return <Redirect to="/create/" />;
     };
