@@ -29,7 +29,7 @@ class Preview extends React.Component {
         <a id="home"/>
         <HomePage handleUser={this.props.handleUser} user = {user} preview={this.props.preview}/>
         <a id="portfolio"/>
-        <Projects handleUser={this.props.handleUser} user = {user}/>
+        <Projects handleUser={this.props.handleUser} user = {user} preview={this.props.preview}/>
       </Route>
     );
   }

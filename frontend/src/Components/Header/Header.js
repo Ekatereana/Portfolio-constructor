@@ -14,18 +14,29 @@ class Header extends React.Component {
     if (this.props.preview) {
       content =
        <ul className="navbar-nav mr-auto">
-         <li className="nav-item active">
-           <a className="nav-link" href="#">Home<span className="sr-only">(current)</span></a>
-         </li>
-         <li className="nav-item">
-           <a className="nav-link" href="#about">About Me</a>
-         </li>
-         <li className="nav-item">
-           <a className="nav-link" href="#portfolio">Portfolio</a>
-         </li>
-         <li className="nav-item">
-           <a className="nav-link" href="#services">Services</a>
-         </li>
+         {this.props.isAuthorized.home ? (
+           <li className="nav-item active">
+             <a className="nav-link" href="#">Home<span className="sr-only">(current)</span></a>
+           </li>
+         ) : null}
+
+         {this.props.isAuthorized.aboutMe ? (
+           <li className="nav-item">
+             <a className="nav-link" href="#about">About Me</a>
+           </li>
+         ) : null}
+
+         {this.props.isAuthorized.portfolio ? (
+           <li className="nav-item">
+             <a className="nav-link" href="#portfolio">Portfolio</a>
+           </li>
+         ) : null}
+
+         {this.props.isAuthorized.services ? (
+           <li className="nav-item">
+             <a className="nav-link" href="#services">Services</a>
+           </li>
+         ) : null}
          <li onClick={ () => { this.props.handlePreview(null); } }>
            <a className="nav-link" href="/create">GO BACK TO CONSTRUCTOR</a>
          </li>

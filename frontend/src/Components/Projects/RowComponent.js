@@ -136,8 +136,24 @@ class RowComponent extends Component {
   };
 
   render () {
+    const noEdit = this.props.edit;
     const titleButton = this.getButtonType(this.state.titlePosition);
     const textButton = this.getButtonType(this.state.textPosition);
+    let buttons;
+    if (!noEdit) {
+      buttons =
+       <div className="footer">
+         <button type="button" onClick={() => { this.props.update(this); }} className="btn btn-primary">SAVE</button>
+         <button type="button" onClick={() => { this.props.delete(this); }} className="btn btn-danger">DELETE</button>
+         <div className="btn btn-info" value="Browse..."
+           onClick={() => { this.upload(this.props.id); }}>
+           <span>Choose Photo</span>
+           <div className="file-path-wrapper">
+             <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
+           </div>
+         </div>
+       </div>;
+    }
     console.log('rowComponent', this.props);
 
     return (
@@ -150,7 +166,7 @@ class RowComponent extends Component {
           <div className="card-body">
 
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
-              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName='editable-title card-title' text={this.state.title} type="input" value={this.state.title}>
+              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={noEdit} styleName='editable-title card-title' text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
                   value={this.state.title}
@@ -158,9 +174,11 @@ class RowComponent extends Component {
                   type="text"
                   id="inputPrefilledEx"/>
               </Editable>
-              <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-                { titleButton }
-              </div>
+              {!noEdit ? (
+                <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                  { titleButton }
+                </div>
+              ) : null}
             </div>
             <hr/>
             <div className={ this.getStyled(this.state.textPosition, 'text-control-item ')}>
@@ -176,22 +194,14 @@ class RowComponent extends Component {
                   type="text"
                   id="inputPrefilledEx"/>
               </Editable>
-              <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
-                { textButton }
-              </div>
+              {!noEdit ? (
+                <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
+                  { textButton }
+                </div>
+              ) : null}
             </div>
             <hr/>
-            <div className="card-footer">
-              <button type="button" onClick={() => { this.props.update(this); }} className="btn btn-primary">SAVE</button>
-              <button type="button" onClick={() => { this.props.delete(this); }} className="btn btn-danger">DELETE</button>
-              <div className="btn btn-info" value="Browse..."
-                onClick={() => { this.upload(this.props.id); }}>
-                <span>Choose Photo</span>
-                <div className="file-path-wrapper">
-                  <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
-                </div>
-              </div>
-            </div>
+            {buttons}
           </div>
         </div>
 

@@ -7,6 +7,11 @@
 	margin-bottom: 5em;
 }
 
+.no-mg-top {
+  margin-top: 0;
+  padding-top:  0;
+}
+
 .profile-panel{
   display: flex;
   flex-direction: column;
@@ -28,7 +33,8 @@
 }
 
 .button-mg-top {
-  margin-top: 1em;
+  margin-top:   0.3em;
+  margin-bottom: 1em;
   font-size: 30px;
 }
 .card-down {
@@ -64,7 +70,7 @@
   width: 50em;
   display: flex;
   position: absolute;
-  top: 72em;
+  top: 55em;
   margin-bottom: 5em;
   }
 
@@ -136,14 +142,16 @@
   display:  flex; 
   flex-direction:   row; 
   max-width: 60%;
-  margin: 2em; 
+  margin-top: 1em;
+  margin-left: 2em;
+  margin-bottom: 0.5em; 
 
 }
 
 .social-button {
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  padding-left: 10px;
   align-items: center;
   color: white;
 

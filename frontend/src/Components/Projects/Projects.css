@@ -1,5 +1,6 @@
 .portfolio-container{
 	margin-left: 20em;
+	max-width: 60%;
 }
 
 .overlay {

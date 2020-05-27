@@ -117,11 +117,12 @@ class BasicUserProfile extends React.Component {
       img: this.props.currentState.img,
       title: this.props.currentState.title,
       subtitle: this.props.currentState.subtitle,
-      subtitlePosition: this.subtitlePosition,
-      titlePosition: this.titlePosition,
+      subtitlePosition: this.props.currentState.subtitlePosition,
+      titlePosition: this.props.currentState.titlePosition,
       primaryText: this.props.currentState.primaryText,
-      primaryTextPosition: this.primaryTextPosition
+      primaryTextPosition: this.props.currentState.primaryTextPosition
     };
+    console.log('title position', this.state.titlePosition);
     this.uploadFile = this.uploadFile.bind(this);
     this.saveTextInput = this.saveTextInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -151,6 +152,10 @@ class BasicUserProfile extends React.Component {
     console.log('change position');
     console.log(event.currentTarget.getAttribute('name'));
     const newState = this.state;
+
+    if (!newState[event.currentTarget.getAttribute('name')]) {
+      newState[event.currentTarget.getAttribute('name')] = null;
+    };
     switch (event.currentTarget.getAttribute('value')) {
       case 'text-center':
         newState[event.currentTarget.getAttribute('name')] = 'text-left';
@@ -172,6 +177,7 @@ class BasicUserProfile extends React.Component {
 
   getButtonType (value) {
     let titleButton;
+    console.log('button-value', value);
     switch (value) {
       case 'text-center':
         titleButton = <i className="fas fa-align-center"></i>;
@@ -232,12 +238,15 @@ class BasicUserProfile extends React.Component {
 
   render () {
     const noEdit = this.props.preview;
-    const titleButton = this.getButtonType(this.state.titlePosition);
+    const titleButton = this.getButtonType(this.state.titlePosition ? this.state.titlePosition : null);
+    const subtitleButton = this.getButtonType(this.state.subtitlePosition ? this.state.subtitlePosition : null);
+    const primaryTextButton = this.getButtonType(this.state.primaryTextPosition ? this.state.primaryTextPosition : null);
+    console.log('title button', titleButton);
     let choosePhotoButton;
     if (!noEdit) {
       choosePhotoButton =
         <div className="file-field button-mg-top" >
-          <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => document.getElementById('selectImage-1').click()}>
+          <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => document.getElementById('selectImage-2').click()}>
             <span>Choose Photo</span>
             <div className="file-path-wrapper">
               <input id="selectImage-2" hidden type="file" onChange={this.uploadFile}/>
@@ -279,9 +288,10 @@ class BasicUserProfile extends React.Component {
                     { titleButton }
                   </div>
                 ) : null}
+
               </div>
 
-              <div className="editable">
+              <div className={this.getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle')} styleName="font-weight-bold indigo-text py-2" text={this.state.subtitle} type="input" value={this.state.subtitle}>
 
                   <input
@@ -292,10 +302,15 @@ class BasicUserProfile extends React.Component {
                     id="inputPrefilledEx"
                     className="card-title"/>
                 </Editable>
+                {!noEdit ? (
+                  <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
+                    { subtitleButton }
+                  </div>
+                ) : null}
 
               </div>
 
-              <div className="editable">
+              <div className={this.getStyled(this.state.primaryTextPosition, 'text-control-item editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.primaryText, 'primaryText')} styleName="card-text" text={this.state.primaryText} type="input" value={this.state.subtitle}>
 
                   <input
@@ -306,6 +321,11 @@ class BasicUserProfile extends React.Component {
                     id="inputPrefilledEx"
                     className="card-title"/>
                 </Editable>
+                {!noEdit ? (
+                  <div onClick={this.onChangeTiTlePosition} name="primaryTextPosition" value={this.state.primaryTextPosition} className="text-format-button">
+                    { primaryTextButton }
+                  </div>
+                ) : null}
 
               </div>
               <hr/>
@@ -354,6 +374,11 @@ class SocialButton extends React.Component {
     };
     this.editSocial = this.editSocial.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.toUrlSocial = this.toUrlSocial.bind(this);
+  }
+
+  toUrlSocial (url) {
+    window.open(url);
   }
 
   handleChange (event) {
@@ -378,19 +403,19 @@ class SocialButton extends React.Component {
     if (!this.props.editable) {
       edit =
       <div>
-        <div className="social-item">  <button type="button" onClick={this.editSocial} className="fas fa-edit btn-edit-social"></button></div>
+        <div className="social-item">  <button onClick={this.editSocial} className="fas fa-edit btn-edit-social"></button></div>
         <div className="socia-item">  <button onClick={ () => this.props.delete(this)} className="far fa-trash-alt btn-edit-social"></button> </div>
       </div>;
     }
     return (
       <div className="social-button">
         <div className="social-item"> <button
-          action={this.state.url}
+          onClick={() => this.toUrlSocial(this.state.url)}
           type="button"
           className={'btn ' + this.props.butonclass + ' no-rm'}>
           <i className={ 'fab ' + this.props.classname}></i>{this.props.socialName}
         </button> </div>
-        { this.state.isEditable ? <div className="social-item"><input name="url" onChange={this.handleChange} className="card-title editable-link" type="text" value={this.state.url}/></div> : null }
+        { this.state.isEditable ? <div className="social-item editable"><input name="url" onChange={this.handleChange} className="card-title editable-link" type="text" value={this.state.url}/></div> : null }
         {edit}
       </div>
 
@@ -406,6 +431,8 @@ class UserPhotoCard extends React.Component {
     this.state = {
       img: currentS.img,
       title: currentS.title,
+      titlePosition: currentS.titlePosition,
+      quotesPosition: currentS.quotesPosition,
       quotes: currentS.quotes,
       arrayOfSocial: currentS.arrayOfSocial,
       isShown: false
@@ -419,7 +446,68 @@ class UserPhotoCard extends React.Component {
     this.saveTextInput = this.saveTextInput.bind(this);
     this.upload = this.upload.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
+    this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
   };
+
+  getStyled (position, styles) {
+    let styleHeader;
+    switch (position) {
+      case null:
+        styleHeader = 'text-center';
+        break;
+      case 'text-center':
+        styleHeader = 'text-center';
+        break;
+      case 'text-left':
+        styleHeader = 'text-left';
+        break;
+      case 'text-right':
+        styleHeader = 'text-right';
+        break;
+    };
+    return styleHeader + ' ' + styles;
+  };
+
+  onChangeTiTlePosition (event) {
+    const newState = this.state;
+    switch (event.currentTarget.getAttribute('value')) {
+      case 'text-center':
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
+        break;
+      case 'text-left':
+        newState[event.currentTarget.getAttribute('name')] = 'text-right';
+        break;
+      case 'text-right':
+        newState[event.currentTarget.getAttribute('name')] = 'text-center';
+        break;
+      case null:
+        newState[event.currentTarget.getAttribute('name')] = 'text-left';
+        break;
+    }
+    this.setState(newState);
+    console.log('change-position', this.state);
+    this.props.update('userPhotoCard', this.state);
+    console.log(this.state);
+  }
+
+  getButtonType (value) {
+    let titleButton;
+    switch (value) {
+      case 'text-center':
+        titleButton = <i className="fas fa-align-center"></i>;
+        break;
+      case 'text-left':
+        titleButton = <i className="fas fa-align-left"></i>;
+        break;
+      case 'text-right':
+        titleButton = <i className="fas fa-align-right"></i>;
+        break;
+      case null:
+        titleButton = <i className="fas fa-align-center"></i>;
+        break;
+    };
+    return titleButton;
+  }
 
   upload (id) {
     console.log(document.getElementById('selectImage'));
@@ -517,7 +605,8 @@ class UserPhotoCard extends React.Component {
   render () {
     let { arrayOfSocial } = this.state;
     const imMuteble = this.props.preview;
-    console.log('immuteble', imMuteble);
+    const titleButton = this.getButtonType(this.state.titlePosition ? this.state.titlePosition : null);
+    const quotesButton = this.getButtonType(this.state.quotesPosition ? this.state.quotesPosition : null);
     let editPhotoCard;
     if (arrayOfSocial == null) {
       arrayOfSocial = [];
@@ -554,7 +643,7 @@ class UserPhotoCard extends React.Component {
           {editPhotoCard}
         </div>
 
-        <div className="social-panel">
+        <div className="social-panel row">
           {
             arrayOfSocial.map((el) => {
               return <SocialButton
@@ -570,28 +659,41 @@ class UserPhotoCard extends React.Component {
           }
         </div>
 
-        <div className="card-body editable">
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={imMuteble} styleName="editable-title card-title" text={this.state.title} type="input" value={this.state.title}>
-            <input
-              name="title"
-              value={this.state.title}
-              onChange={this.handleChange}
-              type="text"
-              id="inputPrefilledEx"/>
-          </Editable>
+        <div className="card-body no-mg-top editable">
+          <div className={this.getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
+            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={imMuteble} styleName="editable-title card-title" text={this.state.title} type="input" value={this.state.title}>
+              <input
+                name="title"
+                value={this.state.title}
+                onChange={this.handleChange}
+                type="text"
+                id="inputPrefilledEx"/>
+            </Editable>
+            {!imMuteble ? (
+              <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                { titleButton }
+              </div>
+            ) : null}
+          </div>
 
           <hr/>
-
           <i className="fas fa-quote-left "></i>
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes')} edit={imMuteble} styleName="editable-text card-text" text={this.state.quotes} type="input" value={this.state.quotes}>
-            <input
-              name="quotes"
-              value={this.state.quotes}
-              onChange={this.handleChange}
-              type="text"
-              id="inputPrefilledEx"
-              className="card-title"/>
-          </Editable>
+          <div className={this.getStyled(this.state.quotesPosition, 'text-control-item editable')}>
+            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes')} edit={imMuteble} styleName="editable-text card-text" text={this.state.quotes} type="input" value={this.state.quotes}>
+              <input
+                name="quotes"
+                value={this.state.quotes}
+                onChange={this.handleChange}
+                type="text"
+                id="inputPrefilledEx"
+                className="card-title"/>
+            </Editable>
+            {!imMuteble ? (
+              <div onClick={this.onChangeTiTlePosition} name="quotesPosition" value={this.state.quotesPosition} className="text-format-button">
+                { quotesButton }
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 

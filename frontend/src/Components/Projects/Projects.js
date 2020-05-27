@@ -62,6 +62,7 @@ class Projects extends Component {
 
   render () {
     let { portfolio } = this.state.user;
+    const noEdit = this.props.preview;
     if (!portfolio) {
       portfolio = {
         best: null,
@@ -70,8 +71,8 @@ class Projects extends Component {
     }
     return (
       <div className="portfolio-container">
-        <button type="button" onClick={() => this.handleSublmitAll(portfolio)} className="btn no-l-mg btn-info waves-effect">SUBMIT ALL</button>
-        <Best currentState={portfolio.best} update={this.updateState} sumit={this.handleSublmitAll}/>
+        {!noEdit ? <button type="button" onClick={() => this.handleSublmitAll(portfolio)} className="btn no-l-mg btn-info waves-effect">SUBMIT ALL</button> : null}
+        <Best edit={noEdit} currentState={portfolio.best} update={this.updateState} sumit={this.handleSublmitAll}/>
       </div>
     );
   }
@@ -229,6 +230,7 @@ class Best extends Component {
   }
 
   render () {
+    const noEdit = this.props.edit;
     const titleButton = this.getButtonType(this.state.titlePosition);
     const subtitleButton = this.getButtonType(this.state.subtitlePosition);
     const { arrayOfCards } = this.state;
@@ -239,7 +241,7 @@ class Best extends Component {
         <section className="dark-grey-text editable ">
           <div className="best-header">
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
-              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName='editable-title card-title' text={this.state.title} type="input" value={this.state.title}>
+              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={noEdit} styleName='editable-title card-title' text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
                   value={this.state.title}
@@ -247,13 +249,15 @@ class Best extends Component {
                   type="text"
                   id="inputPrefilledEx"/>
               </Editable>
-              <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-                { titleButton }
-              </div>
+              {!noEdit ? (
+                <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                  { titleButton }
+                </div>
+              ) : null}
             </div>
 
             <div className={ this.getStyled(this.state.subtitlePosition, 'text-control-item ')}>
-              <Editable styleName={'editable-text card-text' + this.getStyled} text={this.state.subtitle} type="input" value={this.state.subtitle}>
+              <Editable styleName={'editable-text card-text' + this.getStyled} text={this.state.subtitle} edit={noEdit} type="input" value={this.state.subtitle}>
                 <input
                   name="subtitle"
                   value={this.state.subtitle}
@@ -261,17 +265,20 @@ class Best extends Component {
                   type="text"
                   id="inputPrefilledEx"/>
               </Editable>
-              <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
-                { subtitleButton }
-              </div>
+              {!noEdit ? (
+                <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
+                  { subtitleButton }
+                </div>
+              ) : null}
             </div>
           </div>
           <hr/>
-          <button type="button" onClick={this.addBestCard} className="btn no-l-mg btn-info">ADD NEW PROJECT</button>
+          {!noEdit ? <button type="button" onClick={this.addBestCard} className="btn no-l-mg btn-info">ADD NEW PROJECT</button> : null }
           <div className="row">
             {
               arrayOfCards.map((el) => {
                 return <RowComponent
+                  edit = {noEdit}
                   content={el.props.content}
                   update={this.updateRowComponent}
                   delete={this.deleteBestCard}
