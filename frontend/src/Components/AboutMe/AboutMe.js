@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MDBBtn } from "mdbreact";
+import { MDBBtn } from 'mdbreact';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -11,15 +11,17 @@ class AboutMe extends React.Component {
   constructor (props) {
     super(props);
     console.log('start');
-
-    let cards = [];
-    if (this.props.user.aboutMe.arrayOfCards) {
-      cards = this.props.user.aboutMe.arrayOfCards;
-    }
+    console.log('props.user: ', this.props.user);
 
     this.state = {
-      arrayOfCards: cards
+      arrayOfCards: this.props.user.aboutMe.arrayOfCards ? this.props.user.aboutMe.arrayOfCards : []
     };
+
+    // let cards = [];
+    // if (this.props.user.aboutMe.arrayOfCards.length > 0) {
+    //   cards = this.props.user.aboutMe.arrayOfCards;
+    // }
+
     this.handleAddCard = this.handleAddCard.bind(this);
     this.handleSublmitAll = this.handleSublmitAll.bind(this);
     this.removeCard = this.removeCard.bind(this);
@@ -60,7 +62,8 @@ class AboutMe extends React.Component {
     console.log('handleSubmit');
     const { user } = this.props;
     console.log('about', about);
-    user.aboutMe = about;
+    console.log('state: ', this.state);
+    user.aboutMe = this.state;
     this.setState(user);
     console.log('udate user ', user);
 
@@ -89,6 +92,7 @@ class AboutMe extends React.Component {
     this.setState(
       { arrayOfCards: arrayOfCards }
     );
+    console.log('arrayOfCards: ', arrayOfCards);
   }
 
   render () {
@@ -122,9 +126,8 @@ class AboutMe extends React.Component {
 class AboutCard extends React.Component {
   constructor (props) {
     super(props);
-
     const content = this.props.content;
-
+    console.log(content);
     if (content) {
       this.state = {
         title: content.title,
@@ -147,6 +150,7 @@ class AboutCard extends React.Component {
       };
     }
 
+    console.log(this.state);
     this.getStyled = this.getStyled.bind(this);
     this.saveTextInput = this.saveTextInput.bind(this);
     this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
@@ -286,4 +290,4 @@ class AboutCard extends React.Component {
 };
 
 export default AboutMe;
-export {AboutCard};
+export { AboutCard };
