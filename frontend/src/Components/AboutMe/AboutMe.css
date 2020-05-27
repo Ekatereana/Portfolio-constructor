@@ -1,6 +1,7 @@
 .about-conteiner {
 	margin-left: 15%;
-	
+	max-width: 90%;
+	margin-top: 1em;
 	display: flex;
 	flex-direction: column;
 }
@@ -31,9 +32,6 @@
 .add-card-button-group {
 	margin-left: 2em;
 	margin-right: 2em;
-	border-bottom-color:  #f3f3f3;
-	border-bottom-style: groove; 
-	border-radius: 25;
 }
 
 .max-h-10 {

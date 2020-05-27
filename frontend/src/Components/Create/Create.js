@@ -58,13 +58,10 @@ class CreatePlaceHolder extends React.Component {
     this.setState({
       isRedirect: true
     });
+    return this.props.handlePreview(true);
   };
 
   render () {
-    if (this.state.isRedirect) {
-      return this.props.handlePreview(true);
-    }
-
     return (
       <div className="card create-filler">
 

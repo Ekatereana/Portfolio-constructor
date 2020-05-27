@@ -13,7 +13,7 @@ class AboutMe extends React.Component {
     console.log('start');
 
     let cards = [];
-    if (this.props.user.aboutMe.arrayOfCards) {
+    if (this.props.user.aboutMe) {
       cards = this.props.user.aboutMe.arrayOfCards;
     }
 
@@ -79,7 +79,10 @@ class AboutMe extends React.Component {
   }
 
   handleAddCard (event) {
-    const { arrayOfCards } = this.state;
+    let { arrayOfCards } = this.state;
+    if (arrayOfCards == null) {
+      arrayOfCards = [];
+    }
     arrayOfCards.push(<AboutCard
       content = {null}
       delete={this.removeCard}
@@ -93,20 +96,28 @@ class AboutMe extends React.Component {
 
   render () {
     let { arrayOfCards } = this.state;
+    const onEdit = this.props.preview;
     if (!arrayOfCards) {
       arrayOfCards = [];
     }
     return (
       <div className="about-conteiner">
         <div className="add-card-button-group">
-          <MDBBtn onClick={ this.handleAddCard } outline color="primary">Add Card</MDBBtn>
-          <MDBBtn onClick={ this.handleSublmitAll } outline color="success">Save Changes</MDBBtn>
+          {onEdit ? null
+            : (
+              <div>
+                <MDBBtn onClick={ this.handleAddCard } outline color="primary">Add Card</MDBBtn>
+                <MDBBtn onClick={ () => this.handleSublmitAll(this.state) } outline color="success">Save Changes</MDBBtn>
+              </div>
+            )
+          }
 
         </div>
 
         <div className="SomeDetails row">
           { arrayOfCards.map((el) => {
             return <AboutCard
+              edit = {onEdit}
               content = {el.props.content}
               delete={this.removeCard}
               update={this.saveChangedCard}
@@ -253,32 +264,85 @@ class AboutCard extends React.Component {
   }
 
   render () {
+    const noEdit = this.props.edit;
+    const titleButton = this.getButtonType(this.state.titlePosition ? this.state.titlePosition : null);
+    const subtitleButton = this.getButtonType(this.state.subtitlePosition ? this.state.subtitlePosition : null);
+    let buttons;
+    if (!noEdit) {
+      buttons =
+       <div className="footer max-h-10">
+         <a href="#" onClick={() => this.props.update(this)} className="btn btn-primary">Save</a>
+         <a href="#" onClick={() => this.props.delete(this)} className="btn btn-danger">Delete</a>
+         <div className="btn btn-info" value="Browse..."
+           onClick={() => { this.upload(this.props.id); }}>
+           <span>Choose Photo</span>
+           <div className="file-path-wrapper">
+             <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
+           </div>
+         </div>
+       </div>;
+    }
+
     return (
       <div className="card card-element">
         <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
         <div className="card-body">
-          <Editable childRef={ this.textInput} className="card-title" text={this.state.title} type="input">
-            <input ref={ this.textInput } name="title" value={this.state.title} onChange={this.handleChange} type="text" id="inputPrefilledEx" className="form-control"/>
-          </Editable>
+          <div className={this.getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
+            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName="editable-title" edit={noEdit} text={this.state.title} type="input" value={this.state.title}>
 
-          <Editable type="text" className="card-text" text={this.state.subTitle}>
-            <input value={this.state.subTitle} name="subTitle" type="text" className="form-control"/>
-          </Editable>
-
-          <Editable type="text" className="card-text" text={this.state.primaryText}>
-            <input value={this.state.primaryText} name="primaryText" type="text" className="form-control" onChange={this.handleChange}/>
-          </Editable>
-          <div className="card-footer max-h-10">
-            <a href="#" onClick={() => this.props.update(this)} className="btn btn-primary">Save</a>
-            <a href="#" onClick={() => this.props.delete(this)} className="btn btn-danger">Delete</a>
-            <div className="btn btn-info" value="Browse..."
-              onClick={() => { this.upload(this.props.id); }}>
-              <span>Choose Photo</span>
-              <div className="file-path-wrapper">
-                <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
+              <input
+                name="title"
+                value={this.state.title}
+                onChange={this.handleChange}
+                type="text"
+                id="inputPrefilledEx"
+                className="card-title"/>
+            </Editable>
+            {!noEdit ? (
+              <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                { titleButton }
               </div>
-            </div>
+            ) : null}
           </div>
+
+          <div className={this.getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
+            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subTitle, 'subtitle')} styleName="card-text"  edit={noEdit} text={this.state.subTitle} type="input" value={this.state.subtitle}>
+
+              <input
+                name="subtitle"
+                value={this.state.subTitle}
+                onChange={this.handleChange}
+                type="text"
+                id="inputPrefilledEx"
+                className="card-title"/>
+            </Editable>
+            {!noEdit ? (
+              <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subTitlePosition} className="text-format-button">
+                { subtitleButton }
+              </div>
+            ) : null}
+
+          </div>
+
+          <div className={this.getStyled(this.state.primaryTextPosition, 'text-control-item editable')}>
+            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.primaryText, 'primaryText')} edit={noEdit} styleName="card-text" text={this.state.primaryText} type="input" value={this.state.primaryText}>
+
+              <input
+                name="primaryText"
+                value={this.state.primaryText}
+                onChange={this.handleChange}
+                type="text"
+                id="inputPrefilledEx"
+                className="card-title"/>
+            </Editable>
+            {!noEdit ? (
+              <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subTitlePosition} className="text-format-button">
+                { subtitleButton }
+              </div>
+            ) : null}
+
+          </div>
+          {buttons}
         </div>
       </div>
     );
@@ -286,4 +350,4 @@ class AboutCard extends React.Component {
 };
 
 export default AboutMe;
-export {AboutCard};
+export { AboutCard };

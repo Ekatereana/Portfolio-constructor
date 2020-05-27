@@ -65,6 +65,7 @@ class Services extends Component {
 
   render () {
     let { services } = this.state.user;
+    const noEdit = this.props.preview;
     console.log('services', services);
     if (!services) {
       services = {
@@ -73,9 +74,9 @@ class Services extends Component {
     }
     return (
       <section className="services-card my-5">
-        <button type="button" onClick={() => this.handleSublmitAll(services)} className="btn no-l-mg btn-info waves-effect">SUBMIT ALL</button>
+        {!noEdit ? <button type="button" onClick={() => this.handleSublmitAll(services)} className="btn no-l-mg btn-info waves-effect">SUBMIT ALL</button> : null}
         <hr/>
-        <ServicePanel currentState={ services.servicesPanel } update={this.updateState} sumit={this.handleSublmitAll}/>
+        <ServicePanel edit = {noEdit} currentState={ services.servicesPanel } update={this.updateState} sumit={this.handleSublmitAll}/>
         <hr/>
       </section>
     );
@@ -238,6 +239,7 @@ class ServicePanel extends Component {
   }
 
   render () {
+    const noEdit = this.props.edit;
     const titleButton = this.getButtonType(this.state.titlePosition);
     const subtitleButton = this.getButtonType(this.state.subtitlePosition);
     const { arrayOfCards } = this.state;
@@ -246,7 +248,7 @@ class ServicePanel extends Component {
       <div className="">
 
         <div className={ this.getStyled(this.state.titlePosition, 'text-control-item editable')}>
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName='editable-title  h1-responsive font-weight-bold my-5' text={this.state.title} type="input" value={this.state.title}>
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={noEdit} styleName='editable-title  h1-responsive font-weight-bold my-5' text={this.state.title} type="input" value={this.state.title}>
             <input
               name="title"
               value={this.state.title}
@@ -254,9 +256,11 @@ class ServicePanel extends Component {
               type="text"
               id="inputPrefilledEx"/>
           </Editable>
-          <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-            { titleButton }
-          </div>
+          {!noEdit ? (
+            <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+              { titleButton }
+            </div>
+          ) : null}
         </div>
 
         <div className={ this.getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
@@ -268,16 +272,19 @@ class ServicePanel extends Component {
               type="text"
               id="inputPrefilledEx"/>
           </Editable>
-          <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
-            { subtitleButton }
-          </div>
+          {!noEdit ? (
+            <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subTitlePosition} className="text-format-button">
+              { subtitleButton }
+            </div>
+          ) : null}
         </div>
         <hr/>
-        <ButtonDrop add = {this.addService}/>
+        {noEdit ? null : <ButtonDrop add = {this.addService}/>}
         <MDBRow>
           {
             arrayOfCards.map((el) => {
               return <ServiceComponent
+                edit = {noEdit}
                 content={el.props.content}
                 type={el.props.type}
                 update={this.updateService}
@@ -451,26 +458,33 @@ class ServiceComponent extends Component {
   };
 
   render () {
+    const noEdit = this.props.edit;
     const titleButton = this.getButtonType(this.state.titlePosition);
     const textButton = this.getButtonType(this.state.textPosition);
     const iconButton = this.getButtonType(this.state.iconPosition);
     console.log('iconButton', this.state.iconPosition);
     return (
       <MDBCol md="4">
-        <div className="del-button" onClick={() => this.props.delete(this)}>
+        {!noEdit ? <div className="del-button" onClick={() => this.props.delete(this)}>
           <MDBIcon icon="trash-alt" />
-        </div>
+        </div> : null }
+
         <div className={ this.getStyled(this.state.iconPosition, 'text-control-item editable ')}>
-          <div name="color" value={this.state.color} onClick={this.changeColor} className="filler-color">
-            <MDBIcon icon="fill" />
-          </div>
           <MDBIcon icon={this.state.icon} size="3x" className={this.state.color} />
-          <div onClick={this.onChangeTiTlePosition} name="iconPosition" value={this.state.iconPosition} className="text-format-button">
-            { iconButton }
-          </div>
+          {!noEdit ? (
+            <div>
+              <div name="color" value={this.state.color} onClick={this.changeColor} className="filler-color">
+                <MDBIcon icon="fill" />
+              </div>
+
+              <div onClick={this.onChangeTiTlePosition} name="iconPosition" value={this.state.iconPosition} className="text-format-button">
+                { iconButton }
+              </div>
+            </div>) : null }
         </div>
+
         <div className={ this.getStyled(this.state.titlePosition, 'text-control-item editable')}>
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} styleName='editable-title font-weight-bold my-4' text={this.state.title} type="input" value={this.state.title}>
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={noEdit} styleName='editable-title font-weight-bold my-4' text={this.state.title} type="input" value={this.state.title}>
             <input
               name="title"
               value={this.state.title}
@@ -478,13 +492,15 @@ class ServiceComponent extends Component {
               type="text"
               id="inputPrefilledEx"/>
           </Editable>
-          <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+
+          {!noEdit ? <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
             { titleButton }
-          </div>
+          </div> : null}
+
         </div>
 
         <div className={ this.getStyled(this.state.textPosition, 'text-control-item ')}>
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
+          <Editable edit={noEdit} onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
             styleName='grey-text mb-md-0 mb-5'
             text={this.state.text}
             type="input"
@@ -496,9 +512,9 @@ class ServiceComponent extends Component {
               type="text"
               id="inputPrefilledEx"/>
           </Editable>
-          <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
+          {!noEdit ? <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
             { textButton }
-          </div>
+          </div> : null }
         </div>
       </MDBCol>
     );

@@ -47,7 +47,7 @@ function Authorized () {
     console.log('preview value', preview);
     if (preview !== null) {
       console.log('preview value', preview);
-      return <Redirect to="/preview/#home" />;
+      return <Redirect to="/preview/" />;
     } else {
       return <Redirect to="/create/" />;
     };
@@ -62,14 +62,15 @@ function Authorized () {
       content =
       <Router>
         <Header handlePreview = {handlePreview} isAuthorized={isAuthorized} preview = {preview}/>
-        <Route path="/preview" render={props => <Preview preview = {preview} handleUser={handleUser} user={value} /> }/>
+        <Route exact path="/preview/" render={props => <Preview preview = {preview} handleUser={handleUser} user={value} /> }/>
+        <Route path="/create"> <Redirect to="/preview/" /></Route>
       </Router>;
     } else {
       content =
      <Router>
        <Header isAuthorized={isAuthorized} />
        <div className="vertical-panel">
-         <Route path="/create" render={props => <CreateAll handleUser={handleUser} handlePreview={handlePreview} user={value} /> }/>
+         <Route path="/create" render={props => <CreateAll handleUser={handleUser} handlePreview={handlePreview} preview={preview} user={value} /> }/>
          <Route exact path="/" component={ Main }/>
        </div>
      </Router>;
