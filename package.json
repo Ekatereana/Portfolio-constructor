@@ -9,7 +9,7 @@
     "start": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
     "backend": "nodemon app.js",
     "frontend": "cd frontend && npm start",
-    "build": "cd frontend && npm run build",
+    "build": "npm install && cd frontend && npm install && npm run build",
     "construct": " concurently --kill-others \"npm install\" \" cd frontend && npm install\""
   },
   "repository": {
