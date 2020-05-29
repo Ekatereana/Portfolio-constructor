@@ -5,8 +5,9 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 
 import axios from 'axios';
-import { MDBBtn, MDBDropdown, MDBDropdownToggle,  MDBBtnGroup, MDBDropdownMenu, MDBDropdownItem } from 'mdbreact';
 import RowComponent from './RowComponent';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange } from '../TextFormater';
+import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class Projects extends Component {
   constructor (props) {
@@ -88,7 +89,11 @@ class Best extends Component {
         subtitle: current.subtitle,
         titlePosition: current.titlePosition,
         subtitlePosition: current.subtitlePosition,
-        arrayOfCards: current.arrayOfCards
+        arrayOfCards: current.arrayOfCards,
+        titleColor: current.titleColor,
+        subtitleColor: current.subtitleColor,
+        subtitleFontSize: current.subtitleFontSize,
+        titleFontSize: current.titleFontSize
       };
     } else {
       this.state = {
@@ -96,16 +101,22 @@ class Best extends Component {
         subtitle: 'TYPE SOME TEXT',
         titlePosition: null,
         subtitlePosition: null,
-        arrayOfCards: []
+        arrayOfCards: [],
+        titleColor: null,
+        subtitleColor: null,
+        subtitleFontSize: null,
+        titleFontSize: null
       };
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.getStyled = this.getStyled.bind(this);
-    this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
+    this.handleChange = handleChange.bind(this);
+    this.getStyled = getStyled.bind(this);
+    this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
     this.addBestCard = this.addBestCard.bind(this);
     this.deleteBestCard = this.deleteBestCard.bind(this);
-    this.saveTextInput = this.saveTextInput.bind(this);
+    this.saveTextInput = saveTextInput.bind(this);
     this.updateRowComponent = this.updateRowComponent.bind(this);
+    this.changeColor = changeColor.bind(this);
+    this.changeFont = changeFont.bind(this);
   }
 
   updateRowComponent (component) {
@@ -115,8 +126,7 @@ class Best extends Component {
     const current = newState.arrayOfCards.find(el => el.props.id === component.props.id);
     const id = newState.arrayOfCards.indexOf(current);
     console.log('id', id);
-    this.deleteBestCard(component);
-    newState.arrayOfCards.push(<RowComponent
+    newState.arrayOfCards.splice(id, 1, <RowComponent
       content={component.state}
       delete = {this.deleteBestCard}
       update = {this.updateRowComponent}
@@ -154,85 +164,10 @@ class Best extends Component {
     this.props.update('best', this.state);
   }
 
-  getStyled (position, styles) {
-    let styleHeader;
-    switch (position) {
-      case null:
-        styleHeader = 'text-center';
-        break;
-      case 'text-center':
-        styleHeader = 'text-center';
-        break;
-      case 'text-left':
-        styleHeader = 'text-left';
-        break;
-      case 'text-right':
-        styleHeader = 'text-right';
-        break;
-    };
-    return styleHeader + ' ' + styles;
-  };
-
-  onChangeTiTlePosition (event) {
-    const newState = this.state;
-    switch (event.currentTarget.getAttribute('value')) {
-      case 'text-center':
-        newState[event.currentTarget.getAttribute('name')] = 'text-left';
-        break;
-      case 'text-left':
-        newState[event.currentTarget.getAttribute('name')] = 'text-right';
-        break;
-      case 'text-right':
-        newState[event.currentTarget.getAttribute('name')] = 'text-center';
-        break;
-      case null:
-        newState[event.currentTarget.getAttribute('name')] = 'text-left';
-        break;
-    }
-    this.setState(newState);
-    console.log('change-position', this.state);
-    this.props.update('best', this.state);
-    console.log(this.state);
-  }
-
-  getButtonType (value) {
-    let titleButton;
-    switch (value) {
-      case 'text-center':
-        titleButton = <i className="fas fa-align-center"></i>;
-        break;
-      case 'text-left':
-        titleButton = <i className="fas fa-align-left"></i>;
-        break;
-      case 'text-right':
-        titleButton = <i className="fas fa-align-right"></i>;
-        break;
-      case null:
-        titleButton = <i className="fas fa-align-center"></i>;
-        break;
-    };
-    return titleButton;
-  }
-
-  saveTextInput (event, input, element) {
-    if (event.key === 'Enter') {
-      const newState = this.state;
-      newState[element] = input;
-      this.setState(newState);
-      this.props.update('best', this.state);
-    };
-  }
-
-  handleChange (event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
   render () {
     const noEdit = this.props.edit;
-    const titleButton = this.getButtonType(this.state.titlePosition);
-    const subtitleButton = this.getButtonType(this.state.subtitlePosition);
+    const titleButton = getButtonType(this.state.titlePosition);
+    const subtitleButton = getButtonType(this.state.subtitlePosition);
     const { arrayOfCards } = this.state;
     console.log('array of components', arrayOfCards);
     return (
@@ -241,7 +176,8 @@ class Best extends Component {
         <section className="dark-grey-text editable ">
           <div className="best-header">
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
-              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={noEdit} styleName='editable-title card-title' text={this.state.title} type="input" value={this.state.title}>
+              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
+                edit={noEdit} styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
                   value={this.state.title}
@@ -250,14 +186,22 @@ class Best extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-                  { titleButton }
+                <div className="row control-panel">
+                  <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, true)} className="filler-color">
+                    <MDBIcon icon="fill" />
+                  </div>
+                  <div onClick={(event) => this.onChangeTiTlePosition(event, true)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                    { titleButton }
+                  </div>
+                  <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">
+                    <i class="fas fa-text-height"></i>
+                  </div>
                 </div>
               ) : null}
             </div>
 
             <div className={ this.getStyled(this.state.subtitlePosition, 'text-control-item ')}>
-              <Editable styleName={'editable-text card-text' + this.getStyled} text={this.state.subtitle} edit={noEdit} type="input" value={this.state.subtitle}>
+              <Editable styleName={'editable-text card-text ' + this.state.subtitleFontSize + ' ' + this.state.subtitleColor } text={this.state.subtitle} edit={noEdit} type="input" value={this.state.subtitle}>
                 <input
                   name="subtitle"
                   value={this.state.subtitle}
@@ -266,8 +210,16 @@ class Best extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div onClick={this.onChangeTiTlePosition} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
-                  { subtitleButton }
+                <div className="row control-panel">
+                  <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, true)} className="filler-color">
+                    <MDBIcon icon="fill" />
+                  </div>
+                  <div onClick={(event) => this.onChangeTiTlePosition(event, true)} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
+                    { subtitleButton }
+                  </div>
+                  <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">
+                    <i class="fas fa-text-height"></i>
+                  </div>
                 </div>
               ) : null}
             </div>

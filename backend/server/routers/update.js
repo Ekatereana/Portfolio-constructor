@@ -12,7 +12,7 @@ router.post('/update', async (ctx) => {
   const user = await queries.updateUser(ctx.request.body.user);
   console.log(user);
   if (user) {
-    ctx.body = ctx.state.user;
+    ctx.body = ctx.request.body.user;
     console.log('updated', ctx.body);
   } else {
     ctx.stus = 400;

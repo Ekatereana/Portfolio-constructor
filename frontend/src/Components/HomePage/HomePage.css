@@ -12,6 +12,20 @@
   padding-top:  0;
 }
 
+
+.opacity-button {
+  font-size: 24px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  cursor: pointer;
+}
+
+.opacity-button:hover{
+  color: grey;
+}
+
 .profile-panel{
   display: flex;
   flex-direction: column;
@@ -22,6 +36,19 @@
   margin: 0;
   margin-bottom: 1em;
 }
+
+.opacity-full {
+  background-color: rgba( 255, 255, 255,  1);
+}
+
+.opacity-middle {
+  background-color: rgba( 255, 255, 255,  0.5);
+}
+
+.opacity-null {
+  background-color: rgba( 255, 255, 255,  0);
+}
+
 .profile-card {
 	display: flex;
 	flex-direction: column;
@@ -62,7 +89,7 @@
 	width: 50em;
 	display: flex;
   position: absolute;
-  top: 65em;
+  top: 55em;
   margin-bottom: 5em;
 	}
 

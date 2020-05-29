@@ -53,10 +53,9 @@ router.get('/auth/login', async (ctx) => {
 
 router.post('/auth/login', async (ctx, next) => {
   console.log('start login');
-  console.log(ctx.request.body);
   // ctx.logout();
   return passport.authenticate('local', (err, user, info, status) => {
-    console.log('inside post login user: ', user);
+    console.log('inside post login user: ');
     if (err) {
       console.log('error with login');
       console.log(err.stack);
@@ -65,7 +64,9 @@ router.post('/auth/login', async (ctx, next) => {
       if (user) {
         console.log('login me');
         ctx.login(user);
-        ctx.redirect('/home');
+        console.log('after login', ctx.isAuthenticated());
+        ctx.response.body = ctx.state.user;
+        // ctx.redirect('/home');
       } else {
         ctx.status = 400;
         console.log('error with user auth');
@@ -89,7 +90,7 @@ router.get('/auth/logout', async (ctx) => {
 
 router.get('/home', async (ctx) => {
   console.log('home');
-  console.log(ctx.state);
+  console.log('is auth before chack', ctx.isAuthenticated());
   if (ctx.isAuthenticated()) {
     console.log('is auth');
     ctx.response.body = ctx.state.user;

@@ -35,7 +35,7 @@ function Authorized () {
   let [preview, setPreview] = useStateWithsessionStorage('preview');
 
   const handleUser = (user) => {
-    console.log('handle');
+    console.log('handle', user);
     setValue(JSON.stringify(user));
     sessionStorage.setItem('user', JSON.stringify(user));
   };
@@ -68,7 +68,7 @@ function Authorized () {
     } else {
       content =
      <Router>
-       <Header isAuthorized={isAuthorized} />
+       <Header handleUser = {handleUser}  handlePreview = {handlePreview} isAuthorized={isAuthorized} />
        <div className="vertical-panel">
          <Route path="/create" render={props => <CreateAll handleUser={handleUser} handlePreview={handlePreview} preview={preview} user={value} /> }/>
          <Route exact path="/" component={ Main }/>
@@ -78,7 +78,7 @@ function Authorized () {
   } else {
     content =
      <Router>
-       <Header isAuthorized={isAuthorized}/>
+       <Header handlePreview = {handlePreview} isAuthorized={isAuthorized}/>
        <div className="vertical-panel">
          <Route path="/registration" render={props => <Conteiner handleUser={handleUser} /> }/>
          <Route exact path="/" component={ Main }/>

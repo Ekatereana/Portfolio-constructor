@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Editable from '../Editable';
 import axios from 'axios';
 
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange } from '../TextFormater';
+import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
+
 class RowComponent extends Component {
   constructor (props) {
     super(props);
@@ -12,7 +15,11 @@ class RowComponent extends Component {
         title: content.title,
         img: content.img,
         titlePosition: content.titlePosition,
+        titleColor: content.titleColor,
+        titleFontSize: content.titleFontSize,
         textPosition: content.textPosition,
+        textFontSize: content.textFontSize,
+        textColor: content.textColor,
         text: content.text,
         url: content.url,
         isSaved: true
@@ -22,18 +29,24 @@ class RowComponent extends Component {
         title: 'Custom Title',
         titlePosition: null,
         textPosition: null,
+        titleColor: null,
+        titleFontSize: null,
+        textFontSize: null,
+        textColor: null,
         img: 'https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(147).jpg',
         text: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
         url: '#',
         isSaved: true
       };
     }
-    this.getStyled = this.getStyled.bind(this);
-    this.saveTextInput = this.saveTextInput.bind(this);
-    this.onChangeTiTlePosition = this.onChangeTiTlePosition.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.getStyled = getStyled.bind(this);
+    this.saveTextInput = saveTextInput.bind(this);
+    this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
+    this.handleChange = handleChange.bind(this);
     this.upload = this.upload.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
+    this.changeColor = changeColor.bind(this);
+    this.changeFont = changeFont.bind(this);
   };
 
   upload (id) {
@@ -56,89 +69,10 @@ class RowComponent extends Component {
     });
   }
 
-  getStyled (position, styles) {
-    let styleHeader;
-    switch (position) {
-      case null:
-        styleHeader = 'text-center';
-        break;
-      case 'text-center':
-        styleHeader = 'text-center';
-        break;
-      case 'text-left':
-        styleHeader = 'text-left';
-        break;
-      case 'text-right':
-        styleHeader = 'text-right';
-        break;
-    };
-    return styleHeader + ' ' + styles;
-  };
-
-  onChangeTiTlePosition (event) {
-    console.log('change position');
-    console.log(event.currentTarget.getAttribute('name'));
-    const newState = this.state;
-    switch (event.currentTarget.getAttribute('value')) {
-      case 'text-center':
-        newState[event.currentTarget.getAttribute('name')] = 'text-left';
-        break;
-      case 'text-left':
-        newState[event.currentTarget.getAttribute('name')] = 'text-right';
-        break;
-      case 'text-right':
-        newState[event.currentTarget.getAttribute('name')] = 'text-center';
-        break;
-      case null:
-        newState[event.currentTarget.getAttribute('name')] = 'text-left';
-        break;
-    }
-    newState.isSaved = false;
-    this.setState(newState);
-    this.props.update(this);
-  }
-
-  getButtonType (value) {
-    let titleButton;
-    switch (value) {
-      case 'text-center':
-        titleButton = <i className="fas fa-align-center"></i>;
-        break;
-      case 'text-left':
-        titleButton = <i className="fas fa-align-left"></i>;
-        break;
-      case 'text-right':
-        titleButton = <i className="fas fa-align-right"></i>;
-        break;
-      case null:
-        titleButton = <i className="fas fa-align-center"></i>;
-        break;
-    };
-    return titleButton;
-  }
-
-  saveTextInput (event, input, element) {
-    if (event.key === 'Enter') {
-      const newState = this.state;
-      newState[element] = input;
-      newState.isSaved = false;
-      this.setState(newState);
-      this.props.update(this);
-    };
-  }
-
-  handleChange (event) {
-    console.log('change');
-    this.setState({
-      [event.target.name]: event.target.value,
-      isSaved: false
-    });
-  };
-
   render () {
     const noEdit = this.props.edit;
-    const titleButton = this.getButtonType(this.state.titlePosition);
-    const textButton = this.getButtonType(this.state.textPosition);
+    const titleButton = getButtonType(this.state.titlePosition);
+    const textButton = getButtonType(this.state.textPosition);
     let buttons;
     if (!noEdit) {
       buttons =
@@ -166,7 +100,8 @@ class RowComponent extends Component {
           <div className="card-body">
 
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
-              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={noEdit} styleName='editable-title card-title' text={this.state.title} type="input" value={this.state.title}>
+              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
+                edit={noEdit} styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
                   value={this.state.title}
@@ -175,15 +110,23 @@ class RowComponent extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div onClick={this.onChangeTiTlePosition} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-                  { titleButton }
+                <div className="row control-panel">
+                  <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
+                    <MDBIcon icon="fill" />
+                  </div>
+                  <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                    { titleButton }
+                  </div>
+                  <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, false)} className="filler-color">
+                    <i class="fas fa-text-height"></i>
+                  </div>
                 </div>
               ) : null}
             </div>
             <hr/>
             <div className={ this.getStyled(this.state.textPosition, 'text-control-item ')}>
               <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
-                styleName='card-plain-text text-muted font-weight-light'
+                styleName={ 'card-plain-text text-muted font-weight-light ' + this.state.textColor + ' ' + this.state.textFontSize}
                 text={this.state.text}
                 type="input"
                 value={this.state.text}>
@@ -195,8 +138,16 @@ class RowComponent extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
-                  { textButton }
+                <div className="row control-panel">
+                  <div name="textColor" value={this.state.textColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
+                    <MDBIcon icon="fill" />
+                  </div>
+                  <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
+                    { textButton }
+                  </div>
+                  <div name="textFontSize" value={this.state.textFontSize} onClick={ (event) => this.changeFont(event, false)} className="filler-color">
+                    <i class="fas fa-text-height"></i>
+                  </div>
                 </div>
               ) : null}
             </div>

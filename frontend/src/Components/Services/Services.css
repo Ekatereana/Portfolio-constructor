@@ -2,6 +2,32 @@
 	font-size: 50px;
 }
 
+.middle-text {
+	font-size: 24px;
+}
+
+.small-text {
+	font-size: 18px;
+}
+
+.big-text {
+	font-size: 50px;
+}
+
+.huge-text {
+	font-size: 60px;
+}
+
+.plus-huge-text {
+	font-size: 70px;
+}
+
+.icon {
+	margin-top: 1em;
+}
+.mega-huge-text {
+	font-size: 90px;
+}
 .services-card {
 	max-width: 	70%;
 	margin-left: 15em;
@@ -14,13 +40,24 @@
 
 .row {
  margin-top: 1em;
+ display: flex;
 }
 
 .col-md-4 {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 3em;
+	max-width: 20em;
 }
+
+.control-panel{
+	margin-left: 0.5em;
+	margin-bottom: 1em;
+	margin-right: 0.75em;
+	border-radius: 0.2em;
+	background: white; 
+}
+
 
 .del-button {
 	cursor: pointer;
@@ -34,14 +71,23 @@
 	color: #4db8ff;
 }
 
+.text-format-button {
+	color: #8c8c8c;
+	margin-right: 0.3em;
+}
 .filler-color {
 	margin-right: 0.3em;
-	margin-left: 0.75em;
+	margin-left: 0.35em;
 	color: #8c8c8c;
 	cursor: pointer;
 }
 
 .filler-color:hover {
+
+	color: #4db8ff;
+	
+}
+.text-format-button:hover {
 
 	color: #4db8ff;
 	

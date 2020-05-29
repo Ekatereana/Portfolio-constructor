@@ -51,11 +51,14 @@ class Header extends React.Component {
          <li className="nav-item">
            <a className="nav-link" href="/create">Create</a>
          </li>
-         <li className="nav-item">
+         <li onClick={() => this.props.handlePreview(true)} className="nav-item">
            <a className="nav-link" href="/preview">Preview</a>
          </li>
          <li className="nav-item">
            <a className="nav-link" href="/aboutUS">AboutUS</a>
+         </li>
+         <li onClick = {() => this.props.handleUser(null)} className="nav-item">
+           <a  className="nav-link" href="/">Log out</a>
          </li>
        </ul>;
       } else {
@@ -65,7 +68,7 @@ class Header extends React.Component {
            <a className="nav-link" href="/">Home<span className="sr-only">(current)</span></a>
          </li>
          <li className="nav-item">
-           <a className="nav-link" href="/registration">Register</a>
+           <a className="nav-link" href="/registration">to ACCOUNT</a>
          </li>
          <li className="nav-item">
            <a className="nav-link" href="/aboutUS">AboutUS</a>
