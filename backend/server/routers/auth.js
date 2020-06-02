@@ -2,8 +2,7 @@
 
 const Router = require('koa-router');
 const passport = require('../auth');
-// to create read stream
-// const fs = require('fs')
+
 const queries = require('../db/queries/users');
 
 const router = new Router();
@@ -30,7 +29,7 @@ router.post('/auth/register', async (ctx, next) => {
       } else {
         if (user) {
           ctx.login(user);
-          ctx.redirect('/home');
+          ctx.response.body = user;
         } else {
           ctx.status = 400;
           ctx.body = { status: 'error' };

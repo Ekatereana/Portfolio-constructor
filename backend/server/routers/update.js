@@ -8,9 +8,9 @@ const queries = require('../db/queries/users');
 const router = new Router();
 
 router.post('/update', async (ctx) => {
-  console.log('will be uodate', ctx.request.body);
+  console.log('will be update', ctx.request.body);
   const user = await queries.updateUser(ctx.request.body.user);
-  console.log(user);
+  console.log('founded', user);
   if (user) {
     ctx.body = ctx.request.body.user;
     console.log('updated', ctx.body);

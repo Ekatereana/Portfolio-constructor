@@ -34,7 +34,7 @@ export default class Registration extends Component {
       email: this.state.email,
       password: this.state.password
     }, { withCredentials: true, port: 4000 })
-      .then(function (response) {
+      .then(response => {
         console.log('added user in Registration');
         console.log(response);
         this.props.handleUser(response.data);
@@ -60,7 +60,7 @@ export default class Registration extends Component {
           <div className="image">
             <img src={'./login.svg'}/>
           </div>
-          <form className="form" onSubmit={this.handleSubmit}>
+          <form className="form" onSubmit={(event) => this.handleSubmit(event)}>
 
             <div className="form-group regist-title">
               <label htmlFor="username">Username</label>

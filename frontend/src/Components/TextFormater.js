@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 function getButtonType (value) {
   let titleButton;
@@ -224,4 +225,28 @@ function getStyled (position, styles) {
   return styleHeader + ' ' + styles;
 };
 
-export { getButtonType, getStyled, handleChange, saveTextInput, onChangeTiTlePosition, changeColor, changeFont, changeOpacity };
+function uploadFile ({ target: { files } }) {
+  console.log('===HomePage file upload===');
+  console.log('files: ', files);
+  const file = files[0];
+  console.log('file: ', file);
+
+  const data = new FormData();
+  data.append('image', file);
+  console.log('data: ', data);
+
+  axios.post('/upload/image',
+    data,
+    { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+    console.log('Processed results');
+    console.log('frontend result: ', res);
+    console.log('the link to the image: ', res.data.url);
+    this.setState({
+      img: res.data.url
+    });
+    console.log('new state after file upload', this.state);
+    this.props.update('userPhotoCard', this.state);
+  });
+}
+
+export { getButtonType, getStyled, handleChange, saveTextInput, onChangeTiTlePosition, changeColor, changeFont, changeOpacity, uploadFile };

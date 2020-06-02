@@ -61,7 +61,7 @@ class HomePage extends React.Component {
     user.home = home;
     this.setState(user);
 
-    axios.post('/update', {
+    await axios.post('/update', {
       user: user
     },
     { port: 4000, withCredentials: true }).then(response => {

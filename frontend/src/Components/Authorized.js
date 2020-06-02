@@ -68,7 +68,7 @@ function Authorized () {
     } else {
       content =
      <Router>
-       <Header handleUser = {handleUser}  handlePreview = {handlePreview} isAuthorized={isAuthorized} />
+       <Header handleUser = {handleUser} handlePreview = {handlePreview} isAuthorized={isAuthorized} />
        <div className="vertical-panel">
          <Route path="/create" render={props => <CreateAll handleUser={handleUser} handlePreview={handlePreview} preview={preview} user={value} /> }/>
          <Route exact path="/" component={ Main }/>

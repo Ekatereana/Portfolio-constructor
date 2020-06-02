@@ -3,9 +3,7 @@ import './HomePage.css';
 
 import { Route } from 'react-router-dom';
 import Editable from '../Editable';
-
-import axios from 'axios';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class SocialButton extends React.Component {
@@ -17,19 +15,12 @@ class SocialButton extends React.Component {
       url: url
     };
     this.editSocial = this.editSocial.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = handleChange.bind(this);
     this.toUrlSocial = this.toUrlSocial.bind(this);
   }
 
   toUrlSocial (url) {
     window.open(url);
-  }
-
-  handleChange (event) {
-    console.log('change');
-    this.setState({
-      [event.target.name]: event.target.value
-    });
   }
 
   editSocial () {
@@ -93,7 +84,7 @@ class UserPhotoCard extends React.Component {
     this.handleChange = handleChange.bind(this);
     this.saveTextInput = saveTextInput.bind(this);
     this.upload = this.upload.bind(this);
-    this.uploadFile = this.uploadFile.bind(this);
+    this.uploadFile = uploadFile.bind(this);
     this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
@@ -150,30 +141,6 @@ class UserPhotoCard extends React.Component {
     console.log(this.state);
     this.setState(newState);
     this.props.update('userPhotoCard', this.state);
-  }
-
-  uploadFile ({ target: { files } }) {
-    console.log('===HomePage file upload===');
-    console.log('files: ', files);
-    const file = files[0];
-    console.log('file: ', file);
-
-    const data = new FormData();
-    data.append('image', file);
-    console.log('data: ', data);
-
-    axios.post('/upload/image',
-      data,
-      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-      console.log('Processed results');
-      console.log('frontend result: ', res);
-      console.log('the link to the image: ', res.data.url);
-      this.setState({
-        img: res.data.url
-      });
-      console.log('new state after file upload', this.state);
-      this.props.update('userPhotoCard', this.state);
-    });
   }
 
   render () {

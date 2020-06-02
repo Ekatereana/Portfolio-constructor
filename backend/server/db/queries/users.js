@@ -26,7 +26,7 @@ async function getUser (user) {
 }
 
 async function updateUser (user) {
-  console.log('update');
+  console.log('update', user);
   const email = user.email;
   const updateU = knex('users').where({ email }).first();
   if (updateU) {
