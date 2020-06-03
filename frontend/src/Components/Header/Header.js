@@ -55,10 +55,10 @@ class Header extends React.Component {
            <a className="nav-link" href="/preview">Preview</a>
          </li>
          <li className="nav-item">
-           <a className="nav-link" href="/aboutUS">AboutUS</a>
+           <a className="nav-link" href="/aboutUS">About</a>
          </li>
          <li onClick = {() => this.props.handleUser(null)} className="nav-item">
-           <a  className="nav-link" href="/">Log out</a>
+           <a className="nav-link" href="/">Log out</a>
          </li>
        </ul>;
       } else {
@@ -68,10 +68,10 @@ class Header extends React.Component {
            <a className="nav-link" href="/">Home<span className="sr-only">(current)</span></a>
          </li>
          <li className="nav-item">
-           <a className="nav-link" href="/registration">to ACCOUNT</a>
+           <a className="nav-link" href="/registration">Account</a>
          </li>
          <li className="nav-item">
-           <a className="nav-link" href="/aboutUS">AboutUS</a>
+           <a className="nav-link" href="/aboutUS">About</a>
          </li>
        </ul>;
       };
@@ -81,7 +81,7 @@ class Header extends React.Component {
     } else {
       header = <header>
         <nav className="navbar fixed-top navbar-expand-lg navbar-dark blue scrolling-navbar">
-          <a className="navbar-brand" href="#"><strong>Navbar</strong></a>
+          <a className="navbar-brand" href="#"><strong>Portfolio constructor</strong></a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
