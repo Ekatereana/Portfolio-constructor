@@ -53,7 +53,7 @@ class RowComponent extends Component {
 
   upload (id) {
     console.log('upload', id);
-    document.getElementById('selectImage' + id).click();
+    document.getElementById('selectImageprojects' + id).click();
   }
 
   render () {
@@ -70,7 +70,7 @@ class RowComponent extends Component {
            onClick={() => { this.upload(this.props.id); }}>
            <span>Choose Photo</span>
            <div className="file-path-wrapper">
-             <input id={'selectImage' + this.props.id} hidden type="file" accept="image/*" onChange={this.uploadFile }/>
+             <input id={'selectImageprojects' + this.props.id} hidden type="file" accept="image/*" onChange={(event) => this.uploadFile(event, false) }/>
            </div>
          </div>
        </div>;

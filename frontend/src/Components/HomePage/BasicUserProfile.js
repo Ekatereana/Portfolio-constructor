@@ -48,10 +48,10 @@ class BasicUserProfile extends React.Component {
     if (!noEdit) {
       choosePhotoButton =
         <div className="file-field button-mg-top" >
-          <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => document.getElementById('selectImage-2').click()}>
+          <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => document.getElementById('selectImage-3').click()}>
             <span>Choose Photo</span>
             <div className="file-path-wrapper">
-              <input id="selectImage-2" hidden type="file" accept="image/*" onChange={this.uploadFile}/>
+              <input id="selectImage-3" hidden type="file" accept="image/*" onChange={(event) => this.uploadFile(event, 'basicProfile')}/>
             </div>
           </div>
         </div>;

@@ -143,6 +143,9 @@ function changeImageBorderType (event, isParent) {
     value = null;
   }
   switch (value) {
+    case 'plain':
+      newState[event.currentTarget.getAttribute('name')] = 'bootom-border-plus';
+      break;
     case 'bootom-border-plus':
       newState[event.currentTarget.getAttribute('name')] = 'top-border-plus';
       break;
@@ -159,10 +162,10 @@ function changeImageBorderType (event, isParent) {
       newState[event.currentTarget.getAttribute('name')] = 'circle-border-plus';
       break;
     case 'circle-border-plus':
-      newState[event.currentTarget.getAttribute('name')] = 'bootom-border-plus';
+      newState[event.currentTarget.getAttribute('name')] = 'plain';
       break;
     case null:
-      newState[event.currentTarget.getAttribute('name')] = 'bootom-border-plus';
+      newState[event.currentTarget.getAttribute('name')] = 'plain';
       break;
   }
   newState.isSaved = false;
@@ -389,7 +392,7 @@ function getStyled (position, styles) {
   return styleHeader + ' ' + styles;
 };
 
-function uploadFile ({ target: { files } }) {
+function uploadFile ({ target: { files } }, isParent) {
   console.log('===HomePage file upload===');
   console.log('files: ', files);
   const file = files[0];
@@ -411,7 +414,16 @@ function uploadFile ({ target: { files } }) {
         noImg: false
       });
       console.log('new state after file upload', this.state);
-      this.props.update('basicProfile', this.state);
+      if (isParent) {
+        if (isParent !== true) {
+          console.log('isparent', isParent);
+          this.props.update(isParent, this.state);
+        } else {
+          this.props.update(this.state);
+        }
+      } else {
+        this.props.update(this);
+      }
     });
   } else {
     this.setState({

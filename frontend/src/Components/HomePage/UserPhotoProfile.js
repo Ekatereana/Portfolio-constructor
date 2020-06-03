@@ -173,7 +173,7 @@ class UserPhotoCard extends React.Component {
             <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
               <span>Choose Photo</span>
               <div className="file-path-wrapper">
-                <input id="selectImage-1" hidden type="file" accept="image/*" onChange={this.uploadFile}/>
+                <input id="selectImage-1" hidden type="file" accept="image/*" onChange={(event) => this.uploadFile(event, 'userPhotoCard')}/>
               </div>
             </div>
             <div className="file-path-wrapper">

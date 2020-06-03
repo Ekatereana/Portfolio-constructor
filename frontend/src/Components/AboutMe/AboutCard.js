@@ -78,7 +78,7 @@ class AboutCard extends React.Component {
            onClick={() => { this.upload(this.props.id); }}>
            <span>Choose Photo</span>
            <div className="file-path-wrapper">
-             <input id={'selectImage' + this.props.id} hidden type="file" accept="image/*" onChange={this.uploadFile }/>
+             <input id={'selectImage' + this.props.id} hidden type="file" accept="image/*" onChange={(event) => this.uploadFile(event,false) }/>
            </div>
          </div>
        </div>;
