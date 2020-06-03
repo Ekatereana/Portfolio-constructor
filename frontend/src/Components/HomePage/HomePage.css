@@ -29,6 +29,7 @@
 .profile-panel{
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .profile-conteiner button {
@@ -89,7 +90,7 @@
 	width: 50em;
 	display: flex;
   position: absolute;
-  top: 55em;
+  top: 15em;
   margin-bottom: 5em;
 	}
 
@@ -97,7 +98,7 @@
   width: 50em;
   display: flex;
   position: absolute;
-  top: 55em;
+  top: 20em;
   margin-bottom: 5em;
   flex-direction: column;
   }
@@ -211,6 +212,10 @@ justify-content:  flex-start;
   width: 100%;
 }
 
+.text-control-item section{
+  max-width: 500px;
+}
+
 .title-row{
   display:  flex;
   flex-direction:   row;
@@ -223,8 +228,24 @@ justify-content:  flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 5em; 
+  padding-left: 3em; 
   max-width: 500px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.center-text-keeper .text-control-item {
+  max-width: 400px;
 }
 
 

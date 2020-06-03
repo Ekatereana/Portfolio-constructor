@@ -328,6 +328,33 @@ function changeColor (event, isParent) {
   }
 }
 
+function changeStyle (event, value, isParent) {
+  console.log('change style');
+  console.log(event.currentTarget.getAttribute('name'));
+  const newState = this.state;
+  if (newState[event.currentTarget.getAttribute('name')]) {
+    if (newState[event.currentTarget.getAttribute('name')].includes(value)) {
+      newState[event.currentTarget.getAttribute('name')] = newState[event.currentTarget.getAttribute('name')].replace(value, '');
+    } else {
+      newState[event.currentTarget.getAttribute('name')] += ' ' + value;
+    }
+  } else {
+    newState[event.currentTarget.getAttribute('name')] += ' ' + value;
+  }
+
+  this.setState(newState);
+  if (isParent) {
+    if (isParent !== true) {
+      console.log('isparent', isParent);
+      this.props.update(isParent, this.state);
+    } else {
+      this.props.update(this.state);
+    }
+  } else {
+    this.props.update(this);
+  }
+}
+
 function onChangeTiTlePosition (event, isParent) {
   console.log('change position');
   console.log(event.currentTarget.getAttribute('name'));
@@ -451,5 +478,5 @@ function uploadFile ({ target: { files } }, isParent) {
 export {
   getButtonType, getStyled, handleChange, saveTextInput,
   onChangeTiTlePosition, changeColor, changeFont, changeOpacity,
-  uploadFile, changeImageForm, changeImageOrientation, changeImageSize, changeImageBorderType
+  uploadFile, changeImageForm, changeImageOrientation, changeImageSize, changeImageBorderType, changeStyle
 };

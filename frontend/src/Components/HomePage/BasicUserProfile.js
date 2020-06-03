@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 
 import axios from 'axios';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeOpacity, uploadFile } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeOpacity, uploadFile, changeStyle } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class BasicUserProfile extends React.Component {
@@ -26,6 +26,9 @@ class BasicUserProfile extends React.Component {
       primaryTextFontSize: this.props.currentState.primaryTextFontSize,
       primaryTextColor: this.props.currentState.primaryTextColor,
       titleColor: this.props.currentState.titleColor,
+      titleStyle: this.props.currentState.titleStyle,
+      subtitleStyle: this.props.currentState.subtitleStyle,
+      primaryTextStyle: this.props.currentState.primaryTextStyle,
       noImg: false
     };
     console.log('title position', this.state.titlePosition);
@@ -36,6 +39,7 @@ class BasicUserProfile extends React.Component {
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
     this.changeOpacity = changeOpacity.bind(this);
+    this.changeStyle = changeStyle.bind(this);
   }
 
   render () {
@@ -83,7 +87,8 @@ class BasicUserProfile extends React.Component {
             <div className="card-body card-body-cascade">
               <div className={getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'basicProfile')}
-                  styleName={ 'editable-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
+                  styleName={ 'editable-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+                  text={this.state.title} type="input" value={this.state.title}>
 
                   <input
                     name="title"
@@ -105,13 +110,25 @@ class BasicUserProfile extends React.Component {
                     <div name="titleFontSize" value={this.state.titleFontSize} onClick={(event) => this.changeFont(event, 'basicProfile')} className="filler-color">
                       <i class="fas fa-text-height"></i>
                     </div>
+
+                    <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-underline"/>
+                    </div>
+
+                    <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-italic"/>
+                    </div>
+
+                    <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-bold"/>
+                    </div>
                   </div>
                 ) : null}
               </div>
 
               <div className={getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'basicProfile')}
-                  styleName={ 'font-weight-bold indigo-text py-2 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize}
+                  styleName={ 'font-weight-bold indigo-text py-2 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize + ' ' + this.state.subtitleStyle}
                   text={this.state.subtitle} type="input" value={this.state.subtitle}>
 
                   <input
@@ -133,6 +150,18 @@ class BasicUserProfile extends React.Component {
                     <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={(event) => this.changeFont(event, 'basicProfile')} className="filler-color">
                       <i class="fas fa-text-height"></i>
                     </div>
+
+                    <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-underline"/>
+                    </div>
+
+                    <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-italic"/>
+                    </div>
+
+                    <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-bold"/>
+                    </div>
                   </div>
                 ) : null}
 
@@ -140,7 +169,8 @@ class BasicUserProfile extends React.Component {
 
               <div className={getStyled(this.state.primaryTextPosition, 'text-control-item editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.primaryText, 'primaryText', 'basicProfile')}
-                  styleName={ this.state.primaryTextColor + ' ' + this.state.primaryTextFontSize } text={this.state.primaryText} type="input" value={this.state.subtitle}>
+                  styleName={ this.state.primaryTextColor + ' ' + this.state.primaryTextFontSize + ' ' + this.state.primaryTextStyle }
+                  text={this.state.primaryText} type="input" value={this.state.subtitle}>
 
                   <input
                     name="primaryText"
@@ -158,8 +188,20 @@ class BasicUserProfile extends React.Component {
                     <div onClick={(event) => this.onChangeTiTlePosition(event, 'basicProfile')} name="primaryTextPosition" value={this.state.primaryTextPosition} className="text-format-button">
                       { primaryTextButton }
                     </div>
-                    <div name="primaryTextFontSize" value={this.state.primaryTextFontSize} onClick={(event) => this.changeFont(event, 'basicProfile')} className="filler-color">
+                    <div name="primaryTextFontSize" value={this.state.primaryTextFontSize} onClick={(event) => this.changeFont(event, 'basicProfile', true)} className="filler-color">
                       <i class="fas fa-text-height"></i>
+                    </div>
+
+                    <div name="primaryTextStyle" value={this.state.primaryTextStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-underline"/>
+                    </div>
+
+                    <div name="primaryTextStyle" value={this.state.primaryTextStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-italic"/>
+                    </div>
+
+                    <div name="primaryTextStyle" value={this.state.primaryTextStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'basicProfile')} className="filler-color">
+                      <i class="fas fa-bold"/>
                     </div>
                   </div>
                 ) : null}
