@@ -3,7 +3,11 @@ import './HomePage.css';
 
 import { Route } from 'react-router-dom';
 import Editable from '../Editable';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile, changeImageForm, changeImageOrientation } from '../TextFormater';
+import {
+  getButtonType, getStyled, saveTextInput, changeFont,
+  changeColor, onChangeTiTlePosition, handleChange, uploadFile,
+  changeImageForm, changeImageOrientation, changeImageSize, changeImageBorderType
+} from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 import axios from 'axios';
 
@@ -75,9 +79,12 @@ class UserPhotoCard extends React.Component {
       quotesFontSize: currentS.quotesFonstSize,
       quotes: currentS.quotes,
       arrayOfSocial: currentS.arrayOfSocial,
+      imageOrientation: currentS.imageOrientation,
       imageForm: currentS.imageForm,
+      imgSize: currentS.imgSize,
       isShown: false,
-      noImg: false
+      noImg: false,
+      imgBorderType: currentS.imgBorderType
     };
 
     console.log('arr', currentS.arrayOfSocial);
@@ -93,6 +100,8 @@ class UserPhotoCard extends React.Component {
     this.changeFont = changeFont.bind(this);
     this.changeImageForm = changeImageForm.bind(this);
     this.changeImageOrientation = changeImageOrientation.bind(this);
+    this.changeImageSize = changeImageSize.bind(this);
+    this.changeImageBorderType = changeImageBorderType.bind(this);
   };
 
   upload (id) {
@@ -182,20 +191,25 @@ class UserPhotoCard extends React.Component {
         <div className="card-up indigo lighten-1"></div>
 
         <div className={ this.state.imageForm + ' profile-photo' }>
-          <div className={ 'avatar ' + this.state.imageOrientation}>
+          <div className={ this.state.imageOrientation + ' ' + `${this.state.imgSize ? this.state.imgSize : 'avatar'}` + ' ' + this.state.imgBorderType }>
             {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
               : <img src={this.state.img} className="avatar"
                 alt="woman avatar"/>}
             {!imMuteble ? (
-              <div className="row control-panel">
+              <div title="change imageOrientation" className="row control-panel">
                 <div name="imageForm" value={this.state.imageForm} onClick={(event) => this.changeImageForm(event, 'userPhotoCard')} className="filler-color">
-                  <MDBIcon icon="image" />
+                  <MDBIcon icon="exchange-alt" />
                 </div>
-                <div onClick={(event) => this.changeImageOrientation(event, 'userPhotoCard')} name="imageOrientation" value={this.state.titlePosition} className="text-format-button">
+                <div title="turn image" onClick={(event) => this.changeImageOrientation(event, 'userPhotoCard')}
+                  name="imageOrientation"
+                  value={this.state.imageOrientation} className="text-format-button">
                   <MDBIcon icon="undo-alt" />
                 </div>
-                <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-text-height"></i>
+                <div name="imgSize" title="Change size of image" value={this.state.imgSize} onClick={ (event) => this.changeImageSize(event, 'userPhotoCard')} className="filler-color">
+                  <i class="fas fa-expand"></i>
+                </div>
+                <div name="imgBorderType" title = "change borders" value={this.state.imgBorderType} onClick={ (event) => this.changeImageBorderType(event, 'userPhotoCard')} className="filler-color">
+                  <i class="fas fa-border-style"></i>
                 </div>
               </div>
             ) : null}

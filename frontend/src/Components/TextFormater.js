@@ -65,12 +65,48 @@ function changeFont (event, isParent) {
   }
 }
 
+function changeImageSize (event, isParent) {
+  console.log('change size');
+  console.log(event.currentTarget.getAttribute('name'));
+  const newState = this.state;
+  let value = event.currentTarget.getAttribute('value');
+  if (!value || value === '') {
+    value = null;
+  }
+  switch (value) {
+    case 'avatar':
+      newState[event.currentTarget.getAttribute('name')] = 'avatar-plus';
+      break;
+    case 'avatar-plus':
+      newState[event.currentTarget.getAttribute('name')] = 'avatar-minus';
+      break;
+    case 'avatar-minus':
+      newState[event.currentTarget.getAttribute('name')] = 'avatar';
+      break;
+    case null:
+      newState[event.currentTarget.getAttribute('name')] = 'avatar-plus';
+      break;
+  }
+  newState.isSaved = false;
+  this.setState(newState);
+  if (isParent) {
+    if (isParent !== true) {
+      console.log('isparent', isParent);
+      this.props.update(isParent, this.state);
+    } else {
+      this.props.update(this.state);
+    }
+  } else {
+    this.props.update(this);
+  }
+}
+
 function changeImageForm (event, isParent) {
   console.log('change img form');
   console.log(event.currentTarget.getAttribute('name'));
   const newState = this.state;
   let value = event.currentTarget.getAttribute('value');
-  if (!value) {
+  if (!value || value === '') {
     value = null;
   }
   switch (value) {
@@ -81,7 +117,52 @@ function changeImageForm (event, isParent) {
       newState[event.currentTarget.getAttribute('name')] = 'default';
       break;
     case null:
-      newState[event.currentTarget.getAttribute('name')] = 'default';
+      newState[event.currentTarget.getAttribute('name')] = 'reverse';
+      break;
+  }
+  newState.isSaved = false;
+  this.setState(newState);
+  if (isParent) {
+    if (isParent !== true) {
+      console.log('isparent', isParent);
+      this.props.update(isParent, this.state);
+    } else {
+      this.props.update(this.state);
+    }
+  } else {
+    this.props.update(this);
+  }
+}
+
+function changeImageBorderType (event, isParent) {
+  console.log('change border-type');
+  console.log(event.currentTarget.getAttribute('name'));
+  const newState = this.state;
+  let value = event.currentTarget.getAttribute('value');
+  if (!value || value === '') {
+    value = null;
+  }
+  switch (value) {
+    case 'bootom-border-plus':
+      newState[event.currentTarget.getAttribute('name')] = 'top-border-plus';
+      break;
+    case 'top-border-plus':
+      newState[event.currentTarget.getAttribute('name')] = 'right-border-plus';
+      break;
+    case 'right-border-plus':
+      newState[event.currentTarget.getAttribute('name')] = 'top-border-minus';
+      break;
+    case 'top-border-minus':
+      newState[event.currentTarget.getAttribute('name')] = 'bootom-border-minus';
+      break;
+    case 'bootom-border-minus':
+      newState[event.currentTarget.getAttribute('name')] = 'circle-border-plus';
+      break;
+    case 'circle-border-plus':
+      newState[event.currentTarget.getAttribute('name')] = 'bootom-border-plus';
+      break;
+    case null:
+      newState[event.currentTarget.getAttribute('name')] = 'bootom-border-plus';
       break;
   }
   newState.isSaved = false;
@@ -111,10 +192,13 @@ function changeImageOrientation (event, isParent) {
       newState[event.currentTarget.getAttribute('name')] = 'avatar-reverse';
       break;
     case 'avatar-reverse':
+      newState[event.currentTarget.getAttribute('name')] = 'avatar-reverseY';
+      break;
+    case 'avatar-reverseY':
       newState[event.currentTarget.getAttribute('name')] = 'plain';
       break;
     case null:
-      newState[event.currentTarget.getAttribute('name')] = '';
+      newState[event.currentTarget.getAttribute('name')] = 'avatar-reverse';
       break;
   }
   newState.isSaved = false;
@@ -336,4 +420,8 @@ function uploadFile ({ target: { files } }) {
   }
 }
 
-export { getButtonType, getStyled, handleChange, saveTextInput, onChangeTiTlePosition, changeColor, changeFont, changeOpacity, uploadFile, changeImageForm, changeImageOrientation };
+export {
+  getButtonType, getStyled, handleChange, saveTextInput,
+  onChangeTiTlePosition, changeColor, changeFont, changeOpacity,
+  uploadFile, changeImageForm, changeImageOrientation, changeImageSize, changeImageBorderType
+};
