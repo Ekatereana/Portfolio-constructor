@@ -25,7 +25,8 @@ class BasicUserProfile extends React.Component {
       titleFontSize: this.props.currentState.titleFontSize,
       primaryTextFontSize: this.props.currentState.primaryTextFontSize,
       primaryTextColor: this.props.currentState.primaryTextColor,
-      titleColor: this.props.currentState.titleColor
+      titleColor: this.props.currentState.titleColor,
+      noImg: false
     };
     console.log('title position', this.state.titlePosition);
     this.uploadFile = uploadFile.bind(this);
@@ -50,7 +51,7 @@ class BasicUserProfile extends React.Component {
           <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => document.getElementById('selectImage-2').click()}>
             <span>Choose Photo</span>
             <div className="file-path-wrapper">
-              <input id="selectImage-2" hidden type="file" onChange={this.uploadFile}/>
+              <input id="selectImage-2" hidden type="file" accept="image/*" onChange={this.uploadFile}/>
             </div>
           </div>
         </div>;
@@ -63,8 +64,9 @@ class BasicUserProfile extends React.Component {
           <div className="card-down card-cascade wider reverse">
 
             <div className="view-cascade">
-              <img className="card-img-top max" src={this.state.img}
-                alt="Card image cap"/>
+              {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
+                : <img className="card-img-top max" src={this.state.img}
+                  alt="Card image cap"/>}
               <a href="#!">
                 <div className="mask rgba-white-slight"></div>
               </a>

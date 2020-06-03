@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile, changeImageForm, changeImageOrientation } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
+import axios from 'axios';
 
 class SocialButton extends React.Component {
   constructor (props) {
@@ -75,7 +76,8 @@ class UserPhotoCard extends React.Component {
       quotes: currentS.quotes,
       arrayOfSocial: currentS.arrayOfSocial,
       imageForm: currentS.imageForm,
-      isShown: false
+      isShown: false,
+      noImg: false
     };
 
     console.log('arr', currentS.arrayOfSocial);
@@ -162,7 +164,7 @@ class UserPhotoCard extends React.Component {
             <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={this.upload}>
               <span>Choose Photo</span>
               <div className="file-path-wrapper">
-                <input id="selectImage-1" hidden type="file" onChange={this.uploadFile}/>
+                <input id="selectImage-1" hidden type="file" accept="image/*" onChange={this.uploadFile}/>
               </div>
             </div>
             <div className="file-path-wrapper">
@@ -178,10 +180,12 @@ class UserPhotoCard extends React.Component {
       <div className="card ">
 
         <div className="card-up indigo lighten-1"></div>
+
         <div className={ this.state.imageForm + ' profile-photo' }>
           <div className={ 'avatar ' + this.state.imageOrientation}>
-            <img src={this.state.img} className="avatar"
-              alt="woman avatar"/>
+            {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
+              : <img src={this.state.img} className="avatar"
+                alt="woman avatar"/>}
             {!imMuteble ? (
               <div className="row control-panel">
                 <div name="imageForm" value={this.state.imageForm} onClick={(event) => this.changeImageForm(event, 'userPhotoCard')} className="filler-color">

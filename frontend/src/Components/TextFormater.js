@@ -311,22 +311,29 @@ function uploadFile ({ target: { files } }) {
   const file = files[0];
   console.log('file: ', file);
 
-  const data = new FormData();
-  data.append('image', file);
-  console.log('data: ', data);
-
-  axios.post('/upload/image',
-    data,
-    { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-    console.log('Processed results');
-    console.log('frontend result: ', res);
-    console.log('the link to the image: ', res.data.url);
-    this.setState({
-      img: res.data.url
+  const types = ['image/jpeg', 'image/pjpeg', 'image/png', 'image/jpg', 'image/gif'];
+  if (file && types.includes(file.type)) {
+    const data = new FormData();
+    data.append('image', file);
+    console.log('data: ', data);
+    axios.post('/upload/image',
+      data,
+      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+      console.log('Processed results');
+      console.log('frontend result: ', res);
+      console.log('the link to the image: ', res.data.url);
+      this.setState({
+        img: res.data.url,
+        noImg: false
+      });
+      console.log('new state after file upload', this.state);
+      this.props.update('basicProfile', this.state);
     });
-    console.log('new state after file upload', this.state);
-    this.props.update('userPhotoCard', this.state);
-  });
+  } else {
+    this.setState({
+      noImg: true
+    });
+  }
 }
 
 export { getButtonType, getStyled, handleChange, saveTextInput, onChangeTiTlePosition, changeColor, changeFont, changeOpacity, uploadFile, changeImageForm, changeImageOrientation };

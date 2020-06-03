@@ -28,8 +28,8 @@ class AboutCard extends React.Component {
         subtitleColor: content.subtitleColor,
         subtitleFontSize: content.subtitleFontSize,
         titleFontSize: content.titleFontSize,
-        primaryTextFontSize: content.primaryTextFontSize
-
+        primaryTextFontSize: content.primaryTextFontSize,
+        noImg: false
       };
     } else {
       this.state = {
@@ -78,7 +78,7 @@ class AboutCard extends React.Component {
            onClick={() => { this.upload(this.props.id); }}>
            <span>Choose Photo</span>
            <div className="file-path-wrapper">
-             <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
+             <input id={'selectImage' + this.props.id} hidden type="file" accept="image/*" onChange={this.uploadFile }/>
            </div>
          </div>
        </div>;
@@ -86,13 +86,14 @@ class AboutCard extends React.Component {
 
     return (
       <div className="card card-element">
-        <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
+        {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
+          : <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
+        }
         <div className="card-body">
           <div className={this.getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
             <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
               styleName={'editable-title ' + this.state.titleColor + ' ' + this.state.titleFontSize}
               edit={noEdit} text={this.state.title} type="input" value={this.state.title}>
-
               <input
                 name="title"
                 value={this.state.title}

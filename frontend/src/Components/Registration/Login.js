@@ -56,7 +56,7 @@ export default class Login extends Component {
           <div className="image">
             <img src={'./login.svg'}/>
           </div>
-          <form className="form" >
+          <form className="form" onSubmit={(event) => this.handleSubmit(event)}>
 
             <div className="form-group regist-title">
               <label htmlFor="email">Email</label>
@@ -69,7 +69,6 @@ export default class Login extends Component {
                 className="regist-title"
                 required
               />
-
             </div>
 
             <div className="form-group regist-title">
@@ -85,12 +84,11 @@ export default class Login extends Component {
               />
             </div>
 
+            <div className="footer">
+              <button type="submit" className="btn">Login</button>
+            </div>
           </form>
 
-        </div>
-
-        <div className="footer">
-          <button type="submit" onClick={this.handleSubmit} className="btn">Login</button>
         </div>
       </div>
 

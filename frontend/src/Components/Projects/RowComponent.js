@@ -22,7 +22,8 @@ class RowComponent extends Component {
         textColor: content.textColor,
         text: content.text,
         url: content.url,
-        isSaved: true
+        isSaved: true,
+        noImg: false
       };
     } else {
       this.state = {
@@ -36,7 +37,8 @@ class RowComponent extends Component {
         img: 'https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(147).jpg',
         text: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
         url: '#',
-        isSaved: true
+        isSaved: true,
+        noImg: false
       };
     }
     this.getStyled = getStyled.bind(this);
@@ -68,7 +70,7 @@ class RowComponent extends Component {
            onClick={() => { this.upload(this.props.id); }}>
            <span>Choose Photo</span>
            <div className="file-path-wrapper">
-             <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
+             <input id={'selectImage' + this.props.id} hidden type="file" accept="image/*" onChange={this.uploadFile }/>
            </div>
          </div>
        </div>;
@@ -80,7 +82,9 @@ class RowComponent extends Component {
 
         <div className="card compact">
           <div className=" overlay no-m">
-            <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
+            {this.state.noImg ? <div><p>The uploaded file is not image, try again!</p>
+              <img className="card-img-top" src={this.state.img} alt=""/></div>
+              : <img className="card-img-top" src={this.state.img} alt="Card image cap"/>}
           </div>
           <div className="card-body">
 
