@@ -65,6 +65,72 @@ function changeFont (event, isParent) {
   }
 }
 
+function changeImageForm (event, isParent) {
+  console.log('change img form');
+  console.log(event.currentTarget.getAttribute('name'));
+  const newState = this.state;
+  let value = event.currentTarget.getAttribute('value');
+  if (!value) {
+    value = null;
+  }
+  switch (value) {
+    case 'default':
+      newState[event.currentTarget.getAttribute('name')] = 'reverse';
+      break;
+    case 'reverse':
+      newState[event.currentTarget.getAttribute('name')] = 'default';
+      break;
+    case null:
+      newState[event.currentTarget.getAttribute('name')] = 'default';
+      break;
+  }
+  newState.isSaved = false;
+  this.setState(newState);
+  if (isParent) {
+    if (isParent !== true) {
+      console.log('isparent', isParent);
+      this.props.update(isParent, this.state);
+    } else {
+      this.props.update(this.state);
+    }
+  } else {
+    this.props.update(this);
+  }
+}
+
+function changeImageOrientation (event, isParent) {
+  console.log('change img orient');
+  console.log(event.currentTarget.getAttribute('name'));
+  const newState = this.state;
+  let value = event.currentTarget.getAttribute('value');
+  if (!value) {
+    value = null;
+  }
+  switch (value) {
+    case 'plain':
+      newState[event.currentTarget.getAttribute('name')] = 'avatar-reverse';
+      break;
+    case 'avatar-reverse':
+      newState[event.currentTarget.getAttribute('name')] = 'plain';
+      break;
+    case null:
+      newState[event.currentTarget.getAttribute('name')] = '';
+      break;
+  }
+  newState.isSaved = false;
+  this.setState(newState);
+  if (isParent) {
+    if (isParent !== true) {
+      console.log('isparent', isParent);
+      this.props.update(isParent, this.state);
+    } else {
+      this.props.update(this.state);
+    }
+  } else {
+    this.props.update(this);
+  }
+}
+
 function changeOpacity (event, isParent) {
   console.log('change opacity');
   console.log(event.currentTarget.getAttribute('name'));
@@ -75,6 +141,9 @@ function changeOpacity (event, isParent) {
   }
   switch (value) {
     case 'opacity-full':
+      newState[event.currentTarget.getAttribute('name')] = 'opacity-middle';
+      break;
+    case 'opacity-middle':
       newState[event.currentTarget.getAttribute('name')] = 'opacity-null';
       break;
     case 'opacity-null':
@@ -99,7 +168,7 @@ function changeOpacity (event, isParent) {
 }
 
 function changeColor (event, isParent) {
-  console.log('change position');
+  console.log('change color');
   console.log(event.currentTarget.getAttribute('name'));
   const newState = this.state;
   switch (event.currentTarget.getAttribute('value')) {
@@ -148,6 +217,7 @@ function changeColor (event, isParent) {
       console.log('isparent', isParent);
       this.props.update(isParent, this.state);
     } else {
+      console.log('isparent', isParent);
       this.props.update(this.state);
     }
   } else {
@@ -188,13 +258,23 @@ function onChangeTiTlePosition (event, isParent) {
   }
 }
 
-function saveTextInput (event, input, element) {
+function saveTextInput (event, input, element, isParent) {
   if (event.key === 'Enter') {
     const newState = this.state;
     newState[element] = input;
     newState.isSaved = false;
     this.setState(newState);
-    this.props.update(this);
+    if (isParent) {
+      if (isParent !== true) {
+        console.log('isparent', isParent);
+        this.props.update(isParent, this.state);
+      } else {
+        console.log('My perent');
+        this.props.update(this.state);
+      }
+    } else {
+      this.props.update(this);
+    }
   };
 }
 
@@ -249,4 +329,4 @@ function uploadFile ({ target: { files } }) {
   });
 }
 
-export { getButtonType, getStyled, handleChange, saveTextInput, onChangeTiTlePosition, changeColor, changeFont, changeOpacity, uploadFile };
+export { getButtonType, getStyled, handleChange, saveTextInput, onChangeTiTlePosition, changeColor, changeFont, changeOpacity, uploadFile, changeImageForm, changeImageOrientation };

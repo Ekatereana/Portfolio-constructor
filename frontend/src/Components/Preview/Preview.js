@@ -1,5 +1,5 @@
 import React from 'react';
-
+import copy from 'copy-to-clipboard';
 import About from '../AboutMe/AboutMe';
 import '../AboutMe/AboutMe.css';
 
@@ -21,10 +21,17 @@ import Services from '../Services/Services';
 import '../Services/Services.css';
 
 class Preview extends React.Component {
+  handleCopy (id) {
+    console.log('copied');
+    copy('http://localhost:3000/portfolio-constructor/?id=' + id);
+  }
+
   render () {
     const user = this.props.user;
     console.log('Preview', this.props.preview);
+    // <button type="button" onClick={() => this.handleCopy(user.id)} className="btn no-l-mg btn-info">Copy URL</button>
     return (
+
       <Router>
         <a id="home"/>
         <HomePage handleUser={this.props.handleUser} user = {user} preview={this.props.preview}/>

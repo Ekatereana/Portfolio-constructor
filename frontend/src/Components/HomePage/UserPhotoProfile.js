@@ -3,7 +3,7 @@ import './HomePage.css';
 
 import { Route } from 'react-router-dom';
 import Editable from '../Editable';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile, changeImageForm, changeImageOrientation } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class SocialButton extends React.Component {
@@ -74,6 +74,7 @@ class UserPhotoCard extends React.Component {
       quotesFontSize: currentS.quotesFonstSize,
       quotes: currentS.quotes,
       arrayOfSocial: currentS.arrayOfSocial,
+      imageForm: currentS.imageForm,
       isShown: false
     };
 
@@ -88,6 +89,8 @@ class UserPhotoCard extends React.Component {
     this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
+    this.changeImageForm = changeImageForm.bind(this);
+    this.changeImageOrientation = changeImageOrientation.bind(this);
   };
 
   upload (id) {
@@ -175,10 +178,23 @@ class UserPhotoCard extends React.Component {
       <div className="card ">
 
         <div className="card-up indigo lighten-1"></div>
-        <div className="profile-photo">
-          <div className="avatar white">
+        <div className={ this.state.imageForm + ' profile-photo' }>
+          <div className={ 'avatar ' + this.state.imageOrientation}>
             <img src={this.state.img} className="avatar"
               alt="woman avatar"/>
+            {!imMuteble ? (
+              <div className="row control-panel">
+                <div name="imageForm" value={this.state.imageForm} onClick={(event) => this.changeImageForm(event, 'userPhotoCard')} className="filler-color">
+                  <MDBIcon icon="image" />
+                </div>
+                <div onClick={(event) => this.changeImageOrientation(event, 'userPhotoCard')} name="imageOrientation" value={this.state.titlePosition} className="text-format-button">
+                  <MDBIcon icon="undo-alt" />
+                </div>
+                <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard')} className="filler-color">
+                  <i class="fas fa-text-height"></i>
+                </div>
+              </div>
+            ) : null}
           </div>
 
           {editPhotoCard}
@@ -202,7 +218,7 @@ class UserPhotoCard extends React.Component {
 
         <div className="card-body no-mg-top editable">
           <div className={getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
-            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
+            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'userPhotoCard')}
               edit={imMuteble} styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
               <input
                 name="title"
@@ -229,7 +245,7 @@ class UserPhotoCard extends React.Component {
           <hr/>
           <i className="fas fa-quote-left "></i>
           <div className={ getStyled(this.state.quotesPosition, 'text-control-item editable')}>
-            <Editable onKeyDown={(event) => saveTextInput(event, this.state.quotes, 'quotes')} edit={imMuteble}
+            <Editable onKeyDown={(event) => saveTextInput(event, this.state.quotes, 'quotes', 'userPhotoCard')} edit={imMuteble}
               styleName={ 'editable-text ' + this.state.quotesColor + ' ' + this.state.quotesFontSize} text={this.state.quotes} type="input" value={this.state.quotes}>
               <input
                 name="quotes"

@@ -15,6 +15,7 @@ import Preview from './Preview/Preview';
 import CreateAll from './Create/Create';
 import './Create/Create.css';
 
+
 const useStateWithsessionStorage = SessionStorageKey => {
   if (sessionStorage.getItem(SessionStorageKey) == null) {
     sessionStorage.setItem(SessionStorageKey, null);

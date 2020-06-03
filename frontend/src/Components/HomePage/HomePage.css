@@ -99,6 +99,7 @@
   position: absolute;
   top: 55em;
   margin-bottom: 5em;
+  flex-direction: column;
   }
 
 
@@ -111,10 +112,24 @@
 
 .profile-photo {
   display: flex;
-  flex-direction : row;
   justify-content: space-between;
 }
 
+.default {
+  display: flex;
+  flex-direction : row;
+}
+
+.reverse {
+  display: flex;
+  flex-direction : row-reverse;
+}
+
+
+.avatar-reverse{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 .avatar {
   width: 70%;
   height: 70%;

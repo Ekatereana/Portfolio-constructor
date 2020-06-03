@@ -176,7 +176,7 @@ class Best extends Component {
         <section className="dark-grey-text editable ">
           <div className="best-header">
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
-              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
+              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'best')}
                 edit={noEdit} styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
@@ -187,13 +187,13 @@ class Best extends Component {
               </Editable>
               {!noEdit ? (
                 <div className="row control-panel">
-                  <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, true)} className="filler-color">
+                  <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, 'best')} className="filler-color">
                     <MDBIcon icon="fill" />
                   </div>
-                  <div onClick={(event) => this.onChangeTiTlePosition(event, true)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+                  <div onClick={(event) => this.onChangeTiTlePosition(event, 'best')} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
                     { titleButton }
                   </div>
-                  <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">
+                  <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, 'best')} className="filler-color">
                     <i class="fas fa-text-height"></i>
                   </div>
                 </div>
@@ -201,7 +201,8 @@ class Best extends Component {
             </div>
 
             <div className={ this.getStyled(this.state.subtitlePosition, 'text-control-item ')}>
-              <Editable styleName={'editable-text card-text ' + this.state.subtitleFontSize + ' ' + this.state.subtitleColor } text={this.state.subtitle} edit={noEdit} type="input" value={this.state.subtitle}>
+              <Editable styleName={'editable-text card-text ' + this.state.subtitleFontSize + ' ' + this.state.subtitleColor }
+                onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'best')} text={this.state.subtitle} edit={noEdit} type="input" value={this.state.subtitle}>
                 <input
                   name="subtitle"
                   value={this.state.subtitle}
@@ -211,10 +212,10 @@ class Best extends Component {
               </Editable>
               {!noEdit ? (
                 <div className="row control-panel">
-                  <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, true)} className="filler-color">
+                  <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, 'best')} className="filler-color">
                     <MDBIcon icon="fill" />
                   </div>
-                  <div onClick={(event) => this.onChangeTiTlePosition(event, true)} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
+                  <div onClick={(event) => this.onChangeTiTlePosition(event, 'best')} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
                     { subtitleButton }
                   </div>
                   <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">

@@ -115,7 +115,7 @@ class ServiceComponent extends Component {
 
         </div>
 
-        <div className={ this.getStyled(this.state.textPosition, 'text-control-item ') }>
+        <div className={ this.getStyled(this.state.textPosition, 'text-control-item editable') }>
           <Editable edit={noEdit} onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
             styleName={ this.state.textColor ? 'mb-md-0 mb-5 ' + this.state.textColor : ' grey-text'}
             text={this.state.text}

@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 
 import axios from 'axios';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeOpacity } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeOpacity, uploadFile } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class BasicUserProfile extends React.Component {
@@ -28,37 +28,13 @@ class BasicUserProfile extends React.Component {
       titleColor: this.props.currentState.titleColor
     };
     console.log('title position', this.state.titlePosition);
-    this.uploadFile = this.uploadFile.bind(this);
+    this.uploadFile = uploadFile.bind(this);
     this.saveTextInput = saveTextInput.bind(this);
     this.handleChange = handleChange.bind(this);
     this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
     this.changeOpacity = changeOpacity.bind(this);
-  }
-
-  uploadFile ({ target: { files } }) {
-    console.log('===HomePage file upload===');
-    console.log('files: ', files);
-    const file = files[0];
-    console.log('file: ', file);
-
-    const data = new FormData();
-    data.append('image', file);
-    console.log('data: ', data);
-
-    axios.post('/upload/image',
-      data,
-      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-      console.log('Processed results');
-      console.log('frontend result: ', res);
-      console.log('the link to the image: ', res.data.url);
-      this.setState({
-        img: res.data.url
-      });
-      console.log('new state after file upload', this.state);
-      this.props.update('basicProfile', this.state);
-    });
   }
 
   render () {
@@ -98,13 +74,13 @@ class BasicUserProfile extends React.Component {
           <div className={this.state.opacity === 'opacity-null' ? this.state.opacity + ' ' + `${noEdit ? 'up-full' : 'up-edit'}` : 'card ' + this.state.opacity + ' ' + `${noEdit ? 'up-full' : 'up-edit'}`}>
             {!noEdit ? (
               <div name="opacity" value={this.state.opacity} title="Click to change opacity" onClick={(event) => this.changeOpacity(event, 'basicProfile')}
-                className={this.state.opacity === 'opacity-null' ? 'opacity-button ' + 'white-text' : 'opacity-button'}>
+                className="opacity-button">
                 <i class="fas fa-ellipsis-v"></i>
               </div>
             ) : null}
             <div className="card-body card-body-cascade">
               <div className={getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
-                <Editable onKeyDown={(event) => saveTextInput(event, this.state.title, 'title')}
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'basicProfile')}
                   styleName={ 'editable-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
 
                   <input
@@ -132,8 +108,9 @@ class BasicUserProfile extends React.Component {
               </div>
 
               <div className={getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
-                <Editable onKeyDown={(event) => saveTextInput(event, this.state.subtitle, 'subtitle')}
-                  styleName={ 'font-weight-bold indigo-text py-2 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize} text={this.state.subtitle} type="input" value={this.state.subtitle}>
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'basicProfile')}
+                  styleName={ 'font-weight-bold indigo-text py-2 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize}
+                  text={this.state.subtitle} type="input" value={this.state.subtitle}>
 
                   <input
                     name="subtitle"
@@ -160,7 +137,7 @@ class BasicUserProfile extends React.Component {
               </div>
 
               <div className={getStyled(this.state.primaryTextPosition, 'text-control-item editable')}>
-                <Editable onKeyDown={(event) => saveTextInput(event, this.state.primaryText, 'primaryText')}
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.primaryText, 'primaryText', 'basicProfile')}
                   styleName={ this.state.primaryTextColor + ' ' + this.state.primaryTextFontSize } text={this.state.primaryText} type="input" value={this.state.subtitle}>
 
                   <input

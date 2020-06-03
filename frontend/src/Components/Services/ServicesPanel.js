@@ -45,8 +45,10 @@ class ServicePanel extends Component {
       this.state = {
         title: current.title,
         subtitle: current.subtitle,
+        titleColor: current.titleColor,
         titlePosition: current.titlePosition,
         subtitlePosition: current.subtitlePosition,
+        subtitleColor: current.subtitleColor,
         arrayOfCards: current.arrayOfCards
       };
     } else {
@@ -128,7 +130,7 @@ class ServicePanel extends Component {
       <div className="">
 
         <div className={ this.getStyled(this.state.titlePosition, 'text-control-item editable')}>
-          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')} edit={noEdit}
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', true)} edit={noEdit}
             styleName={'editable-title  h1-responsive font-weight-bold my-5 ' + this.state.titleFontSize + ' ' + this.state.titleColor}
             text={this.state.title} type="input" value={this.state.title}>
             <input
@@ -143,7 +145,7 @@ class ServicePanel extends Component {
               <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, true)} className="filler-color">
                 <MDBIcon icon="fill" />
               </div>
-              <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
+              <div onClick={(event) => this.onChangeTiTlePosition(event, true)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
                 { titleButton }
               </div>
               <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">
@@ -154,7 +156,8 @@ class ServicePanel extends Component {
         </div>
 
         <div className={ this.getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
-          <Editable styleName={'editable-text lead grey-text w-responsive mx-auto mb-5 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize}
+          <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', true)}
+            styleName={'editable-text lead w-responsive mx-auto mb-5 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize}
             text={this.state.subtitle} edit={noEdit} type="input" value={this.state.subtitle}>
             <input
               name="subtitle"
@@ -168,7 +171,7 @@ class ServicePanel extends Component {
               <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, true)} className="filler-color">
                 <MDBIcon icon="fill" />
               </div>
-              <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
+              <div onClick={(event) => this.onChangeTiTlePosition(event, true)} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
                 { subtitleButton }
               </div>
               <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">

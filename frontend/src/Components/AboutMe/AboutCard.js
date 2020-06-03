@@ -6,7 +6,7 @@ import 'mdbreact/dist/css/mdb.css';
 import Editable from '../Editable';
 import axios from 'axios';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile } from '../TextFormater';
 
 class AboutCard extends React.Component {
   constructor (props) {
@@ -54,7 +54,7 @@ class AboutCard extends React.Component {
     this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
     this.handleChange = handleChange.bind(this);
     this.upload = this.upload.bind(this);
-    this.uploadFile = this.uploadFile.bind(this);
+    this.uploadFile = uploadFile.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
   };
@@ -62,21 +62,6 @@ class AboutCard extends React.Component {
   upload (id) {
     document.getElementById('selectImage' + id).click();
   };
-
-  async uploadFile ({ target: { files } }) {
-    console.log('===HomePage file upload===');
-    const file = files[0];
-    const data = new FormData();
-    data.append('image', file);
-    await axios.post('/upload/image',
-      data,
-      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-      console.log('the link to the image: ', res.data.url);
-      this.setState({
-        img: res.data.url
-      });
-    });
-  }
 
   render () {
     const noEdit = this.props.edit;
