@@ -22,7 +22,8 @@ class RowComponent extends Component {
         textColor: content.textColor,
         text: content.text,
         url: content.url,
-        isSaved: true
+        isSaved: true,
+        noImg: false
       };
     } else {
       this.state = {
@@ -36,7 +37,8 @@ class RowComponent extends Component {
         img: 'https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(147).jpg',
         text: 'Some quick example text to build on the card title and make up the bulk of the cards content.',
         url: '#',
-        isSaved: true
+        isSaved: true,
+        noImg: false
       };
     }
     this.getStyled = getStyled.bind(this);
@@ -57,16 +59,24 @@ class RowComponent extends Component {
   async uploadFile ({ target: { files } }) {
     console.log('===HomePage file upload===');
     const file = files[0];
-    const data = new FormData();
-    data.append('image', file);
-    await axios.post('/upload/image',
-      data,
-      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-      console.log('the link to the image: ', res.data.url);
-      this.setState({
-        img: res.data.url
+    const types = ['image/jpeg', 'image/pjpeg', 'image/png', 'image/jpg', 'image/gif'];
+    if (file && types.includes(file.type)) {
+      const data = new FormData();
+      data.append('image', file);
+      await axios.post('/upload/image',
+        data,
+        { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+        console.log('the link to the image: ', res.data.url);
+        this.setState({
+          img: res.data.url,
+          noImg: false
+        });
       });
-    });
+    } else {
+      this.setState({
+        noImg: true
+      });
+    }
   }
 
   render () {
@@ -83,7 +93,7 @@ class RowComponent extends Component {
            onClick={() => { this.upload(this.props.id); }}>
            <span>Choose Photo</span>
            <div className="file-path-wrapper">
-             <input id={'selectImage' + this.props.id} hidden type="file" onChange={this.uploadFile }/>
+             <input id={'selectImage' + this.props.id} hidden type="file" accept="image/*" onChange={this.uploadFile }/>
            </div>
          </div>
        </div>;
@@ -95,7 +105,9 @@ class RowComponent extends Component {
 
         <div className="card compact">
           <div className=" overlay no-m">
-            <img className="card-img-top" src={this.state.img} alt="Card image cap"/>
+            {this.state.noImg ? <div><p>The uploaded file is not image, try again!</p>
+              <img className="card-img-top" src={this.state.img} alt=""/></div>
+              : <img className="card-img-top" src={this.state.img} alt="Card image cap"/>}
           </div>
           <div className="card-body">
 
