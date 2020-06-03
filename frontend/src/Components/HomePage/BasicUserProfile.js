@@ -25,7 +25,8 @@ class BasicUserProfile extends React.Component {
       titleFontSize: this.props.currentState.titleFontSize,
       primaryTextFontSize: this.props.currentState.primaryTextFontSize,
       primaryTextColor: this.props.currentState.primaryTextColor,
-      titleColor: this.props.currentState.titleColor
+      titleColor: this.props.currentState.titleColor,
+      noImg: false
     };
     console.log('title position', this.state.titlePosition);
     this.uploadFile = this.uploadFile.bind(this);
@@ -43,22 +44,29 @@ class BasicUserProfile extends React.Component {
     const file = files[0];
     console.log('file: ', file);
 
-    const data = new FormData();
-    data.append('image', file);
-    console.log('data: ', data);
-
-    axios.post('/upload/image',
-      data,
-      { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-      console.log('Processed results');
-      console.log('frontend result: ', res);
-      console.log('the link to the image: ', res.data.url);
-      this.setState({
-        img: res.data.url
+    const types = ['image/jpeg', 'image/pjpeg', 'image/png', 'image/jpg', 'image/gif'];
+    if (file && types.includes(file.type)) {
+      const data = new FormData();
+      data.append('image', file);
+      console.log('data: ', data);
+      axios.post('/upload/image',
+        data,
+        { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+        console.log('Processed results');
+        console.log('frontend result: ', res);
+        console.log('the link to the image: ', res.data.url);
+        this.setState({
+          img: res.data.url,
+          noImg: false
+        });
+        console.log('new state after file upload', this.state);
+        this.props.update('basicProfile', this.state);
       });
-      console.log('new state after file upload', this.state);
-      this.props.update('basicProfile', this.state);
-    });
+    } else {
+      this.setState({
+        noImg: true
+      });
+    }
   }
 
   render () {
@@ -74,7 +82,7 @@ class BasicUserProfile extends React.Component {
           <div className="btn btn-primary btn-sm float-left" value="Browse..." onClick={() => document.getElementById('selectImage-2').click()}>
             <span>Choose Photo</span>
             <div className="file-path-wrapper">
-              <input id="selectImage-2" hidden type="file" onChange={this.uploadFile}/>
+              <input id="selectImage-2" hidden type="file" accept="image/*" onChange={this.uploadFile}/>
             </div>
           </div>
         </div>;
@@ -87,8 +95,9 @@ class BasicUserProfile extends React.Component {
           <div className="card-down card-cascade wider reverse">
 
             <div className="view-cascade">
-              <img className="card-img-top max" src={this.state.img}
-                alt="Card image cap"/>
+              {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
+                : <img className="card-img-top max" src={this.state.img}
+                  alt="Card image cap"/>}
               <a href="#!">
                 <div className="mask rgba-white-slight"></div>
               </a>
