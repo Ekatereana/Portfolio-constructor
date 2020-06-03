@@ -68,7 +68,7 @@ class AboutCard extends React.Component {
     const file = files[0];
     const types = ['image/jpeg', 'image/pjpeg', 'image/png', 'image/jpg', 'image/gif'];
     console.log('file: ', file);
-    if (types.includes(file.type)) {
+    if (file && types.includes(file.type)) {
       const data = new FormData();
       data.append('image', file);
       await axios.post('/upload/image',
