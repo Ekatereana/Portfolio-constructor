@@ -272,11 +272,13 @@ justify-content:  flex-start;
 }
 
 .btn-edit-social {
-  background-color: white;
   border: none; 
+  border: none;
+  outline: none;
+  background: none;
 }
 
-.btn-edit-social:hover, .btn-edit-social:active {
+.btn-edit-social:hover, .btn-edit-social:active, .btn-edit-social:focus {
   outline: none;
 }
 

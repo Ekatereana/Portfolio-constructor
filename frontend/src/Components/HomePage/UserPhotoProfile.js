@@ -43,7 +43,7 @@ class SocialButton extends React.Component {
     if (!this.props.editable) {
       edit =
       <div>
-        <div className="social-item">  <button onClick={this.editSocial} className="fas fa-edit btn-edit-social"></button></div>
+        <div className="social-item"> <button onClick={this.editSocial} type="button" className="fas fa-edit btn-edit-social"/></div>
         <div className="socia-item">  <button onClick={ () => this.props.delete(this)} className="far fa-trash-alt btn-edit-social"></button> </div>
       </div>;
     }
@@ -142,13 +142,20 @@ class UserPhotoCard extends React.Component {
     console.log('save social-lable', url);
     const newState = this.state;
     console.log(lable.props.id);
-    this.deleteSocial(lable);
     console.log('replace', newState.arrayOfSocial);
     if (!newState.arrayOfSocial) {
       newState.arrayOfSocial = [];
     }
-    newState.arrayOfSocial.push(<SocialButton delete = {this.deleteSocial}
-      save = {this.saveSocialLable} url = {url} butonclass = {lable.props.butonclass} classname = {lable.props.classname} key={lable.props.id} id={lable.props.id}/>);
+    const current = newState.arrayOfSocial.find(el => el.props.id === lable.props.id);
+    const id = newState.arrayOfSocial.indexOf(current);
+    newState.arrayOfSocial.splice(id, 1,
+      <SocialButton delete = {this.deleteSocial}
+        save = {this.saveSocialLable}
+        url = {url}
+        butonclass = {lable.props.butonclass}
+        classname = {lable.props.classname}
+        key={lable.props.id}
+        id={lable.props.id}/>);
     this.setState(newState);
     this.props.update('userPhotoCard', this.state);
   };
@@ -214,10 +221,10 @@ class UserPhotoCard extends React.Component {
                   <MDBIcon icon="undo-alt" />
                 </div>
                 <div name="imgSize" title="Change size of image" value={this.state.imgSize} onClick={ (event) => this.changeImageSize(event, 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-expand"></i>
+                  <i className="fas fa-expand"></i>
                 </div>
                 <div name="imgBorderType" title = "change borders" value={this.state.imgBorderType} onClick={ (event) => this.changeImageBorderType(event, 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-border-style"></i>
+                  <i className="fas fa-border-style"></i>
                 </div>
               </div>
             ) : null}

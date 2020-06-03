@@ -15,7 +15,6 @@ import Preview from './Preview/Preview';
 import CreateAll from './Create/Create';
 import './Create/Create.css';
 
-
 const useStateWithsessionStorage = SessionStorageKey => {
   if (sessionStorage.getItem(SessionStorageKey) == null) {
     sessionStorage.setItem(SessionStorageKey, null);
@@ -69,10 +68,10 @@ function Authorized () {
     } else {
       content =
      <Router>
-       <Header handleUser = {handleUser} handlePreview = {handlePreview} isAuthorized={isAuthorized} />
+       <Header handleUser = {handleUser} preview = {preview} handlePreview = {handlePreview} isAuthorized={isAuthorized} />
        <div className="vertical-panel">
          <Route path="/create" render={props => <CreateAll handleUser={handleUser} handlePreview={handlePreview} preview={preview} user={value} /> }/>
-         <Route exact path="/" component={ Main }/>
+         <Route exact path="/" render={props => <Main handleUser={handleUser} handlePreview={handlePreview} preview={preview} user={value} /> }/>
        </div>
      </Router>;
     }
