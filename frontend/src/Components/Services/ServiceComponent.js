@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 import '../Editable.css';
 
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeStyle } from '../TextFormater';
 import axios from 'axios';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
@@ -16,6 +16,7 @@ class ServiceComponent extends Component {
     if (content !== null) {
       this.state = {
         title: content.title,
+        titleStyle: content.titleStyle,
         icon: this.props.type,
         color: content.color,
         titlePosition: content.titlePosition,
@@ -23,6 +24,7 @@ class ServiceComponent extends Component {
         text: content.text,
         iconPosition: content.iconPosition,
         textColor: content.textColor,
+        textStyle: content.textStyle,
         titleColor: content.titleColor,
         titleFontSize: content.titleFontSize,
         textFontSize: content.textFontSize,
@@ -53,6 +55,7 @@ class ServiceComponent extends Component {
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
     this.handleChange = handleChange.bind(this);
+    this.changeStyle = changeStyle.bind(this);
   }
 
   render () {
@@ -89,7 +92,7 @@ class ServiceComponent extends Component {
         <div className={ this.getStyled(this.state.titlePosition, 'text-control-item editable')}>
           <Editable
             onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
-            edit={noEdit} styleName={'editable-title font-weight-bold my-4 ' + this.state.titleColor + ' ' + this.state.titleFontSize}
+            edit={noEdit} styleName={'editable-title font-weight-bold my-4 ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
             text={this.state.title} type="input" value={this.state.title}>
             <input
               name="title"
@@ -100,7 +103,7 @@ class ServiceComponent extends Component {
           </Editable>
 
           {!noEdit ? (
-            <div className="row control-panel">
+            <div className="row col">
               <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
                 <MDBIcon icon="fill" />
               </div>
@@ -108,8 +111,20 @@ class ServiceComponent extends Component {
               <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
                 { titleButton }
               </div>
-              <div name="titleFontSize" value={this.state.titleFontSize} onClick={(event) => this.changeFont(event, false)} className="filler-color">
+              <div name="titleFontSize" value={this.state.titleFontSize} onClick={(event) => this.changeFont(event, false, true)} className="filler-color">
                 <i class="fas fa-text-height"></i>
+              </div>
+
+              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
+                <i class="fas fa-underline"/>
+              </div>
+
+              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
+                <i class="fas fa-italic"/>
+              </div>
+
+              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
+                <i class="fas fa-bold"/>
               </div>
             </div>) : null}
 
@@ -117,7 +132,7 @@ class ServiceComponent extends Component {
 
         <div className={ this.getStyled(this.state.textPosition, 'text-control-item editable') }>
           <Editable edit={noEdit} onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
-            styleName={ this.state.textColor ? 'mb-md-0 mb-5 ' + this.state.textColor : ' grey-text'}
+            styleName={ this.state.textColor ? 'mb-md-0 mb-5 ' + this.state.textColor + ' ' + this.state.textStyle : ' grey-text' + ' ' + this.state.textStyle}
             text={this.state.text}
             type="input"
             value={this.state.text}>
@@ -129,12 +144,24 @@ class ServiceComponent extends Component {
               id="inputPrefilledEx"/>
           </Editable>
           {!noEdit ? (
-            <div className="row control-panel">
+            <div className="row control-panel col-3">
               <div name="textColor" value={this.state.textColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
                 <MDBIcon icon="fill" />
               </div>
               <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="textPosition" value={this.state.textPosition} className="text-format-button">
                 { textButton }
+              </div>
+
+              <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
+                <i class="fas fa-underline"/>
+              </div>
+
+              <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
+                <i class="fas fa-italic"/>
+              </div>
+
+              <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
+                <i class="fas fa-bold"/>
               </div>
             </div>
           ) : null }

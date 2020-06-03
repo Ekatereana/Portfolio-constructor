@@ -6,7 +6,7 @@ import Editable from '../Editable';
 
 import axios from 'axios';
 import RowComponent from './RowComponent';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeStyle } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class Projects extends Component {
@@ -91,7 +91,9 @@ class Best extends Component {
         subtitlePosition: current.subtitlePosition,
         arrayOfCards: current.arrayOfCards,
         titleColor: current.titleColor,
+        titleStyle: current.titleStyle,
         subtitleColor: current.subtitleColor,
+        subtitleStyle: current.subtitleStyle,
         subtitleFontSize: current.subtitleFontSize,
         titleFontSize: current.titleFontSize
       };
@@ -117,6 +119,7 @@ class Best extends Component {
     this.updateRowComponent = this.updateRowComponent.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
+    this.changeStyle = changeStyle.bind(this);
   }
 
   updateRowComponent (component) {
@@ -177,7 +180,9 @@ class Best extends Component {
           <div className="best-header">
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
               <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'best')}
-                edit={noEdit} styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
+                edit={noEdit}
+                styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+                text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
                   value={this.state.title}
@@ -196,6 +201,18 @@ class Best extends Component {
                   <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, 'best')} className="filler-color">
                     <i class="fas fa-text-height"></i>
                   </div>
+
+                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'best')} className="filler-color">
+                    <i class="fas fa-underline"/>
+                  </div>
+
+                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'best')} className="filler-color">
+                    <i class="fas fa-italic"/>
+                  </div>
+
+                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'best')} className="filler-color">
+                    <i class="fas fa-bold"/>
+                  </div>
                 </div>
               ) : null}
             </div>
@@ -211,7 +228,7 @@ class Best extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div className="row control-panel">
+                <div className="row control-panel col-3">
                   <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, 'best')} className="filler-color">
                     <MDBIcon icon="fill" />
                   </div>
@@ -220,6 +237,18 @@ class Best extends Component {
                   </div>
                   <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">
                     <i class="fas fa-text-height"></i>
+                  </div>
+
+                  <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'best')} className="filler-color">
+                    <i class="fas fa-underline"/>
+                  </div>
+
+                  <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'best')} className="filler-color">
+                    <i class="fas fa-italic"/>
+                  </div>
+
+                  <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'best')} className="filler-color">
+                    <i class="fas fa-bold"/>
                   </div>
                 </div>
               ) : null}

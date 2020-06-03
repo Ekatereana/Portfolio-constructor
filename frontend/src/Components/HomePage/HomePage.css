@@ -212,7 +212,7 @@ justify-content:  flex-start;
   width: 100%;
 }
 
-.text-control-item section{
+.lock{
   max-width: 500px;
 }
 
@@ -228,7 +228,8 @@ justify-content:  flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 3em; 
+  padding-left: 2em; 
+  padding-right: 2em; 
   max-width: 500px;
 }
 

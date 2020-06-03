@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Editable from '../Editable';
 import axios from 'axios';
 
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile, changeStyle } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class RowComponent extends Component {
@@ -17,9 +17,11 @@ class RowComponent extends Component {
         titlePosition: content.titlePosition,
         titleColor: content.titleColor,
         titleFontSize: content.titleFontSize,
+        titleStyle: content.titleFStyle,
         textPosition: content.textPosition,
         textFontSize: content.textFontSize,
         textColor: content.textColor,
+        textStyle: content.textStyle,
         text: content.text,
         url: content.url,
         isSaved: true,
@@ -49,6 +51,7 @@ class RowComponent extends Component {
     this.uploadFile = uploadFile.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
+    this.changeStyle = changeStyle.bind(this);
   };
 
   upload (id) {
@@ -90,7 +93,9 @@ class RowComponent extends Component {
 
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
               <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
-                edit={noEdit} styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize} text={this.state.title} type="input" value={this.state.title}>
+                edit={noEdit}
+                styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+                text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
                   value={this.state.title}
@@ -106,8 +111,19 @@ class RowComponent extends Component {
                   <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
                     { titleButton }
                   </div>
-                  <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, false)} className="filler-color">
+                  <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, false, true)} className="filler-color">
                     <i class="fas fa-text-height"></i>
+                  </div>
+                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
+                    <i class="fas fa-underline"/>
+                  </div>
+
+                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
+                    <i class="fas fa-italic"/>
+                  </div>
+
+                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
+                    <i class="fas fa-bold"/>
                   </div>
                 </div>
               ) : null}
@@ -115,7 +131,7 @@ class RowComponent extends Component {
             <hr/>
             <div className={ this.getStyled(this.state.textPosition, 'text-control-item ')}>
               <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
-                styleName={ 'card-plain-text text-muted font-weight-light ' + this.state.textColor + ' ' + this.state.textFontSize}
+                styleName={ 'card-plain-text text-muted font-weight-light ' + this.state.textColor + ' ' + this.state.textFontSize + ' ' + this.state.textStyle}
                 text={this.state.text}
                 type="input"
                 value={this.state.text}>
@@ -127,15 +143,26 @@ class RowComponent extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div className="row control-panel">
+                <div className="row control-panel col-2">
                   <div name="textColor" value={this.state.textColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
                     <MDBIcon icon="fill" />
                   </div>
                   <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
                     { textButton }
                   </div>
-                  <div name="textFontSize" value={this.state.textFontSize} onClick={ (event) => this.changeFont(event, false)} className="filler-color">
+                  <div name="textFontSize" value={this.state.textFontSize} onClick={ (event) => this.changeFont(event, false, true)} className="filler-color">
                     <i class="fas fa-text-height"></i>
+                  </div>
+                  <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
+                    <i class="fas fa-underline"/>
+                  </div>
+
+                  <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
+                    <i class="fas fa-italic"/>
+                  </div>
+
+                  <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
+                    <i class="fas fa-bold"/>
                   </div>
                 </div>
               ) : null}

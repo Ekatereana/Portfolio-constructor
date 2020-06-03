@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 import '../Editable.css';
 
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeStyle } from '../TextFormater';
 import axios from 'axios';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 import ServiceComponent from './ServiceComponent';
@@ -49,7 +49,9 @@ class ServicePanel extends Component {
         titlePosition: current.titlePosition,
         subtitlePosition: current.subtitlePosition,
         subtitleColor: current.subtitleColor,
-        arrayOfCards: current.arrayOfCards
+        arrayOfCards: current.arrayOfCards,
+        titleStyle: current.titleStyle,
+        subtitleStyle: current.subtitleStyle
       };
     } else {
       this.state = {
@@ -60,6 +62,11 @@ class ServicePanel extends Component {
         arrayOfCards: []
       };
     }
+    if (!this.state.arrayOfCards) {
+      this.setState({
+        arrayOfCards: []
+      });
+    }
     this.handleChange = handleChange.bind(this);
     this.getStyled = getStyled.bind(this);
     this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
@@ -69,6 +76,7 @@ class ServicePanel extends Component {
     this.updateService = this.updateService.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
+    this.changeStyle = changeStyle.bind(this);
   }
 
   updateService (component) {
@@ -125,13 +133,14 @@ class ServicePanel extends Component {
     const titleButton = getButtonType(this.state.titlePosition);
     const subtitleButton = getButtonType(this.state.subtitlePosition);
     const { arrayOfCards } = this.state;
+
     console.log('subtitlePosition', this.state.subtitlePosition);
     return (
       <div className="">
 
         <div className={ this.getStyled(this.state.titlePosition, 'text-control-item editable')}>
           <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', true)} edit={noEdit}
-            styleName={'editable-title  h1-responsive font-weight-bold my-5 ' + this.state.titleFontSize + ' ' + this.state.titleColor}
+            styleName={'editable-title  h1-responsive font-weight-bold my-5 ' + this.state.titleFontSize + ' ' + this.state.titleColor + ' ' + this.state.titleStyle}
             text={this.state.title} type="input" value={this.state.title}>
             <input
               name="title"
@@ -151,13 +160,24 @@ class ServicePanel extends Component {
               <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">
                 <i class="fas fa-text-height"></i>
               </div>
+              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', true)} className="filler-color">
+                <i class="fas fa-underline"/>
+              </div>
+
+              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', true)} className="filler-color">
+                <i class="fas fa-italic"/>
+              </div>
+
+              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', true)} className="filler-color">
+                <i class="fas fa-bold"/>
+              </div>
             </div>
           ) : null}
         </div>
 
         <div className={ this.getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
           <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', true)}
-            styleName={'editable-text lead w-responsive mx-auto mb-5 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize}
+            styleName={'editable-text lead w-responsive mx-auto mb-5 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize + ' ' + this.state.subtitleStyle}
             text={this.state.subtitle} edit={noEdit} type="input" value={this.state.subtitle}>
             <input
               name="subtitle"
@@ -176,6 +196,18 @@ class ServicePanel extends Component {
               </div>
               <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={ (event) => this.changeFont(event, true)} className="filler-color">
                 <i class="fas fa-text-height"></i>
+              </div>
+
+              <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'underline', true)} className="filler-color">
+                <i class="fas fa-underline"/>
+              </div>
+
+              <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'italic', true)} className="filler-color">
+                <i class="fas fa-italic"/>
+              </div>
+
+              <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'bold', true)} className="filler-color">
+                <i class="fas fa-bold"/>
               </div>
             </div>
           ) : null}

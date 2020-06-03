@@ -313,7 +313,7 @@ class UserPhotoCard extends React.Component {
           <hr/>
           <i className="fas fa-quote-left "></i>
           <div className={ getStyled(this.state.quotesPosition, 'text-control-item editable')}>
-            <Editable onKeyDown={(event) => saveTextInput(event, this.state.quotes, 'quotes', 'userPhotoCard')} edit={imMuteble}
+            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes', 'userPhotoCard')} edit={imMuteble}
               styleName={ 'editable-text ' + this.state.quotesColor + ' ' + this.state.quotesFontSize + ' ' + this.state.quotesStyle}
               text={this.state.quotes} type="input" value={this.state.quotes}>
               <input

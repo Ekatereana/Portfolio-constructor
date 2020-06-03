@@ -169,7 +169,7 @@ class BasicUserProfile extends React.Component {
 
               <div className={getStyled(this.state.primaryTextPosition, 'text-control-item editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.primaryText, 'primaryText', 'basicProfile')}
-                  styleName={ this.state.primaryTextColor + ' ' + this.state.primaryTextFontSize + ' ' + this.state.primaryTextStyle }
+                  styleName={ 'lock' + this.state.primaryTextColor + ' ' + this.state.primaryTextFontSize + ' ' + this.state.primaryTextStyle }
                   text={this.state.primaryText} type="input" value={this.state.subtitle}>
 
                   <input
@@ -181,7 +181,7 @@ class BasicUserProfile extends React.Component {
                     className="card-title"/>
                 </Editable>
                 {!noEdit ? (
-                  <div className="row control-panel">
+                  <div className="row col">
                     <div name="primaryTextColor" value={this.state.primaryTextColor} onClick={(event) => this.changeColor(event, 'basicProfile')} className="filler-color">
                       <MDBIcon icon="fill" />
                     </div>
