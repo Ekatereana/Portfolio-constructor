@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
+import axios from 'axios';
 
 class SocialButton extends React.Component {
   constructor (props) {
@@ -74,7 +75,8 @@ class UserPhotoCard extends React.Component {
       quotesFontSize: currentS.quotesFonstSize,
       quotes: currentS.quotes,
       arrayOfSocial: currentS.arrayOfSocial,
-      isShown: false
+      isShown: false,
+      noImg: false
     };
 
     console.log('arr', currentS.arrayOfSocial);
@@ -177,8 +179,9 @@ class UserPhotoCard extends React.Component {
         <div className="card-up indigo lighten-1"></div>
         <div className="profile-photo">
           <div className="avatar white">
-            <img src={this.state.img} className="avatar"
-              alt="woman avatar"/>
+            {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
+              : <img src={this.state.img} className="avatar"
+                alt="woman avatar"/>}
           </div>
 
           {editPhotoCard}

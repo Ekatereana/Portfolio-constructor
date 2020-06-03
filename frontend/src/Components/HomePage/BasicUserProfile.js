@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import Editable from '../Editable';
 
 import axios from 'axios';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeOpacity } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeOpacity, uploadFile } from '../TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
 
 class BasicUserProfile extends React.Component {
@@ -29,44 +29,13 @@ class BasicUserProfile extends React.Component {
       noImg: false
     };
     console.log('title position', this.state.titlePosition);
-    this.uploadFile = this.uploadFile.bind(this);
+    this.uploadFile = uploadFile.bind(this);
     this.saveTextInput = saveTextInput.bind(this);
     this.handleChange = handleChange.bind(this);
     this.onChangeTiTlePosition = onChangeTiTlePosition.bind(this);
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
     this.changeOpacity = changeOpacity.bind(this);
-  }
-
-  uploadFile ({ target: { files } }) {
-    console.log('===HomePage file upload===');
-    console.log('files: ', files);
-    const file = files[0];
-    console.log('file: ', file);
-
-    const types = ['image/jpeg', 'image/pjpeg', 'image/png', 'image/jpg', 'image/gif'];
-    if (file && types.includes(file.type)) {
-      const data = new FormData();
-      data.append('image', file);
-      console.log('data: ', data);
-      axios.post('/upload/image',
-        data,
-        { port: 4000, withCredentials: false, headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
-        console.log('Processed results');
-        console.log('frontend result: ', res);
-        console.log('the link to the image: ', res.data.url);
-        this.setState({
-          img: res.data.url,
-          noImg: false
-        });
-        console.log('new state after file upload', this.state);
-        this.props.update('basicProfile', this.state);
-      });
-    } else {
-      this.setState({
-        noImg: true
-      });
-    }
   }
 
   render () {
