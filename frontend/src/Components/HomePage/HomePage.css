@@ -137,7 +137,7 @@
 }
 
 .avatar {
-  max-width: 25em;
+  max-width: 450px;
   font-size: 24px;
   width: 70%;
   height: 70%;
@@ -172,7 +172,7 @@
 
 
 .avatar-minus {
-  max-width: 25em;
+  max-width: 400px;
   font-size: 24px;
   width: 50%;
   height: 50%;
@@ -181,7 +181,7 @@
 }
 
 .avatar-plus {
-  max-width: 20em;
+  max-width: 500px;
   font-size: 24px;
   display:  flex;
   flex-direction: row;
@@ -217,6 +217,14 @@ justify-content:  flex-start;
   width: 100%;
   align-items: center;  
   justify-content:  center; 
+}
+
+.center-text-keeper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 5em; 
+  max-width: 500px;
 }
 
 

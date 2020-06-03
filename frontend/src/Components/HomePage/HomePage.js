@@ -32,6 +32,7 @@ class HomePage extends React.Component {
         userPhotoCard: {
           img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
           title: 'My adventure',
+          subtitle: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci ..... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci.....',
           quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
           arrayOfSocial: []
         },

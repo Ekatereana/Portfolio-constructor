@@ -20,7 +20,7 @@ function getButtonType (value) {
   return titleButton;
 }
 
-function changeFont (event, isParent) {
+function changeFont (event, isParent, condition) {
   console.log('change position');
   console.log(event.currentTarget.getAttribute('name'));
   const newState = this.state;
@@ -28,29 +28,45 @@ function changeFont (event, isParent) {
   if (!value) {
     value = null;
   }
-  switch (value) {
-    case 'small-text':
-      newState[event.currentTarget.getAttribute('name')] = 'middle-text';
-      break;
-    case 'middle-text':
-      newState[event.currentTarget.getAttribute('name')] = 'big-text';
-      break;
-    case 'big-text':
-      newState[event.currentTarget.getAttribute('name')] = 'huge-text';
-      break;
-    case 'huge-text':
-      newState[event.currentTarget.getAttribute('name')] = 'plus-huge-text';
-      break;
-    case 'plus-huge-text':
-      newState[event.currentTarget.getAttribute('name')] = 'mega-huge-text';
-      break;
-    case 'mega-huge-text':
-      newState[event.currentTarget.getAttribute('name')] = 'small-text';
-      break;
-    case null:
-      newState[event.currentTarget.getAttribute('name')] = 'middle-text';
-      break;
+
+  if (!condition) {
+    switch (value) {
+      case 'small-text':
+        newState[event.currentTarget.getAttribute('name')] = 'middle-text';
+        break;
+      case 'middle-text':
+        newState[event.currentTarget.getAttribute('name')] = 'big-text';
+        break;
+      case 'big-text':
+        newState[event.currentTarget.getAttribute('name')] = 'huge-text';
+        break;
+      case 'huge-text':
+        newState[event.currentTarget.getAttribute('name')] = 'plus-huge-text';
+        break;
+      case 'plus-huge-text':
+        newState[event.currentTarget.getAttribute('name')] = 'mega-huge-text';
+        break;
+      case 'mega-huge-text':
+        newState[event.currentTarget.getAttribute('name')] = 'small-text';
+        break;
+      case null:
+        newState[event.currentTarget.getAttribute('name')] = 'middle-text';
+        break;
+    }
+  } else {
+    switch (value) {
+      case 'small-text':
+        newState[event.currentTarget.getAttribute('name')] = 'middle-text';
+        break;
+      case 'middle-text':
+        newState[event.currentTarget.getAttribute('name')] = 'small-text';
+        break;
+      case null:
+        newState[event.currentTarget.getAttribute('name')] = 'middle-text';
+        break;
+    }
   }
+
   newState.isSaved = false;
   this.setState(newState);
   if (isParent) {

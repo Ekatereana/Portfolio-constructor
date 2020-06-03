@@ -82,6 +82,10 @@ class UserPhotoCard extends React.Component {
       imageOrientation: currentS.imageOrientation,
       imageForm: currentS.imageForm,
       imgSize: currentS.imgSize,
+      subtitle: currentS.subtitle,
+      subtitlePosition: currentS.subtitlePosition,
+      subtitleColor: currentS.subtitleColor,
+      subtitleFontSize: currentS.subtitleFontSize,
       isShown: false,
       noImg: false,
       imgBorderType: currentS.imgBorderType
@@ -214,8 +218,36 @@ class UserPhotoCard extends React.Component {
               </div>
             ) : null}
           </div>
-
-          {editPhotoCard}
+          <div className="center-text-keeper">
+            {editPhotoCard}
+            <div className="row">
+              <i class="fab fa-angellist"></i>
+              <div className={getStyled(this.state.subitlePosition, 'text-control-item  editable')}>
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'userPhotoCard')}
+                  edit={imMuteble} styleName={ this.state.subtitleColor + ' ' + this.state.subtitleFontSize} text={this.state.subtitle} type="input" value={this.state.subtitle}>
+                  <input
+                    name="subtitle"
+                    value={this.state.subtitle}
+                    onChange={this.handleChange}
+                    type="text"
+                    id="inputPrefilledEx"/>
+                </Editable>
+                {!imMuteble ? (
+                  <div className="row control-panel">
+                    <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, 'userPhotoCard')} className="filler-color">
+                      <MDBIcon icon="fill" />
+                    </div>
+                    <div onClick={(event) => this.onChangeTiTlePosition(event, 'userPhotoCard')} name="titlePosition" value={this.state.subtitlePosition} className="text-format-button">
+                      { titleButton }
+                    </div>
+                    <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard', true)} className="filler-color">
+                      <i class="fas fa-text-height"></i>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="social-panel row">
@@ -281,7 +313,7 @@ class UserPhotoCard extends React.Component {
                 <div onClick={this.onChangeTiTlePosition} name="quotesPosition" value={this.state.quotesPosition} className="text-format-button">
                   { quotesButton }
                 </div>
-                <div name="quotesFontSize" value={this.state.quotesFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard')} className="filler-color">
+                <div name="quotesFontSize" value={this.state.quotesFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard', true)} className="filler-color">
                   <i class="fas fa-text-height"></i>
                 </div>
               </div>
