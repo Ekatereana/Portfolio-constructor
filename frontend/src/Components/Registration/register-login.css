@@ -4,6 +4,8 @@
     flex-direction: column;
     align-items: center;
     top: 3em;
+    padding-bottom: 10px;
+    height: max-content;
 }
 
 .right-side.right {
@@ -25,7 +27,7 @@
     z-index: 100;
     max-width: 380px;
     height: max-content;
-    max-height: 900px;
+    max-height: 1000px;
     margin-left: -160px;
 }
 
