@@ -7,10 +7,12 @@
 }
 
 .right-side.right {
+    position: relative;
     z-index: 0;
 }
 
 .right-side.left {
+    position: relative;
     z-index: 0;
 }
 
