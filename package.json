@@ -10,7 +10,8 @@
     "backend": "nodemon app.js",
     "frontend": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
-    "construct": " concurently --kill-others \"npm install\" \" cd frontend && npm install\""
+    "construct": " concurently --kill-others \"npm install\" \" cd frontend && npm install\"",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "repository": {
     "url": "git+https://github.com/Ekatereana/Portfolio-constructor.git"
@@ -55,5 +56,8 @@
     "pg": "^8.2.1",
     "pug": "^2.0.4",
     "yarn": "^1.22.4"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
