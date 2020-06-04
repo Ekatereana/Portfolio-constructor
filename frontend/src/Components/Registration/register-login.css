@@ -23,9 +23,9 @@
 .container {
     position: absolute;
     z-index: 100;
-    max-width: 350px;
+    max-width: 380px;
     max-height: 800px;
-    margin-left: -70px;
+    margin-left: -120px;
 }
 
 .header {
