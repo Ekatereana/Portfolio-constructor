@@ -6,6 +6,18 @@
   top: 3em;
 }
 
+.container {
+    z-index: 100;
+}
+
+.right-side.right {
+    z-index: -100;
+}
+
+.right-side.left {
+    z-index: -100;
+}
+
   .header {
     font-size: 24px;
     font-family: "Open Sans", sans-serif;
