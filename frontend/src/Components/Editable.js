@@ -54,7 +54,7 @@ const Editable = ({
           className={`editable-${type}`}
           onClick={editable}
         >
-          <span className={`${text ? 'text-black ' : 'text-gray-500'}` + `${styleName}`}>
+          <span className={`${text ? 'text-black ' : 'text-gray-500 '}` + `${styleName}`}>
             {text || placeholder || placeholderDef}
           </span>
         </div>
