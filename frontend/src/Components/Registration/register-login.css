@@ -6,21 +6,6 @@
   top: 3em;
 }
 
-.right-side.right {
-    position: relative;
-    z-index: -100;
-}
-
-.right-side.left {
-    position: relative;
-    z-index: -100;
-}
-
-.container {
-    z-index: 100;
-    position: absolute;
-}
-
   .header {
     font-size: 24px;
     font-family: "Open Sans", sans-serif;
