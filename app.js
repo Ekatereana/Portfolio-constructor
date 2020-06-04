@@ -2,6 +2,7 @@
 
 const Koa = require('koa');
 const path = require('path');
+const fs = require('fs');
 const koaBody = require('koa-body');
 const session = require('koa-session');
 const Logger = require('koa-logger');
@@ -15,15 +16,16 @@ const koaOptions = {
   credentials: true
 };
 
-// const authRoutes = require(path.join(__dirname, BASE_PATH, 'routers/auth'));
 const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'));
 const authRoute = require(path.join(__dirname, BASE_PATH, '/routers/auth'));
-const mainRoute = require(path.join(__dirname, BASE_PATH, '/routers/main'));
-const testRoute = require(path.join(__dirname, BASE_PATH, '/routers/test'));
 const updateRoute = require(path.join(__dirname, BASE_PATH, '/routers/update'));
 const uploadRoute = require(path.join(__dirname, BASE_PATH, '/routers/upload'));
 
 const app = new Koa();
+
+const serve = require('koa-static');
+app.use(serve(path.join(__dirname, '/frontend/build')));
+app.use(serve(path.join(__dirname, '/frontend/public')));
 
 // sessions settings
 app.keys = [process.env.KEY_A, process.env.KEY_B];
@@ -36,8 +38,6 @@ app.use(passport.session());
 
 // to use all routes that include in basic router
 app.use(homeRoute.routes())
-  .use(mainRoute.routes())
-  .use(testRoute.routes())
   .use(authRoute.routes())
   .use(updateRoute.routes())
   .use(uploadRoute.routes())
@@ -46,6 +46,16 @@ app.use(homeRoute.routes())
 // to parse request body
 // to log all info
 app.use(Logger());
+
+const Router = require('koa-router');
+const router = new Router();
+
+router.get('/*', function (ctx) {
+  ctx.body = fs.readFileSync(path.join(__dirname, '/frontend/build', '/index.html'), 'utf8');
+});
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 const port = process.env.PORT || 4000;
 
