@@ -11,11 +11,11 @@
 }
 
 .right-side.right {
-    z-index: 0;
+    z-index: -1;
 }
 
 .right-side.left {
-    z-index: 0;
+    z-index: -1;
 }
 
   .header {
