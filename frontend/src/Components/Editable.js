@@ -36,6 +36,7 @@ const Editable = ({
     editable = () => setEditing(true);
   }
 
+  const placeholderDef = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci \n Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci';
   console.log('editable', edit);
 
   return (
@@ -54,7 +55,7 @@ const Editable = ({
           onClick={editable}
         >
           <span className={`${text ? 'text-black ' : 'text-gray-500'}` + `${styleName}`}>
-            {text || placeholder || 'Editable content'}
+            {text || placeholder || placeholderDef}
           </span>
         </div>
       )}

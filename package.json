@@ -10,6 +10,7 @@
     "backend": "nodemon app.js",
     "frontend": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
+    "dev": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
     "construct": " concurently --kill-others \"npm install\" \" cd frontend && npm install\"",
     "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
