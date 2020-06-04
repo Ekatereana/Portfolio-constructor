@@ -7,11 +7,7 @@
 }
 
 .App {
-    z-index: -10;
-}
-
-.container {
-    z-index: 100;
+    z-index: -100;
 }
 
 .right-side.right {
@@ -20,6 +16,10 @@
 
 .right-side.left {
     z-index: -1;
+}
+
+.container {
+    z-index: 100;
 }
 
   .header {
