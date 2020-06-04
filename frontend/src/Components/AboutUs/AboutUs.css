@@ -4,10 +4,11 @@
     flex-direction: column;
     align-items: center;
     height: max-content;
+    overflow: hidden;
 }
 
 .description {
-    font-size: 24pt;
+    font-size: 20pt;
     width: 60%;
     height: 10%;
 }
