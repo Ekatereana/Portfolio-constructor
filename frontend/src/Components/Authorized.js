@@ -8,6 +8,8 @@ import './Conteiner/Conteiner.css';
 import Main from './Main/Main';
 import './Main/Main.css';
 
+import AboutUs from './AboutUs/AboutUs';
+
 import Header from './Header/Header';
 
 import Preview from './Preview/Preview';
@@ -62,6 +64,7 @@ function Authorized () {
       content =
       <Router>
         <Header handlePreview = {handlePreview} isAuthorized={isAuthorized} preview = {preview}/>
+        <Route path="/aboutUS" render={props => <AboutUs />}/>
         <Route exact path="/preview/" render={props => <Preview preview = {preview} handleUser={handleUser} user={value} /> }/>
         <Route path="/create"> <Redirect to="/preview/" /></Route>
       </Router>;
@@ -70,6 +73,7 @@ function Authorized () {
      <Router>
        <Header handleUser = {handleUser} preview = {preview} handlePreview = {handlePreview} isAuthorized={isAuthorized} />
        <div className="vertical-panel">
+         <Route path="/aboutUS" render={props => <AboutUs />}/>
          <Route path="/create" render={props => <CreateAll handleUser={handleUser} handlePreview={handlePreview} preview={preview} user={value} /> }/>
          <Route exact path="/" render={props => <Main handleUser={handleUser} handlePreview={handlePreview} preview={preview} user={value} /> }/>
        </div>
@@ -80,6 +84,7 @@ function Authorized () {
      <Router>
        <Header handlePreview = {handlePreview} isAuthorized={isAuthorized}/>
        <div className="vertical-panel">
+         <Route path="/aboutUS" render={props => <AboutUs />}/>
          <Route path="/registration" render={props => <Conteiner handleUser={handleUser} /> }/>
          <Route exact path="/" component={ Main }/>
        </div>
