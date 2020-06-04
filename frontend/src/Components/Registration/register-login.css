@@ -1,85 +1,91 @@
 .base-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: -100;
-  top: 3em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 3em;
 }
 
 .right-side.right {
+    position: absolute;
+    width: 300px;
+    height: 100px;
     z-index: 50;
 }
 
 .right-side.left {
+    height: 100px;
+    position: absolute;
+    width: 300px;
     z-index: 50;
 }
 
 .container {
+    position: absolute;
     z-index: 100;
 }
 
-  .header {
+.header {
     font-size: 24px;
     font-family: "Open Sans", sans-serif;
-  }
+}
 
-   .content {
+.content {
     display: flex;
     flex-direction: column;
-    }
+}
 
-     .image {
-      width: 21em;
-      }
+.image {
+    width: 21em;
+}
 
-      img {
-      width: 100%;
-      height: 100%;
-      }
+img {
+    width: 100%;
+    height: 100%;
+}
 
-    form {
-      margin-top: 1em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+form {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-        }
+}
 
-        label {
-          font-size: 18px;}
+label {
+    font-size: 18px;}
 
 
-       .regist-title input {
-          margin: 0;
-          min-width: 18em;
-          height: 30px;
-          padding: 0 5px;
-          font-size: 16px;
-          font-family: "Open Sans", sans-serif;
-          background-color: #f3f3f3;
-          border: 0;
-          border-radius: 4px;
-          margin-bottom: 31px;
-          transition: all 250ms ease-in-out;
-        }
+.regist-title input {
+    margin: 0;
+    min-width: 18em;
+    height: 30px;
+    padding: 0 5px;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif;
+    background-color: #f3f3f3;
+    border: 0;
+    border-radius: 4px;
+    margin-bottom: 31px;
+    transition: all 250ms ease-in-out;
+}
 
-         .regist-title input:hover {
-            //background-color: #ffffff;
-            //box-shadow: 0px 0px 14px 0.3px #0e81ce96;
-          }
+.regist-title input:hover {
+//background-color: #ffffff;
+//box-shadow: 0px 0px 14px 0.3px #0e81ce96;
+}
 
-          .regist-title input:focus {
-            outline: none;
-            box-shadow: 0 0 12px 1px #3474dbb2;
-          }
+.regist-title input:focus {
+    outline: none;
+    box-shadow: 0 0 12px 1px #3474dbb2;
+}
 
-  .footer {
+.footer {
     margin-top: 10px;
-  }
+}
