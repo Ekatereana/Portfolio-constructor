@@ -30,14 +30,14 @@ class HomePage extends React.Component {
     if (!user.home) {
       user.home = {
         userPhotoCard: {
-          img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
+          img: 'https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg',
           title: 'My adventure',
           subtitle: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci ..... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci.....',
           quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
           arrayOfSocial: []
         },
         basicProfile: {
-          img: 'https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg',
+          img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/6-col/img%20(131).jpg',
           title: 'My adventure'
         }
       };
