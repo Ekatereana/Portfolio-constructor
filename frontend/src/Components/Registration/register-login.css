@@ -8,16 +8,20 @@
 
 .right-side.right {
     position: relative;
+    width: max-content;
+    height: max-content;
     z-index: 50;
 }
 
 .right-side.left {
-    position: relative;
+    position: absolute;
+    width: max-content;
+    height: max-content;
     z-index: 50;
 }
 
 .container {
-    position: relative;
+    position: absolute;
     z-index: 100;
 }
 
