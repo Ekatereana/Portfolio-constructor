@@ -25,6 +25,7 @@
     z-index: 100;
     max-width: 350px;
     max-height: 800px;
+    margin-left: -30px;
 }
 
 .header {
