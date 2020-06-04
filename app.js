@@ -16,10 +16,11 @@ const koaOptions = {
   credentials: true
 };
 
-const homeRoute = require(path.join(__dirname, BASE_PATH, '/routers/home'));
 const authRoute = require(path.join(__dirname, BASE_PATH, '/routers/auth'));
+const testRoute = require(path.join(__dirname, BASE_PATH, '/routers/test'));
 const updateRoute = require(path.join(__dirname, BASE_PATH, '/routers/update'));
 const uploadRoute = require(path.join(__dirname, BASE_PATH, '/routers/upload'));
+// const deployRoute = require(path.join(__dirname, BASE_PATH, '/routers/deploy'));
 
 const app = new Koa();
 
@@ -30,19 +31,17 @@ app.use(serve(path.join(__dirname, '/frontend/public')));
 // sessions settings
 app.keys = [process.env.KEY_A, process.env.KEY_B];
 app.use(koaCors(koaOptions));
-app.use(session({ faildWithErrors: true, session: true }, app));
+app.use(session({ failedWithErrors: true, session: true }, app));
 app.use(koaBody({ multipart: true }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 // to use all routes that include in basic router
-app.use(homeRoute.routes())
+app.use(testRoute.routes())
   .use(authRoute.routes())
   .use(updateRoute.routes())
-  .use(uploadRoute.routes())
-// to serve up compiled React app
-  .use(require('koa-static')('./build'));
+  .use(uploadRoute.routes());
 // to parse request body
 // to log all info
 app.use(Logger());
