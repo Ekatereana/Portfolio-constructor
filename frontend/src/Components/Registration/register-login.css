@@ -24,8 +24,9 @@
     position: absolute;
     z-index: 100;
     max-width: 380px;
-    max-height: 800px;
-    margin-left: -120px;
+    height: max-content;
+    max-height: 900px;
+    margin-left: -140px;
 }
 
 .header {
