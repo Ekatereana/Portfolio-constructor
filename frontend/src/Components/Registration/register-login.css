@@ -3,19 +3,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: -100;
   top: 3em;
 }
 
-.App {
-    z-index: -100;
-}
-
 .right-side.right {
-    z-index: -1;
+    z-index: 50;
 }
 
 .right-side.left {
-    z-index: -1;
+    z-index: 50;
 }
 
 .container {
