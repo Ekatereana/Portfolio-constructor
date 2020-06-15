@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import './HomePage.css';
 
 import { Route } from 'react-router-dom';
-import Editable from '../Editable';
+import Editable from '../Editable/Editable';
 
 import axios from 'axios';
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeOpacity, uploadFile, changeStyle } from '../TextFormater';
+import {
+  getButtonType, getStyled, saveTextInput, changeFont,
+  changeColor, onChangeTiTlePosition, handleChange, changeOpacity, uploadFile, changeStyle
+} from '../../helpers/TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
+import EditablePanel from '../EditablePanel/EditablePanel';
 
 class BasicUserProfile extends React.Component {
   constructor (props) {
@@ -87,7 +91,7 @@ class BasicUserProfile extends React.Component {
             <div className="card-body card-body-cascade">
               <div className={getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'basicProfile')}
-                  styleName={ 'editable-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+                  styleName={ 'c-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
                   text={this.state.title} type="input" value={this.state.title}>
 
                   <input
@@ -99,36 +103,23 @@ class BasicUserProfile extends React.Component {
                     className="card-title"/>
                 </Editable>
                 {!noEdit ? (
-                  <div className="row control-panel">
-                    <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, 'basicProfile')} className="filler-color">
-                      <MDBIcon icon="fill" />
-                    </div>
-                    <div onClick={(event) => this.onChangeTiTlePosition(event, 'basicProfile')} name="titlePosition" value={this.state.titlePosition}
-                      className="text-format-button">
-                      { titleButton }
-                    </div>
-                    <div name="titleFontSize" value={this.state.titleFontSize} onClick={(event) => this.changeFont(event, 'basicProfile')} className="filler-color">
-                      <i class="fas fa-text-height"></i>
-                    </div>
-
-                    <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-underline"/>
-                    </div>
-
-                    <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-italic"/>
-                    </div>
-
-                    <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-bold"/>
-                    </div>
-                  </div>
+                  <EditablePanel name="title"
+                    color={this.state.titleColor}
+                    size={this.state.titleFontSize}
+                    position={this.state.titlePosition}
+                    button={titleButton}
+                    style={this.state.titleStyle}
+                    changeStyle ={this.changeStyle}
+                    changeColor = {this.changeColor}
+                    changeFont = {this.changeFont}
+                    onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                    isParent="basicProfile"/>
                 ) : null}
               </div>
 
               <div className={getStyled(this.state.subtitlePosition, 'text-control-item editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'basicProfile')}
-                  styleName={ 'font-weight-bold indigo-text py-2 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize + ' ' + this.state.subtitleStyle}
+                  styleName={ 'indigo-text py-2 ' + this.state.subtitleColor + ' ' + this.state.subtitleFontSize + ' ' + this.state.subtitleStyle}
                   text={this.state.subtitle} type="input" value={this.state.subtitle}>
 
                   <input
@@ -140,36 +131,25 @@ class BasicUserProfile extends React.Component {
                     className="card-title"/>
                 </Editable>
                 {!noEdit ? (
-                  <div className="row control-panel">
-                    <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, 'basicProfile')} className="filler-color">
-                      <MDBIcon icon="fill" />
-                    </div>
-                    <div onClick={(event) => this.onChangeTiTlePosition(event, 'basicProfile')} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
-                      { subtitleButton }
-                    </div>
-                    <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={(event) => this.changeFont(event, 'basicProfile')} className="filler-color">
-                      <i class="fas fa-text-height"></i>
-                    </div>
-
-                    <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-underline"/>
-                    </div>
-
-                    <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-italic"/>
-                    </div>
-
-                    <div name="subtitleStyle" value={this.state.subtitleStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-bold"/>
-                    </div>
-                  </div>
+                  <EditablePanel name="subtitle"
+                    color={this.state.subtitleColor}
+                    size={this.state.subtitleFontSize}
+                    position={this.state.subtitlePosition}
+                    button={subtitleButton}
+                    changeColor = {this.changeColor}
+                    changeFont = {this.changeFont}
+                    style={this.state.subtitleStyle}
+                    scaleble = {true}
+                    changeStyle ={this.changeStyle}
+                    onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                    isParent="basicProfile"/>
                 ) : null}
 
               </div>
 
               <div className={getStyled(this.state.primaryTextPosition, 'text-control-item editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.primaryText, 'primaryText', 'basicProfile')}
-                  styleName={ 'lock' + this.state.primaryTextColor + ' ' + this.state.primaryTextFontSize + ' ' + this.state.primaryTextStyle }
+                  styleName={ 'lock ' + this.state.primaryTextColor + ' ' + this.state.primaryTextFontSize + ' ' + this.state.primaryTextStyle }
                   text={this.state.primaryText} type="input" value={this.state.subtitle}>
 
                   <input
@@ -181,31 +161,19 @@ class BasicUserProfile extends React.Component {
                     className="card-title"/>
                 </Editable>
                 {!noEdit ? (
-                  <div className="row col">
-                    <div name="primaryTextColor" value={this.state.primaryTextColor} onClick={(event) => this.changeColor(event, 'basicProfile')} className="filler-color">
-                      <MDBIcon icon="fill" />
-                    </div>
-                    <div onClick={(event) => this.onChangeTiTlePosition(event, 'basicProfile')} name="primaryTextPosition" value={this.state.primaryTextPosition} className="text-format-button">
-                      { primaryTextButton }
-                    </div>
-                    <div name="primaryTextFontSize" value={this.state.primaryTextFontSize} onClick={(event) => this.changeFont(event, 'basicProfile', true)} className="filler-color">
-                      <i class="fas fa-text-height"></i>
-                    </div>
-
-                    <div name="primaryTextStyle" value={this.state.primaryTextStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-underline"/>
-                    </div>
-
-                    <div name="primaryTextStyle" value={this.state.primaryTextStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-italic"/>
-                    </div>
-
-                    <div name="primaryTextStyle" value={this.state.primaryTextStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'basicProfile')} className="filler-color">
-                      <i class="fas fa-bold"/>
-                    </div>
-                  </div>
+                  <EditablePanel name="primaryText"
+                    color={this.state.primaryTextColor}
+                    size={this.state.primaryTextFontSize}
+                    position={this.state.primaryTextPosition}
+                    button={primaryTextButton}
+                    style={this.state.primaryTextStyle}
+                    changeStyle ={this.changeStyle}
+                    changeColor = {this.changeColor}
+                    changeFont = {this.changeFont}
+                    scaleble={true}
+                    onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                    isParent="basicProfile"/>
                 ) : null}
-
               </div>
               <hr/>
               <a className="px-2 fa-lg li-ic"><i className="fab fa-linkedin-in"></i></a>

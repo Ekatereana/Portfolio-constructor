@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 import { Route } from 'react-router-dom';
-import Editable from '../Editable';
-import '../Editable.css';
+import Editable from '../Editable/Editable';
 
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeStyle } from '../TextFormater';
+import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, changeStyle } from '../../helpers/TextFormater';
 import axios from 'axios';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
+import EditablePanel from '../EditablePanel/EditablePanel';
 
 class ServiceComponent extends Component {
   constructor (props) {
@@ -18,7 +18,7 @@ class ServiceComponent extends Component {
         title: content.title,
         titleStyle: content.titleStyle,
         icon: this.props.type,
-        color: content.color,
+        iconColor: content.color,
         titlePosition: content.titlePosition,
         textPosition: content.textPosition,
         text: content.text,
@@ -35,7 +35,7 @@ class ServiceComponent extends Component {
       this.state = {
         iconPosition: null,
         title: 'Support',
-        color: null,
+        iconColor: null,
         titleColor: null,
         textColor: null,
         titlePosition: null,
@@ -72,27 +72,25 @@ class ServiceComponent extends Component {
 
         <div className={ this.getStyled(this.state.iconPosition, 'text-control-item editable icon ')}>
           {this.props.fab ? <MDBIcon fab icon={this.state.icon} size="3x" className={this.state.color + ' ' + this.state.iconFontSize} />
-            : <MDBIcon icon={this.state.icon} size="3x" className={this.state.color + ' ' + this.state.iconFontSize} />}
+            : <MDBIcon icon={this.state.icon} size="3x" className={this.state.iconColor + ' ' + this.state.iconFontSize} />}
           {!noEdit ? (
-            <div className=" row control-panel">
-              <div name="color" value={this.state.color} onClick={(event) => this.changeColor(event, false)} className="filler-color">
-                <MDBIcon icon="fill" />
-              </div>
-
-              <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="iconPosition" value={this.state.iconPosition} className="text-format-button">
-                { iconButton }
-              </div>
-
-              <div name="iconFontSize" value={this.state.iconFontSize} onClick={(event) => this.changeFont(event, false)} className="filler-color">
-                <i class="fas fa-plus-circle"></i>
-              </div>
-            </div>) : null }
+            <EditablePanel name="icon"
+              color={this.state.iconColor}
+              size={this.state.iconFontSize}
+              position={this.state.iconPosition}
+              button={iconButton}
+              changeColor = {this.changeColor}
+              changeFont = {this.changeFont}
+              plusSize = {true}
+              onChangeTiTlePosition = {this.onChangeTiTlePosition}
+              isParent={false}/>
+          ) : null }
         </div>
 
         <div className={ this.getStyled(this.state.titlePosition, 'text-control-item editable')}>
           <Editable
             onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
-            edit={noEdit} styleName={'editable-title font-weight-bold my-4 ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+            edit={noEdit} styleName={'c-title my-4 ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
             text={this.state.title} type="input" value={this.state.title}>
             <input
               name="title"
@@ -103,36 +101,26 @@ class ServiceComponent extends Component {
           </Editable>
 
           {!noEdit ? (
-            <div className="row col">
-              <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
-                <MDBIcon icon="fill" />
-              </div>
-
-              <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-                { titleButton }
-              </div>
-              <div name="titleFontSize" value={this.state.titleFontSize} onClick={(event) => this.changeFont(event, false, true)} className="filler-color">
-                <i class="fas fa-text-height"></i>
-              </div>
-
-              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
-                <i class="fas fa-underline"/>
-              </div>
-
-              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
-                <i class="fas fa-italic"/>
-              </div>
-
-              <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
-                <i class="fas fa-bold"/>
-              </div>
-            </div>) : null}
+            <EditablePanel name="title"
+              color={this.state.titleColor}
+              size={this.state.titleFontSize}
+              position={this.state.titlePosition}
+              button={titleButton}
+              style={this.state.titleStyle}
+              changeStyle ={this.changeStyle}
+              changeColor = {this.changeColor}
+              changeFont = {this.changeFont}
+              onChangeTiTlePosition = {this.onChangeTiTlePosition}
+              scaleble={true}
+              isParent={false}/>
+          ) : null}
 
         </div>
 
         <div className={ this.getStyled(this.state.textPosition, 'text-control-item editable') }>
           <Editable edit={noEdit} onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
-            styleName={ this.state.textColor ? 'mb-md-0 mb-5 ' + this.state.textColor + ' ' + this.state.textStyle : ' grey-text' + ' ' + this.state.textStyle}
+            styleName={ this.state.textColor ? 'mb-md-0 mb-5 ' + this.state.textColor + ' ' + this.state.textFontSize + ' ' + this.state.textPosition + ' ' + this.state.textStyle
+              : ' grey-text' + ' ' + this.state.textStyle + ' ' + this.state.textFontSize + ' ' + this.state.textPosition}
             text={this.state.text}
             type="input"
             value={this.state.text}>
@@ -144,26 +132,19 @@ class ServiceComponent extends Component {
               id="inputPrefilledEx"/>
           </Editable>
           {!noEdit ? (
-            <div className="row control-panel col-3">
-              <div name="textColor" value={this.state.textColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
-                <MDBIcon icon="fill" />
-              </div>
-              <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="textPosition" value={this.state.textPosition} className="text-format-button">
-                { textButton }
-              </div>
-
-              <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
-                <i class="fas fa-underline"/>
-              </div>
-
-              <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
-                <i class="fas fa-italic"/>
-              </div>
-
-              <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
-                <i class="fas fa-bold"/>
-              </div>
-            </div>
+            <EditablePanel name="text"
+              color={this.state.textColor}
+              size={this.state.textFontSize}
+              position={this.state.textPosition}
+              button={textButton}
+              changeColor = {this.changeColor}
+              changeFont = {this.changeFont}
+              style={this.state.textStyle}
+              scaleble = {true}
+              changeStyle ={this.changeStyle}
+              column = {true}
+              onChangeTiTlePosition = {this.onChangeTiTlePosition}
+              isParent={false}/>
           ) : null }
         </div>
       </MDBCol>

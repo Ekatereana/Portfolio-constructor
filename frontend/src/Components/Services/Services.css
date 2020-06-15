@@ -18,6 +18,11 @@
 	font-size: 60px;
 }
 
+.part {
+	display: flex;
+	justify-content: center;
+}
+
 .plus-huge-text {
 	font-size: 70px;
 }

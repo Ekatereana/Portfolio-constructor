@@ -28,7 +28,6 @@ function changeFont (event, isParent, condition) {
   if (!value) {
     value = null;
   }
-
   if (!condition) {
     switch (value) {
       case 'small-text':

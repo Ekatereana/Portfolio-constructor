@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import Editable from '../Editable';
+import Editable from '../Editable/Editable';
 import axios from 'axios';
 
-import { getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile, changeStyle } from '../TextFormater';
+import {
+  getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile, changeStyle
+} from '../../helpers/TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu } from 'mdbreact';
+import EditablePanel from '../EditablePanel/EditablePanel';
 
 class RowComponent extends Component {
   constructor (props) {
@@ -94,7 +97,7 @@ class RowComponent extends Component {
             <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
               <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
                 edit={noEdit}
-                styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+                styleName={ 'c-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
                 text={this.state.title} type="input" value={this.state.title}>
                 <input
                   name="title"
@@ -104,28 +107,18 @@ class RowComponent extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div className="row control-panel">
-                  <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
-                    <MDBIcon icon="fill" />
-                  </div>
-                  <div onClick={(event) => this.onChangeTiTlePosition(event, false)} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-                    { titleButton }
-                  </div>
-                  <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, false, true)} className="filler-color">
-                    <i class="fas fa-text-height"></i>
-                  </div>
-                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
-                    <i class="fas fa-underline"/>
-                  </div>
-
-                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
-                    <i class="fas fa-italic"/>
-                  </div>
-
-                  <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
-                    <i class="fas fa-bold"/>
-                  </div>
-                </div>
+                <EditablePanel name="title"
+                  color={this.state.titleColor}
+                  size={this.state.titleFontSize}
+                  position={this.state.titlePosition}
+                  button={titleButton}
+                  style={this.state.titleStyle}
+                  changeStyle ={this.changeStyle}
+                  changeColor = {this.changeColor}
+                  changeFont = {this.changeFont}
+                  onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                  scaleble={true}
+                  isParent={false}/>
               ) : null}
             </div>
             <hr/>
@@ -143,28 +136,19 @@ class RowComponent extends Component {
                   id="inputPrefilledEx"/>
               </Editable>
               {!noEdit ? (
-                <div className="row control-panel col-2">
-                  <div name="textColor" value={this.state.textColor} onClick={(event) => this.changeColor(event, false)} className="filler-color">
-                    <MDBIcon icon="fill" />
-                  </div>
-                  <div onClick={this.onChangeTiTlePosition} name="textPosition" value={this.state.textPosition} className="text-format-button">
-                    { textButton }
-                  </div>
-                  <div name="textFontSize" value={this.state.textFontSize} onClick={ (event) => this.changeFont(event, false, true)} className="filler-color">
-                    <i class="fas fa-text-height"></i>
-                  </div>
-                  <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'underline', false)} className="filler-color">
-                    <i class="fas fa-underline"/>
-                  </div>
-
-                  <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'italic', false)} className="filler-color">
-                    <i class="fas fa-italic"/>
-                  </div>
-
-                  <div name="textStyle" value={this.state.textStyle} onClick={ (event) => this.changeStyle(event, 'bold', false)} className="filler-color">
-                    <i class="fas fa-bold"/>
-                  </div>
-                </div>
+                <EditablePanel name="text"
+                  color={this.state.textColor}
+                  size={this.state.textFontSize}
+                  position={this.state.textPosition}
+                  button={textButton}
+                  changeColor = {this.changeColor}
+                  changeFont = {this.changeFont}
+                  style={this.state.textStyle}
+                  scaleble = {true}
+                  changeStyle ={this.changeStyle}
+                  column = {true}
+                  onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                  isParent={false}/>
               ) : null}
             </div>
             <hr/>

@@ -1,4 +1,5 @@
 .create-filler {
+	overflow: hidden;
 	max-width: 75%;
 	margin-left: 15em;
 }
@@ -13,6 +14,6 @@
 }
 
 .view {
-	width: 70em;
+	width: 130em;
 	margin-left: 5em;
 }

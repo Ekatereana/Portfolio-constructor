@@ -9,7 +9,7 @@ module.exports = {
 
   test: {
     client: 'pg',
-    connection: ' postgres://basic:2110vfvf@localhost:5432/portfolio-const',
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: path.join(BASE_PATH, 'migrations')
     },

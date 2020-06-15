@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
-import Editable from '../Editable';
+import Editable from '../Editable/Editable';
 import axios from 'axios';
 import AboutCard from './AboutCard';
 

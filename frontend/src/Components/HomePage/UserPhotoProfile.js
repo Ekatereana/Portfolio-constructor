@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import './HomePage.css';
 
 import { Route } from 'react-router-dom';
-import Editable from '../Editable';
+import Editable from '../Editable/Editable';
 import {
   getButtonType, getStyled, saveTextInput, changeFont,
   changeColor, onChangeTiTlePosition, handleChange, uploadFile,
   changeImageForm, changeImageOrientation, changeImageSize, changeImageBorderType, changeStyle
-} from '../TextFormater';
+} from '../../helpers/TextFormater';
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu, } from 'mdbreact';
 import axios from 'axios';
+import EditablePanel from '../EditablePanel/EditablePanel';
 
 class SocialButton extends React.Component {
   constructor (props) {
@@ -88,6 +89,7 @@ class UserPhotoCard extends React.Component {
       subtitlePosition: currentS.subtitlePosition,
       subtitleColor: currentS.subtitleColor,
       subtitleFontSize: currentS.subtitleFontSize,
+      subtitleStyle: currentS.subtitleStyle,
       isShown: false,
       noImg: false,
       imgBorderType: currentS.imgBorderType
@@ -236,7 +238,7 @@ class UserPhotoCard extends React.Component {
               <i class="fab fa-angellist"></i>
               <div className={getStyled(this.state.subtitlePosition, 'text-control-item  editable')}>
                 <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'userPhotoCard')}
-                  edit={imMuteble} styleName={ this.state.subtitleColor + ' ' + this.state.subtitleFontSize} text={this.state.subtitle} type="input" value={this.state.subtitle}>
+                  edit={imMuteble} styleName={ this.state.subtitleColor + ' ' + this.state.subtitleFontSize + ' ' + this.state.subtitleStyle} text={this.state.subtitle} type="input" value={this.state.subtitle}>
                   <input
                     name="subtitle"
                     value={this.state.subtitle}
@@ -245,17 +247,18 @@ class UserPhotoCard extends React.Component {
                     id="inputPrefilledEx"/>
                 </Editable>
                 {!imMuteble ? (
-                  <div className="row control-panel">
-                    <div name="subtitleColor" value={this.state.subtitleColor} onClick={(event) => this.changeColor(event, 'userPhotoCard')} className="filler-color">
-                      <MDBIcon icon="fill" />
-                    </div>
-                    <div onClick={(event) => this.onChangeTiTlePosition(event, 'userPhotoCard')} name="subtitlePosition" value={this.state.subtitlePosition} className="text-format-button">
-                      { subtitleButton }
-                    </div>
-                    <div name="subtitleFontSize" value={this.state.subtitleFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard', true)} className="filler-color">
-                      <i class="fas fa-text-height"></i>
-                    </div>
-                  </div>
+                  <EditablePanel name="subtitle"
+                    color={this.state.subtitleColor}
+                    size={this.state.subtitleFontSize}
+                    position={this.state.subtitlePosition}
+                    button={subtitleButton}
+                    changeColor = {this.changeColor}
+                    changeFont = {this.changeFont}
+                    style={this.state.subtitleStyle}
+                    changeStyle ={this.changeStyle}
+                    scaleble = {true}
+                    onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                    isParent="userPhotoCard"/>
                 ) : null}
               </div>
             </div>
@@ -282,7 +285,7 @@ class UserPhotoCard extends React.Component {
           <div className={getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
             <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'userPhotoCard')}
               edit={imMuteble}
-              styleName={ 'editable-title card-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+              styleName={ 'c-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
               text={this.state.title} type="input" value={this.state.title}>
               <input
                 name="title"
@@ -292,28 +295,18 @@ class UserPhotoCard extends React.Component {
                 id="inputPrefilledEx"/>
             </Editable>
             {!imMuteble ? (
-              <div className="row control-panel">
-                <div name="titleColor" value={this.state.titleColor} onClick={(event) => this.changeColor(event, 'userPhotoCard')} className="filler-color">
-                  <MDBIcon icon="fill" />
-                </div>
-                <div onClick={(event) => this.onChangeTiTlePosition(event, 'userPhotoCard')} name="titlePosition" value={this.state.titlePosition} className="text-format-button">
-                  { titleButton }
-                </div>
-                <div name="titleFontSize" value={this.state.titleFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-text-height"></i>
-                </div>
-                <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-underline"/>
-                </div>
-
-                <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-italic"/>
-                </div>
-
-                <div name="titleStyle" value={this.state.titleStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-bold"/>
-                </div>
-              </div>
+              <EditablePanel name="title"
+                color={this.state.titleColor}
+                size={this.state.titleFontSize}
+                position={this.state.titlePosition}
+                button={titleButton}
+                scaleble={false}
+                style={this.state.titleStyle}
+                changeStyle ={this.changeStyle}
+                changeColor = {this.changeColor}
+                changeFont = {this.changeFont}
+                onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                isParent="userPhotoCard"/>
             ) : null}
           </div>
 
@@ -332,29 +325,18 @@ class UserPhotoCard extends React.Component {
                 className="card-title"/>
             </Editable>
             {!imMuteble ? (
-              <div className="row control-panel">
-                <div name="quotesColor" value={this.state.quotesColor} onClick={(event) => this.changeColor(event, 'userPhotoCard')} className="filler-color">
-                  <MDBIcon icon="fill" />
-                </div>
-                <div onClick={this.onChangeTiTlePosition} name="quotesPosition" value={this.state.quotesPosition} className="text-format-button">
-                  { quotesButton }
-                </div>
-                <div name="quotesFontSize" value={this.state.quotesFontSize} onClick={ (event) => this.changeFont(event, 'userPhotoCard', true)} className="filler-color">
-                  <i class="fas fa-text-height"></i>
-                </div>
-
-                <div name="quotesStyle" value={this.state.quotesStyle} onClick={ (event) => this.changeStyle(event, 'underline', 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-underline"/>
-                </div>
-
-                <div name="quotesStyle" value={this.state.quotesStyle} onClick={ (event) => this.changeStyle(event, 'italic', 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-italic"/>
-                </div>
-
-                <div name="quotesStyle" value={this.state.quotesStyle} onClick={ (event) => this.changeStyle(event, 'bold', 'userPhotoCard')} className="filler-color">
-                  <i class="fas fa-bold"/>
-                </div>
-              </div>
+              <EditablePanel name="quotes"
+                color={this.state.quotesColor}
+                size={this.state.quotesFontSize}
+                position={this.state.quotesPosition}
+                button={quotesButton}
+                style={this.state.quotesStyle}
+                changeStyle ={this.changeStyle}
+                changeColor = {this.changeColor}
+                changeFont = {this.changeFont}
+                scaleble={true}
+                onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                isParent="userPhotoCard"/>
             ) : null}
           </div>
         </div>

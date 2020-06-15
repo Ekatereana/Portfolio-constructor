@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './HomePage.css';
 
 import { Route } from 'react-router-dom';
-import Editable from '../Editable';
+import Editable from '../Editable/Editable';
 
 import axios from 'axios';
 import { MDBBtn, MDBDropdown, MDBDropdownToggle,  MDBBtnGroup, MDBDropdownMenu, MDBDropdownItem } from 'mdbreact';
