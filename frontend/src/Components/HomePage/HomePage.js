@@ -8,7 +8,7 @@ import axios from 'axios';
 import { MDBBtn, MDBDropdown, MDBDropdownToggle,  MDBBtnGroup, MDBDropdownMenu, MDBDropdownItem } from 'mdbreact';
 import BasicUserProfile from './BasicUserProfile';
 import UserPhotoCard from './UserPhotoProfile';
-
+import { onStart, onStop, handleDrag } from '../../helpers/OnDrag';
 // import { useLocation } from 'react-router-dom';
 
 class HomePage extends React.Component {
@@ -18,6 +18,7 @@ class HomePage extends React.Component {
     const { user } = this.props;
 
     this.state = {
+      activeDrags: 0,
       user: user
     };
     console.log('start state', user);
@@ -30,13 +31,17 @@ class HomePage extends React.Component {
     if (!user.home) {
       user.home = {
         userPhotoCard: {
-          img: 'https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg',
+          img: '',
           title: 'My adventure',
           subtitle: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci ..... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci.....',
           quotes: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, adipisci',
           arrayOfSocial: []
         },
         basicProfile: {
+          deltaPosition: {
+            x: 0,
+            y: 0
+          },
           img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/6-col/img%20(131).jpg',
           title: 'My adventure'
         }
@@ -82,7 +87,7 @@ class HomePage extends React.Component {
     if (!home) {
       home = {
         userPhotoCard: {
-          img: 'https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg',
+          img: 'profile-filler.png',
           title: 'My adventure',
           titlePosition: null,
           quotesPosition: null,

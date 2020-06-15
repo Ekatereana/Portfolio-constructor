@@ -6,8 +6,8 @@
 	overflow: hidden;
 }
 
-img {
-	top: 5px;
+.main-container img {
+	top: 3px;
 	width: 40%;
 	height: 65%;
 }

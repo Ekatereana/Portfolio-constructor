@@ -11,6 +11,8 @@ import {
 import { MDBBtn, MDBRow, MDBCol, MDBIcon, MDBDropdownToggle, MDBDropdownItem, MDBBtnGroup, MDBDropdown, MDBDropdownMenu, } from 'mdbreact';
 import axios from 'axios';
 import EditablePanel from '../EditablePanel/EditablePanel';
+import { onStart, onStop, handleDrag } from '../../helpers/OnDrag';
+import Draggable from 'react-draggable';
 
 class SocialButton extends React.Component {
   constructor (props) {
@@ -70,6 +72,9 @@ class UserPhotoCard extends React.Component {
     const currentS = this.props.currentState;
     this.nameInput = React.createRef();
     this.state = {
+      activeDrags: currentS.activeDrags,
+      deltaPosition: currentS.deltaPosition,
+      isDragged: currentS.isDragged,
       img: currentS.img,
       title: currentS.title,
       titleStyle: currentS.titleStyle,
@@ -111,6 +116,9 @@ class UserPhotoCard extends React.Component {
     this.changeImageSize = changeImageSize.bind(this);
     this.changeImageBorderType = changeImageBorderType.bind(this);
     this.changeStyle = changeStyle.bind(this);
+    this.onStart = onStart.bind(this);
+    this.onStop = onStop.bind(this);
+    this.handleDrag = handleDrag.bind(this);
   };
 
   upload (id) {
@@ -179,6 +187,7 @@ class UserPhotoCard extends React.Component {
     const titleButton = getButtonType(this.state.titlePosition ? this.state.titlePosition : null);
     const subtitleButton = getButtonType(this.state.subtitlePosition ? this.state.subtitlePosition : null);
     const quotesButton = getButtonType(this.state.quotesPosition ? this.state.quotesPosition : null);
+    const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
     let editPhotoCard;
     if (arrayOfSocial == null) {
       arrayOfSocial = [];
@@ -203,145 +212,148 @@ class UserPhotoCard extends React.Component {
     }
 
     return (
-      <div className="card ">
+      <Draggable cancel={imMuteble ? 'card' : ''} onDrag={!imMuteble ? (event, ui) => this.handleDrag(event, ui, 'userPhotoCard') : null}
+        defaultPosition={this.state.isDragged ? this.state.deltaPosition : { x: 0, y: 0 } } onTouchEnd={console.log('state', this.state.deltaposition)}
+        bounds={ { top: -200, left: -100, right: 100, bottom: 200 }} {...dragHandlers}>
+        <div className="card ">
 
-        <div className="card-up indigo lighten-1"></div>
+          <div className="card-up indigo lighten-1"></div>
 
-        <div className={ this.state.imageForm + ' profile-photo' }>
-          <div className={ this.state.imageOrientation + ' ' + `${this.state.imgSize ? this.state.imgSize : 'avatar'}` + ' ' + this.state.imgBorderType }>
-            {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
-              : <img src={this.state.img} className="avatar"
-                alt="woman avatar"/>}
-            {!imMuteble ? (
-              <div title="change imageOrientation" className="row control-panel">
-                <div name="imageForm" value={this.state.imageForm} onClick={(event) => this.changeImageForm(event, 'userPhotoCard')} className="filler-color">
-                  <MDBIcon icon="exchange-alt" />
+          <div className={ this.state.imageForm + ' profile-photo' }>
+            <div className={ this.state.imageOrientation + ' ' + `${this.state.imgSize ? this.state.imgSize : 'avatar'}` + ' ' + this.state.imgBorderType }>
+              {this.state.noImg ? <p>The uploaded file is not image, try again!</p>
+                : <img src={this.state.img} className="avatar"
+                  alt="woman avatar"/>}
+              {!imMuteble ? (
+                <div title="change imageOrientation" className="row control-panel">
+                  <div name="imageForm" value={this.state.imageForm} onClick={(event) => this.changeImageForm(event, 'userPhotoCard')} className="filler-color">
+                    <MDBIcon icon="exchange-alt" />
+                  </div>
+                  <div title="turn image" onClick={(event) => this.changeImageOrientation(event, 'userPhotoCard')}
+                    name="imageOrientation"
+                    value={this.state.imageOrientation} className="text-format-button">
+                    <MDBIcon icon="undo-alt" />
+                  </div>
+                  <div name="imgSize" title="Change size of image" value={this.state.imgSize} onClick={ (event) => this.changeImageSize(event, 'userPhotoCard')} className="filler-color">
+                    <i className="fas fa-expand"></i>
+                  </div>
+                  <div name="imgBorderType" title = "change borders" value={this.state.imgBorderType} onClick={ (event) => this.changeImageBorderType(event, 'userPhotoCard')} className="filler-color">
+                    <i className="fas fa-border-style"></i>
+                  </div>
                 </div>
-                <div title="turn image" onClick={(event) => this.changeImageOrientation(event, 'userPhotoCard')}
-                  name="imageOrientation"
-                  value={this.state.imageOrientation} className="text-format-button">
-                  <MDBIcon icon="undo-alt" />
-                </div>
-                <div name="imgSize" title="Change size of image" value={this.state.imgSize} onClick={ (event) => this.changeImageSize(event, 'userPhotoCard')} className="filler-color">
-                  <i className="fas fa-expand"></i>
-                </div>
-                <div name="imgBorderType" title = "change borders" value={this.state.imgBorderType} onClick={ (event) => this.changeImageBorderType(event, 'userPhotoCard')} className="filler-color">
-                  <i className="fas fa-border-style"></i>
-                </div>
-              </div>
-            ) : null}
-          </div>
+              ) : null}
+            </div>
 
-          <div className="center-text-keeper">
-            {editPhotoCard}
-            <div className="row">
-              <i class="fab fa-angellist"></i>
-              <div className={getStyled(this.state.subtitlePosition, 'text-control-item  editable')}>
-                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'userPhotoCard')}
-                  edit={imMuteble} styleName={ this.state.subtitleColor + ' ' + this.state.subtitleFontSize + ' ' + this.state.subtitleStyle} text={this.state.subtitle} type="input" value={this.state.subtitle}>
-                  <input
-                    name="subtitle"
-                    value={this.state.subtitle}
-                    onChange={this.handleChange}
-                    type="text"
-                    id="inputPrefilledEx"/>
-                </Editable>
-                {!imMuteble ? (
-                  <EditablePanel name="subtitle"
-                    color={this.state.subtitleColor}
-                    size={this.state.subtitleFontSize}
-                    position={this.state.subtitlePosition}
-                    button={subtitleButton}
-                    changeColor = {this.changeColor}
-                    changeFont = {this.changeFont}
-                    style={this.state.subtitleStyle}
-                    changeStyle ={this.changeStyle}
-                    scaleble = {true}
-                    onChangeTiTlePosition = {this.onChangeTiTlePosition}
-                    isParent="userPhotoCard"/>
-                ) : null}
+            <div className="center-text-keeper">
+              {editPhotoCard}
+              <div className="row">
+                <i class="fab fa-angellist"></i>
+                <div className={getStyled(this.state.subtitlePosition, 'text-control-item  editable')}>
+                  <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.subtitle, 'subtitle', 'userPhotoCard')}
+                    edit={imMuteble} styleName={ this.state.subtitleColor + ' ' + this.state.subtitleFontSize + ' ' + this.state.subtitleStyle} text={this.state.subtitle} type="input" value={this.state.subtitle}>
+                    <input
+                      name="subtitle"
+                      value={this.state.subtitle}
+                      onChange={this.handleChange}
+                      type="text"
+                      id="inputPrefilledEx"/>
+                  </Editable>
+                  {!imMuteble ? (
+                    <EditablePanel name="subtitle"
+                      color={this.state.subtitleColor}
+                      size={this.state.subtitleFontSize}
+                      position={this.state.subtitlePosition}
+                      button={subtitleButton}
+                      changeColor = {this.changeColor}
+                      changeFont = {this.changeFont}
+                      style={this.state.subtitleStyle}
+                      changeStyle ={this.changeStyle}
+                      scaleble = {true}
+                      onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                      isParent="userPhotoCard"/>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="social-panel row">
-          {
-            arrayOfSocial.map((el) => {
-              return <SocialButton
-                editable={imMuteble}
-                delete = {this.deleteSocial}
-                save = {this.saveSocialLable}
-                url = {el.props.url}
-                butonclass = { el.props.butonclass}
-                classname = { el.props.classname}
-                key={ el.props.id }
-                id={ el.props.id } />;
-            })
-          }
-        </div>
-
-        <div className="card-body no-mg-top editable">
-          <div className={getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
-            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'userPhotoCard')}
-              edit={imMuteble}
-              styleName={ 'c-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
-              text={this.state.title} type="input" value={this.state.title}>
-              <input
-                name="title"
-                value={this.state.title}
-                onChange={this.handleChange}
-                type="text"
-                id="inputPrefilledEx"/>
-            </Editable>
-            {!imMuteble ? (
-              <EditablePanel name="title"
-                color={this.state.titleColor}
-                size={this.state.titleFontSize}
-                position={this.state.titlePosition}
-                button={titleButton}
-                scaleble={false}
-                style={this.state.titleStyle}
-                changeStyle ={this.changeStyle}
-                changeColor = {this.changeColor}
-                changeFont = {this.changeFont}
-                onChangeTiTlePosition = {this.onChangeTiTlePosition}
-                isParent="userPhotoCard"/>
-            ) : null}
+          <div className="social-panel row">
+            {
+              arrayOfSocial.map((el) => {
+                return <SocialButton
+                  editable={imMuteble}
+                  delete = {this.deleteSocial}
+                  save = {this.saveSocialLable}
+                  url = {el.props.url}
+                  butonclass = { el.props.butonclass}
+                  classname = { el.props.classname}
+                  key={ el.props.id }
+                  id={ el.props.id } />;
+              })
+            }
           </div>
 
-          <hr/>
-          <i className="fas fa-quote-left "></i>
-          <div className={ getStyled(this.state.quotesPosition, 'text-control-item editable')}>
-            <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes', 'userPhotoCard')} edit={imMuteble}
-              styleName={ 'editable-text ' + this.state.quotesColor + ' ' + this.state.quotesFontSize + ' ' + this.state.quotesStyle}
-              text={this.state.quotes} type="input" value={this.state.quotes}>
-              <input
-                name="quotes"
-                value={this.state.quotes}
-                onChange={this.handleChange}
-                type="text"
-                id="inputPrefilledEx"
-                className="card-title"/>
-            </Editable>
-            {!imMuteble ? (
-              <EditablePanel name="quotes"
-                color={this.state.quotesColor}
-                size={this.state.quotesFontSize}
-                position={this.state.quotesPosition}
-                button={quotesButton}
-                style={this.state.quotesStyle}
-                changeStyle ={this.changeStyle}
-                changeColor = {this.changeColor}
-                changeFont = {this.changeFont}
-                scaleble={true}
-                onChangeTiTlePosition = {this.onChangeTiTlePosition}
-                isParent="userPhotoCard"/>
-            ) : null}
+          <div className="card-body no-mg-top editable">
+            <div className={getStyled(this.state.titlePosition, 'text-control-item title-row editable')}>
+              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title', 'userPhotoCard')}
+                edit={imMuteble}
+                styleName={ 'c-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+                text={this.state.title} type="input" value={this.state.title}>
+                <input
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.handleChange}
+                  type="text"
+                  id="inputPrefilledEx"/>
+              </Editable>
+              {!imMuteble ? (
+                <EditablePanel name="title"
+                  color={this.state.titleColor}
+                  size={this.state.titleFontSize}
+                  position={this.state.titlePosition}
+                  button={titleButton}
+                  scaleble={false}
+                  style={this.state.titleStyle}
+                  changeStyle ={this.changeStyle}
+                  changeColor = {this.changeColor}
+                  changeFont = {this.changeFont}
+                  onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                  isParent="userPhotoCard"/>
+              ) : null}
+            </div>
+
+            <hr/>
+            <i className="fas fa-quote-left "></i>
+            <div className={ getStyled(this.state.quotesPosition, 'text-control-item editable')}>
+              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.quotes, 'quotes', 'userPhotoCard')} edit={imMuteble}
+                styleName={ 'editable-text ' + this.state.quotesColor + ' ' + this.state.quotesFontSize + ' ' + this.state.quotesStyle}
+                text={this.state.quotes} type="input" value={this.state.quotes}>
+                <input
+                  name="quotes"
+                  value={this.state.quotes}
+                  onChange={this.handleChange}
+                  type="text"
+                  id="inputPrefilledEx"
+                  className="card-title"/>
+              </Editable>
+              {!imMuteble ? (
+                <EditablePanel name="quotes"
+                  color={this.state.quotesColor}
+                  size={this.state.quotesFontSize}
+                  position={this.state.quotesPosition}
+                  button={quotesButton}
+                  style={this.state.quotesStyle}
+                  changeStyle ={this.changeStyle}
+                  changeColor = {this.changeColor}
+                  changeFont = {this.changeFont}
+                  scaleble={true}
+                  onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                  isParent="userPhotoCard"/>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
-
+      </Draggable>
     );
   }
 }

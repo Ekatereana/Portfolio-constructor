@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Editable from '../Editable/Editable';
 import axios from 'axios';
-
+import Draggable from 'react-draggable';
+import { onStart, onStop, handleDrag } from '../../helpers/OnDrag';
 import {
   getButtonType, getStyled, saveTextInput, changeFont, changeColor, onChangeTiTlePosition, handleChange, uploadFile, changeStyle
 } from '../../helpers/TextFormater';
@@ -15,6 +16,9 @@ class RowComponent extends Component {
 
     if (content) {
       this.state = {
+        activeDrags: content.activeDrags,
+        deltaPosition: content.deltaPosition,
+        isDragged: content.isDragged,
         title: content.title,
         img: content.img,
         titlePosition: content.titlePosition,
@@ -55,6 +59,9 @@ class RowComponent extends Component {
     this.changeColor = changeColor.bind(this);
     this.changeFont = changeFont.bind(this);
     this.changeStyle = changeStyle.bind(this);
+    this.onStart = onStart.bind(this);
+    this.onStop = onStop.bind(this);
+    this.handleDrag = handleDrag.bind(this);
   };
 
   upload (id) {
@@ -66,6 +73,7 @@ class RowComponent extends Component {
     const noEdit = this.props.edit;
     const titleButton = getButtonType(this.state.titlePosition);
     const textButton = getButtonType(this.state.textPosition);
+    const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
     let buttons;
     if (!noEdit) {
       buttons =
@@ -84,79 +92,83 @@ class RowComponent extends Component {
     console.log('rowComponent', this.props);
 
     return (
-      <div className="col-md-6 mb-4">
+      <Draggable cancel={noEdit ? 'col-md-6' : ''} onDrag={!noEdit ? (event, ui) => this.handleDrag(event, ui, false) : null}
+        defaultPosition={this.state.isDragged ? this.state.deltaPosition : { x: 0, y: 0 } } bounds={ { left: -100, right: 500, bottom: 100, top: -200 } } {...dragHandlers}>
+        <div className="col-md-6 mb-4">
 
-        <div className="card compact">
-          <div className=" overlay no-m">
-            {this.state.noImg ? <div><p>The uploaded file is not image, try again!</p>
-              <img className="card-img-top" src={this.state.img} alt=""/></div>
-              : <img className="card-img-top" src={this.state.img} alt="Card image cap"/>}
-          </div>
-          <div className="card-body">
+          <div className="card compact">
+            <div className=" overlay no-m">
+              {this.state.noImg ? <div><p>The uploaded file is not image, try again!</p>
+                <img className="card-img-top" src={this.state.img} alt=""/></div>
+                : <img className="card-img-top" src={this.state.img} alt="Card image cap"/>}
+            </div>
+            <div className="card-body">
 
-            <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
-              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
-                edit={noEdit}
-                styleName={ 'c-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
-                text={this.state.title} type="input" value={this.state.title}>
-                <input
-                  name="title"
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                  type="text"
-                  id="inputPrefilledEx"/>
-              </Editable>
-              {!noEdit ? (
-                <EditablePanel name="title"
-                  color={this.state.titleColor}
-                  size={this.state.titleFontSize}
-                  position={this.state.titlePosition}
-                  button={titleButton}
-                  style={this.state.titleStyle}
-                  changeStyle ={this.changeStyle}
-                  changeColor = {this.changeColor}
-                  changeFont = {this.changeFont}
-                  onChangeTiTlePosition = {this.onChangeTiTlePosition}
-                  scaleble={true}
-                  isParent={false}/>
-              ) : null}
+              <div className={ this.getStyled(this.state.titlePosition, 'text-control-item ')}>
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.title, 'title')}
+                  edit={noEdit}
+                  styleName={ 'c-title ' + this.state.titleColor + ' ' + this.state.titleFontSize + ' ' + this.state.titleStyle}
+                  text={this.state.title} type="input" value={this.state.title}>
+                  <input
+                    name="title"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                    type="text"
+                    id="inputPrefilledEx"/>
+                </Editable>
+                {!noEdit ? (
+                  <EditablePanel name="title"
+                    color={this.state.titleColor}
+                    size={this.state.titleFontSize}
+                    position={this.state.titlePosition}
+                    button={titleButton}
+                    style={this.state.titleStyle}
+                    changeStyle ={this.changeStyle}
+                    changeColor = {this.changeColor}
+                    changeFont = {this.changeFont}
+                    onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                    scaleble={true}
+                    isParent={false}/>
+                ) : null}
+              </div>
+              <hr/>
+              <div className={ this.getStyled(this.state.textPosition, 'text-control-item ')}>
+                <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
+                  styleName={ 'card-plain-text text-muted font-weight-light ' + this.state.textColor + ' ' + this.state.textFontSize + ' ' + this.state.textStyle}
+                  edit={noEdit}
+                  text={this.state.text}
+                  type="input"
+                  value={this.state.text}>
+                  <input
+                    name="text"
+                    value={this.state.text}
+                    onChange={this.handleChange}
+                    type="text"
+                    id="inputPrefilledEx"/>
+                </Editable>
+                {!noEdit ? (
+                  <EditablePanel name="text"
+                    color={this.state.textColor}
+                    size={this.state.textFontSize}
+                    position={this.state.textPosition}
+                    button={textButton}
+                    changeColor = {this.changeColor}
+                    changeFont = {this.changeFont}
+                    style={this.state.textStyle}
+                    scaleble = {true}
+                    changeStyle ={this.changeStyle}
+                    column = {true}
+                    onChangeTiTlePosition = {this.onChangeTiTlePosition}
+                    isParent={false}/>
+                ) : null}
+              </div>
+              <hr/>
+              {buttons}
             </div>
-            <hr/>
-            <div className={ this.getStyled(this.state.textPosition, 'text-control-item ')}>
-              <Editable onKeyDown={(event) => this.saveTextInput(event, this.state.text, 'text')}
-                styleName={ 'card-plain-text text-muted font-weight-light ' + this.state.textColor + ' ' + this.state.textFontSize + ' ' + this.state.textStyle}
-                text={this.state.text}
-                type="input"
-                value={this.state.text}>
-                <input
-                  name="text"
-                  value={this.state.text}
-                  onChange={this.handleChange}
-                  type="text"
-                  id="inputPrefilledEx"/>
-              </Editable>
-              {!noEdit ? (
-                <EditablePanel name="text"
-                  color={this.state.textColor}
-                  size={this.state.textFontSize}
-                  position={this.state.textPosition}
-                  button={textButton}
-                  changeColor = {this.changeColor}
-                  changeFont = {this.changeFont}
-                  style={this.state.textStyle}
-                  scaleble = {true}
-                  changeStyle ={this.changeStyle}
-                  column = {true}
-                  onChangeTiTlePosition = {this.onChangeTiTlePosition}
-                  isParent={false}/>
-              ) : null}
-            </div>
-            <hr/>
-            {buttons}
           </div>
+
         </div>
-
-      </div>
+      </Draggable>
     );
   }
 }
