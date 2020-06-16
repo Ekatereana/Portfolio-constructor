@@ -5,7 +5,8 @@ function handleDrag (e, ui, isParent) {
         x: 0,
         y: 0
       },
-      isDragged: true
+      isDragged: true,
+      activeDrags: 0
     });
   }
   const { x, y } = this.state.deltaPosition;
